@@ -9,16 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Controller
 @RequestMapping(path = "/role")
 public class RoleController {
 
-    @Autowired
     private final RoleRepository roleRepository;
 
+    @Autowired
     RoleController(RoleRepository roleRepository) { this.roleRepository = roleRepository; }
 
     @GetMapping(path = "/all")
@@ -32,20 +31,20 @@ public class RoleController {
     }
 
     @PostMapping(path = "/add")
-    public ResponseEntity addRole(@RequestBody Role role){
+    public ResponseEntity<?> addRole(@RequestBody Role role){
         roleRepository.save(role);
         return ResponseEntity.status(HttpStatus.OK).body("New role saved successfully");
     }
 
     @PutMapping(path = "/update")
-    public ResponseEntity updateRole(@RequestBody Role role){
+    public ResponseEntity<?> updateRole(@RequestBody Role role){
         roleRepository.save(role);
         return ResponseEntity.status(HttpStatus.OK).body("Role updated successfully");
     }
 
     @DeleteMapping(path = "/remove/{id}")
-    public ResponseEntity deleteRole(@PathVariable Long id) {
-        roleRepository.findById(id).ifPresent(r -> roleRepository.delete(r));
+    public ResponseEntity<?> deleteRole(@PathVariable Long id) {
+        roleRepository.findById(id).ifPresent(roleRepository::delete);
         return ResponseEntity.status(HttpStatus.OK).body("Role deleted successfully");
     }
 
