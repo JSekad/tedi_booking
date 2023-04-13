@@ -5,17 +5,21 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@Table(schema="booking_app", name="role")
-public class Role implements Serializable {
+@Table(schema="booking_app", name="country")
+public class Country implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     private String name;
     private String alias;
+
+    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
+    private Set<City> cities;
 
 }
