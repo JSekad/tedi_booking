@@ -14,7 +14,7 @@ import java.util.Set;
 public class City implements Serializable {
 
     @Id
-    private Integer city;
+    private Integer id;
 
     private String name;
     @ManyToOne(fetch = FetchType.LAZY)

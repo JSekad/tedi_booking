@@ -34,10 +34,14 @@ public class Reservation implements Serializable {
     private LocalDate endDate;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idHostReview")
     private HostReview hostReview;
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idRoomReview")
     private RoomReview RoomReview;
 
-    private String speicalRequest;
+    private String specialRequest;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idPaymentMethod")
     private PaymentMethod paymentMethod;
 }

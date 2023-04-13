@@ -27,6 +27,7 @@ public class Person implements Serializable {
     private String idNumber;
     private String email;
     private String phoneNumber;
+    @Column(columnDefinition = "TINYINT(1)")
     private Boolean approved;
     private OffsetDateTime dateApproved;
 
@@ -34,18 +35,21 @@ public class Person implements Serializable {
     @PrimaryKeyJoinColumn
     private User user;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
     private Set<Chat> messagesSend;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "reciever", fetch = FetchType.LAZY)
     private Set<Chat> messagesRecieved;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "guest", fetch = FetchType.LAZY)
     private Set<Reservation> reservations;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "host", fetch = FetchType.LAZY)
     private Set<HostReview> hostReviews;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "reviewer", fetch = FetchType.LAZY)
     private Set<RoomReview> roomReviews;
+
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    private Set<Enrollment> enrollements;
 }

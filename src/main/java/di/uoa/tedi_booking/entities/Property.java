@@ -17,6 +17,7 @@ public class Property implements Serializable {
     private Integer id;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idPerson")
     private Person person;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPropertyType")

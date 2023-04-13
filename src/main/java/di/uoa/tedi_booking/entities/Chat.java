@@ -18,17 +18,18 @@ public class Chat implements Serializable {
 
     private String message;
     private OffsetDateTime sendTimestamp;
+    @Column(columnDefinition = "TINYINT(1)")
     private Boolean readStatus;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idSender")
     private Person sender;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idReciever")
     private Person reciever;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idReservation")
     private Reservation reservation;
 }
