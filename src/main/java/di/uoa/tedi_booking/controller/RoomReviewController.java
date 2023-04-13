@@ -1,7 +1,6 @@
 package di.uoa.tedi_booking.controller;
 
 import di.uoa.tedi_booking.entities.RoomReview;
-import di.uoa.tedi_booking.repositories.RoleRepository;
 import di.uoa.tedi_booking.repositories.RoomReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
