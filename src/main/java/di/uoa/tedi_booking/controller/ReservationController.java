@@ -1,0 +1,15 @@
+package di.uoa.tedi_booking.controller;
+
+import di.uoa.tedi_booking.entities.Reservation;
+import di.uoa.tedi_booking.repositories.ReservationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping(path = "/reservation")
+public class ReservationController extends GenericController<Reservation>{
+
+    @Autowired
+    public ReservationController(ReservationRepository reservationRepository){super(reservationRepository);}
+}

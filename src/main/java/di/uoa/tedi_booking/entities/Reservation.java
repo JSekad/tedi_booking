@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 @Entity
 @Getter
@@ -23,4 +25,19 @@ public class Reservation implements Serializable {
     @JoinColumn(name = "idGuest")
     private Person guest;
 
+    private Integer numOfPersons;
+    private Integer price;
+    private OffsetDateTime reservationTimestamp;
+    private OffsetDateTime cancelationTimestamp;
+
+    private LocalDate startDate;
+    private LocalDate endDate;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private HostReview hostReview;
+    @OneToOne(fetch = FetchType.LAZY)
+    private RoomReview RoomReview;
+
+    private String speicalRequest;
+    private PaymentMethod paymentMethod;
 }

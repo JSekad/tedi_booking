@@ -18,4 +18,7 @@ public class Room implements Serializable {
 
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private Set<Reservation> reservations;
+
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    private Set<RoomReview> roomReviews;
 }

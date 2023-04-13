@@ -42,4 +42,10 @@ public class Person implements Serializable {
 
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
     private Set<Reservation> reservations;
+
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    private Set<HostReview> hostReviews;
+
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    private Set<RoomReview> roomReviews;
 }
