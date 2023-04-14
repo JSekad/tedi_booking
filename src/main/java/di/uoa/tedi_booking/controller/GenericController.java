@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 public abstract class GenericController<T> {
@@ -27,20 +28,37 @@ public abstract class GenericController<T> {
 
     @PostMapping(path = "/add")
     public ResponseEntity<?> add(@RequestBody T t){
-        repository.save(t);
-        return ResponseEntity.status(HttpStatus.OK).body("New entry saved successfully");
+        try {
+            repository.save(t);
+            return ResponseEntity.status(HttpStatus.OK).body("New entry saved successfully");
+        }
+        catch(IllegalArgumentException ex){
+            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body("Persist failed. Objects was null");
+        }
     }
 
     @PutMapping(path = "/update")
     public ResponseEntity<?> update(@RequestBody T t){
-        repository.save(t);
-        return ResponseEntity.status(HttpStatus.OK).body("Updated successfully");
+        try{
+            repository.save(t);
+            return ResponseEntity.status(HttpStatus.OK).body("Updated successfully");
+
+        }
+        catch(IllegalArgumentException ex) {
+            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body("Persist failed. Objects was null");
+        }
     }
 
     @DeleteMapping(path = "/remove/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        repository.findById(id).ifPresent(repository::delete);
-        return ResponseEntity.status(HttpStatus.OK).body("Deleted successfully");
+        try{
+            T t = repository.findById(id).get();
+            repository.delete(t);
+            return ResponseEntity.status(HttpStatus.OK).body("Deleted successfully");
+        }
+        catch(NoSuchElementException ex){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Deleted failed. Object not found");
+        }
     }
 
 }
