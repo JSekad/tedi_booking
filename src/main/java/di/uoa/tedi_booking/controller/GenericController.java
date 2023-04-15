@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 public abstract class GenericController<T> {
@@ -49,16 +48,12 @@ public abstract class GenericController<T> {
         }
     }
 
-    @DeleteMapping(path = "/remove/{id}")
+    @DeleteMapping(path = "/removeById/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        try{
-            T t = repository.findById(id).get();
-            repository.delete(t);
-            return ResponseEntity.status(HttpStatus.OK).body("Deleted successfully");
-        }
-        catch(NoSuchElementException ex){
+        if(!repository.existsById(id))
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Deleted failed. Object not found");
-        }
-    }
 
+        repository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Deleted successfully");
+    }
 }
