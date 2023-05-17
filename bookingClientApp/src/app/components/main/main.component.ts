@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { Role } from '../app/Entities/Role';
-import { RoleService } from '../app/Services/Role.service';
+import { Role } from '../../model/role';
+import { RoleService } from '../../services/role.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-main',
+  templateUrl: './main.component.html',
+  styleUrls: ['./main.component.css']
 })
-export class AppComponent implements OnInit {
+export class MainComponent implements OnInit {
   title = 'bookingClientApp';
   public roles: Role[];
 
@@ -29,5 +29,9 @@ export class AppComponent implements OnInit {
       }
     );
 
+  }
+
+  dance() {
+    alert("asdasdasdasdasd")
   }
 }
