@@ -12,6 +12,4 @@ public class RoleController extends GenericController<Role> {
 
     @Autowired
     public RoleController(RoleRepository roleRepository){super(roleRepository);}
-
-
 }
