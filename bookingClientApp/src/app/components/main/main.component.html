@@ -1,4 +1,23 @@
-<div *ngFor="let role of roles">
-  <div (click)="dance()">{{role.name}}</div>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NAV BAR</title>
+  <link rel="stylesheet" type="text/css" href="main.component.css">
+</head>
+<body>
+<div class="navbar">
+  <img src="path_to_your_image.png" alt="Logo">
+  <button id="openPopup">Login</button>
 </div>
+
+<div id="popup" class="popup">
+  <label for="username">UserName:</label>
+  <input type="text" id="username">
+  <label for="password">PassWord:</label>
+  <input type="text" id="password">
+  <button id="submitBtn">Submit</button>
+</div>
+
+</body>
+</html>
 <router-outlet></router-outlet>

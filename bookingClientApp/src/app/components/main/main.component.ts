@@ -16,6 +16,17 @@ export class MainComponent implements OnInit {
   constructor(private roleService : RoleService){ this.roles = []; }
 
   ngOnInit(){
+    document.getElementById("openPopup")!.addEventListener("click", function() {
+      document.getElementById("popup")!.style.display = "block";
+    });
+
+    document.getElementById("submitBtn")!.addEventListener("click", function() {
+      const username = (<HTMLInputElement>document.getElementById("username")).value;
+      const password = (<HTMLInputElement>document.getElementById("password")).value;
+      console.log("UserName:", username);
+      console.log("PassWord:", password);
+      document.getElementById("popup")!.style.display = "none";
+    });
     this.getRoles();
   }
 
@@ -31,7 +42,8 @@ export class MainComponent implements OnInit {
 
   }
 
-  dance() {
-    alert("asdasdasdasdasd")
-  }
+
+  // dance() {
+  //   alert("asdasdasdasdasd")
+  // }
 }
