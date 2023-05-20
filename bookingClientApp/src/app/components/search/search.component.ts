@@ -33,6 +33,10 @@ export class SearchComponent {
       alert('Εισάγετε ημερομηνία από και εως');
       return;
     }  
+    if(this.startDate > this.endDate){
+      alert('Η ημερομηνία από πρέπει να είναι μεταγενέστερη της ημερομηνίας εως');
+      return;
+    }
     if(this.numPersons < 1){
       alert('Εισάγετε αριθμό ατόμων.');
       return;
