@@ -1,0 +1,23 @@
+<h1 class="title">Αναζήτηση δωματίων</h1>
+
+<div id="searchComponent">
+
+	<form>
+
+		<label for="area">Τοποθεσία</label>
+		<input id="area" type="text" [(ngModel)]="area" name="area">
+
+		<label for="startDate">Από</label>
+		<input id="startDate" type="date" [(ngModel)]="startDate" name="startDate">
+
+		<label for="endDate">Εως</label>
+		<input id="endDate" type="date" [(ngModel)]="endDate" name="endDate">
+
+		<label for="numPersons">Αριθμός Ατόμων</label>
+		<input id="numPersons" type="number" [(ngModel)]="numPersons" name="numPersons">
+
+		<br/>
+		<button class="button" (click)="(searchRooms())">Search</button>
+
+	</form>
+</div>
