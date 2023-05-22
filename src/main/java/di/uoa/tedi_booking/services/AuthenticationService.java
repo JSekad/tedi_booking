@@ -22,11 +22,11 @@ import java.time.format.DateTimeFormatter;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-//    @Autowired
-//    private UserService userService;
-//
-//    @Autowired
-//    private PersonService personService;
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private PersonService personService;
 
     private final UserRepository userRepository;
     private final PersonRepository personRepository;
@@ -43,7 +43,7 @@ public class AuthenticationService {
 
 
         User user = new User();
-        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        //user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setUserName(registerRequest.getUserName());
         Person person = new Person();
         person.setBirthDate(dateOfBirth);
@@ -57,6 +57,7 @@ public class AuthenticationService {
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
 
+        return null; // delete this
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest){

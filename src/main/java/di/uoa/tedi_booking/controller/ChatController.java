@@ -1,7 +1,7 @@
 package di.uoa.tedi_booking.controller;
 
 import di.uoa.tedi_booking.entities.Chat;
-import di.uoa.tedi_booking.repositories.ChatRepository;
+import di.uoa.tedi_booking.services.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChatController extends GenericController<Chat>{
 
     @Autowired
-    public ChatController(ChatRepository chatRepository){super(chatRepository);}
+    public ChatController(ChatService chatService){ super(chatService); }
 }

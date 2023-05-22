@@ -16,7 +16,7 @@ import java.util.Set;
 public class Person implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String name;
@@ -32,6 +32,7 @@ public class Person implements Serializable {
     private OffsetDateTime dateApproved;
 
     @OneToOne(mappedBy = "person", fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
     private User user;
 
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)

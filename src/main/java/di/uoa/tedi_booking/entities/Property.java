@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -19,6 +20,10 @@ public class Property implements Serializable {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPerson")
     private Person person;
+
+    @OneToMany(mappedBy = "property", fetch = FetchType.LAZY)
+    private Set<Room> rooms;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPropertyType")
     private PropertyType propertyType;

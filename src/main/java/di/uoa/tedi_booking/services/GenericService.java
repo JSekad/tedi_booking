@@ -4,14 +4,18 @@ import java.util.List;
 import java.util.Optional;
 
 import di.uoa.tedi_booking.repositories.GenericRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 public abstract class GenericService<T> {
-    private final GenericRepository<T> repository;
 
-    public GenericService(GenericRepository<T> repository) { this.repository = repository; }
+    protected final GenericRepository<T> repository;
+
+    public GenericService(GenericRepository<T> genericRepository) { this.repository = genericRepository; }
 
     public List<T> findAll(){
         return repository.findAll();

@@ -1,7 +1,7 @@
 package di.uoa.tedi_booking.controller;
 
 import di.uoa.tedi_booking.entities.AvailabilityHist;
-import di.uoa.tedi_booking.repositories.AvailabilityHistRepository;
+import di.uoa.tedi_booking.services.AvailabilityHistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RestController;
 public class AvailabilityHistController extends GenericController<AvailabilityHist> {
 
     @Autowired
-    public AvailabilityHistController(AvailabilityHistRepository availabilityHistRepository){super(availabilityHistRepository);}
+    public AvailabilityHistController(AvailabilityHistService availabilityHistService){ super(availabilityHistService); }
 }

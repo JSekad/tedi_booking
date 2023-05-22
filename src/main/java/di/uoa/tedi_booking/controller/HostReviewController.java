@@ -1,7 +1,7 @@
 package di.uoa.tedi_booking.controller;
 
 import di.uoa.tedi_booking.entities.HostReview;
-import di.uoa.tedi_booking.repositories.HostReviewRepository;
+import di.uoa.tedi_booking.services.HostReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,5 +11,5 @@ import org.springframework.web.bind.annotation.RestController;
 public class HostReviewController extends GenericController<HostReview>{
 
     @Autowired
-    public HostReviewController(HostReviewRepository hostReviewRepository){super(hostReviewRepository);}
+    public HostReviewController(HostReviewService hostReviewService){ super(hostReviewService); }
 }

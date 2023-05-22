@@ -26,7 +26,7 @@
             <artifactId>spring-boot-starter-security</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>org.springframework.boot</groupId>
+                    <groupId>org.springFramework.boot</groupId>
                     <artifactId>spring-boot-starter-web</artifactId>
                 </exclusion>
             </exclusions>
