@@ -15,6 +15,9 @@ export class MainComponent implements OnInit {
     document.getElementById("openPopup")!.addEventListener("click", function() {
       document.getElementById("popup")!.style.display = "block";
     });
+    document.getElementById("closePopup")!.addEventListener("click", function() {
+      document.getElementById("popup")!.style.display = "none";
+    });
 
     document.getElementById("submitBtn")!.addEventListener("click", function() {
       const username = (<HTMLInputElement>document.getElementById("username")).value;

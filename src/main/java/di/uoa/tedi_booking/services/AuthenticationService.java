@@ -6,6 +6,7 @@ import di.uoa.tedi_booking.config.security.RegisterRequest;
 import di.uoa.tedi_booking.entities.Person;
 import di.uoa.tedi_booking.entities.User;
 import di.uoa.tedi_booking.repositories.PersonRepository;
+import di.uoa.tedi_booking.repositories.RoleRepository;
 import di.uoa.tedi_booking.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +32,7 @@ public class AuthenticationService {
 
     private final UserRepository userRepository;
     private final PersonRepository personRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
@@ -41,10 +44,15 @@ public class AuthenticationService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate dateOfBirth = LocalDate.parse(registerRequest.getBirthDate(), formatter);
 
+        Optional<User> userTemp = userRepository.findAllByUserName(registerRequest.getUserName());
+        if (userTemp.isPresent() && userTemp.get().getUsername().equals(registerRequest.getUserName())){
+            return AuthenticationResponse.builder().token("User Exists").build();
+        }
 
         User user = new User();
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setUserName(registerRequest.getUserName());
+        user.setRole(roleRepository.findById(3L).orElse(null));
         Person person = new Person();
         person.setBirthDate(dateOfBirth);
         person.setEmail(registerRequest.getEmail());
@@ -52,6 +60,8 @@ public class AuthenticationService {
         person.setName(registerRequest.getName());
         person.setFathersName(registerRequest.getFathersName());
         person.setMothersName(registerRequest.getMothersName());
+        person.setPhoneNumber(registerRequest.getPhoneNumber());
+        person.setIdNumber(registerRequest.getIdNumber());
         user.setPerson(person);
         userRepository.save(user);
         String jwtToken = jwtService.generateToken(user);

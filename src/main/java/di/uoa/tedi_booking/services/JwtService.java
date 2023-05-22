@@ -1,5 +1,11 @@
 package di.uoa.tedi_booking.services;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import di.uoa.tedi_booking.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -28,15 +34,26 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(),userDetails);
+    public String generateToken(User user){
+        return generateToken(new HashMap<>(),user);
     }
 
     public String generateToken(Map<String,Object> extraClaims,
-    UserDetails userDetails){
+    User user){
+        String jsonSubject = "";
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            objectMapper.registerModule(new JavaTimeModule());
+            objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+            jsonSubject = objectMapper.writeValueAsString(user).replaceAll("\\\\", "");
+            System.out.println(jsonSubject);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
         return Jwts.builder()
                 .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(jsonSubject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+10000*30))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
