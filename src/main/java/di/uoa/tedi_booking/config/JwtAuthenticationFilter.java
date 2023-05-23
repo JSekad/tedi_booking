@@ -1,6 +1,9 @@
 package di.uoa.tedi_booking.config;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import di.uoa.tedi_booking.entities.User;
+import di.uoa.tedi_booking.repositories.UserRepository;
 import di.uoa.tedi_booking.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,7 +25,7 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-
+    private final UserRepository userRepository;
     private UserDetailsService userDetailsService;
 
     @Override
@@ -40,9 +43,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         jwt = authHeader.substring(7);
         userName = jwtService.extractUserName(jwt);//todo
         if(userName != null && SecurityContextHolder.getContext().getAuthentication() == null){
-            UserDetails userdetails = this.userDetailsService.loadUserByUsername(userName);
-            if(jwtService.isTokenValid(jwt,userdetails)){
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userdetails, null, userdetails.getAuthorities());
+            // Parse the JSON string
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            JsonNode jsonNode = objectMapper.readTree(userName);
+//            String uname = jsonNode.get("username").asText();
+
+            User user = userRepository.findAllByUserName(userName)
+                    .orElseThrow();
+            if(jwtService.isTokenValid(jwt,user)){
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user.getUsername(), null, user.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }

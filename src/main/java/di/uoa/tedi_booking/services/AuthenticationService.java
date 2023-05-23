@@ -1,5 +1,6 @@
 package di.uoa.tedi_booking.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import di.uoa.tedi_booking.config.security.AuthenticationRequest;
 import di.uoa.tedi_booking.config.security.AuthenticationResponse;
 import di.uoa.tedi_booking.config.security.RegisterRequest;
@@ -8,14 +9,18 @@ import di.uoa.tedi_booking.entities.User;
 import di.uoa.tedi_booking.repositories.PersonRepository;
 import di.uoa.tedi_booking.repositories.RoleRepository;
 import di.uoa.tedi_booking.repositories.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -46,7 +51,7 @@ public class AuthenticationService {
 
         Optional<User> userTemp = userRepository.findAllByUserName(registerRequest.getUserName());
         if (userTemp.isPresent() && userTemp.get().getUsername().equals(registerRequest.getUserName())){
-            return AuthenticationResponse.builder().token("User Exists").build();
+            return AuthenticationResponse.builder().accessToken("User Exists").build();
         }
 
         User user = new User();
@@ -65,7 +70,7 @@ public class AuthenticationService {
         user.setPerson(person);
         userRepository.save(user);
         String jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return AuthenticationResponse.builder().accessToken(jwtToken).build();
 
     }
 
@@ -86,7 +91,39 @@ public class AuthenticationService {
             e.printStackTrace();
 
         }
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return AuthenticationResponse.builder().accessToken(jwtToken).build();
+    }
+
+    public AuthenticationResponse refreshToken(
+            HttpServletRequest request) throws IOException {
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        final String refreshToken;
+        final String userEmail;
+        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+            return AuthenticationResponse.builder()
+                    .accessToken("No Bearer Auth")
+                    .build();
+        }
+        refreshToken = authHeader.substring(7);
+        userEmail = jwtService.extractUserName(refreshToken);
+
+
+        if (userEmail != null) {
+
+            User user = userRepository.findAllByUserName(userEmail)
+                    .orElseThrow();
+            if (jwtService.isTokenValid(refreshToken, user)) {
+                String accessToken = jwtService.generateToken(user);
+
+                return AuthenticationResponse.builder()
+                        .accessToken(accessToken)
+                        .refreshToken(refreshToken)
+                        .build();
+            }
+        }
+        return AuthenticationResponse.builder()
+                .accessToken("No username")
+                .build();
     }
 
 }
