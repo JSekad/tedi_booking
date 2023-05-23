@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/role")
 public class RoleController extends GenericController<Role> {
 
+    private final RoleService roleService;
+
     @Autowired
-    public RoleController(RoleService roleService){super(roleService);}
+    public RoleController(RoleService service){
+        super(service);
+        this.roleService = service;
+    }
 }

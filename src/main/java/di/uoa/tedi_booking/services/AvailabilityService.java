@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class AvailabilityService extends GenericService<Availability>{
 
+    private final AvailabilityRepository availabilityRepository;
+
     @Autowired
-    public AvailabilityService(AvailabilityRepository availabilityRepository){ super(availabilityRepository); }
+    public AvailabilityService(AvailabilityRepository repository){
+        super(repository);
+        this.availabilityRepository = repository;
+    }
 }

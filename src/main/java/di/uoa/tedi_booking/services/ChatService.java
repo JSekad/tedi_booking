@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ChatService extends GenericService<Chat>{
 
+    private final ChatRepository chatRepository;
     @Autowired
-    public ChatService(ChatRepository chatRepository){ super(chatRepository); }
+    public ChatService(ChatRepository repository){
+        super(repository);
+        this.chatRepository = repository;
+    }
 }

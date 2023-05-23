@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class PaymentMethodService extends GenericService<PaymentMethod> {
 
+    private final PaymentMethodRepository paymentMethodRepository;
     @Autowired
-    public PaymentMethodService(PaymentMethodRepository paymentMethodRepository){ super(paymentMethodRepository); }
+    public PaymentMethodService(PaymentMethodRepository repository){
+        super(repository);
+        this.paymentMethodRepository = repository;
+    }
 }

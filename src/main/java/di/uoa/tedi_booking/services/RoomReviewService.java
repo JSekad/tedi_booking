@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoomReviewService extends GenericService<RoomReview>{
 
+    private final RoomReviewRepository roomReviewRepository;
     @Autowired
-    public RoomReviewService(RoomReviewRepository roomReviewRepository){ super(roomReviewRepository); }
+    public RoomReviewService(RoomReviewRepository repository){
+        super(repository);
+        this.roomReviewRepository = repository;
+    }
 }

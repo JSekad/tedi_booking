@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class CityService extends GenericService<City>{
 
+    private final CityRepository cityRepository;
     @Autowired
-    public CityService(CityRepository cityRepository){ super(cityRepository); }
+    public CityService(CityRepository repository){
+        super(repository);
+        this.cityRepository = repository;
+    }
 }

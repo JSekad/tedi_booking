@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class PropertyService extends GenericService<Property>{
 
+    private final PropertyRepository propertyRepository;
     @Autowired
-    public PropertyService(PropertyRepository propertyRepository){ super(propertyRepository); }
+    public PropertyService(PropertyRepository repository){
+        super(repository);
+        this.propertyRepository = repository;
+    }
 }

@@ -13,11 +13,16 @@ import java.util.List;
 @Service
 public class RoomService extends GenericService<Room>{
 
-    @Autowired
-    public RoomService(RoomRepository roomRepository){ super(roomRepository); }
+    private final RoomRepository roomRepository;
 
-    public List<Room> searchRoom(String area, LocalDate startDate, LocalDate endDate, Long numPersons){
-        return null;
+    @Autowired
+    public RoomService(RoomRepository repository){
+        super(repository);
+        this.roomRepository= repository;
+    }
+
+    public List<Room> searchAvailableRooms(String area, LocalDate startDate, LocalDate endDate, Long numPersons){
+        return roomRepository.searchAvailableRooms(area, startDate, endDate, numPersons);
     }
 
 }

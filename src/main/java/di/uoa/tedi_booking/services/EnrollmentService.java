@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class EnrollmentService extends GenericService<Enrollment>{
 
+    private final EnrollmentRepository enrollmentRepository;
     @Autowired
-    public EnrollmentService(EnrollmentRepository enrollmentRepository){ super(enrollmentRepository); }
+    public EnrollmentService(EnrollmentRepository repository){
+        super(repository);
+        this.enrollmentRepository = repository;
+    }
 }

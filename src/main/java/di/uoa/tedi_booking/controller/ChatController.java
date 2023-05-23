@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/chat")
 public class ChatController extends GenericController<Chat>{
 
+    private final ChatService chatService;
     @Autowired
-    public ChatController(ChatService chatService){ super(chatService); }
+    public ChatController(ChatService service){
+        super(service);
+        this.chatService = service;
+    }
 }

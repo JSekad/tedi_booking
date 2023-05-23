@@ -43,7 +43,7 @@ public class AuthenticationService {
 
 
         User user = new User();
-        //user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setUserName(registerRequest.getUserName());
         Person person = new Person();
         person.setBirthDate(dateOfBirth);
@@ -56,8 +56,6 @@ public class AuthenticationService {
         userRepository.save(user);
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
-
-        return null; // delete this
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest){

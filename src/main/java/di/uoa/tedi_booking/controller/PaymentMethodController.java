@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/paymentMethod")
 public class PaymentMethodController extends GenericController<PaymentMethod>{
+
+    private final PaymentMethodService paymentMethodService;
     @Autowired
-    public PaymentMethodController(PaymentMethodService paymentMethodService ){ super(paymentMethodService); }
+    public PaymentMethodController(PaymentMethodService service){
+        super(service);
+        this.paymentMethodService = service;
+    }
 }

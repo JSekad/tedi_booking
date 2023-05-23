@@ -10,4 +10,5 @@ public class UserService extends GenericService<User>{
 
     @Autowired
     public UserService(GenericRepository<User> repository) { super(repository); }
+
 }

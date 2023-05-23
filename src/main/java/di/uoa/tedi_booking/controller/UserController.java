@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/user")
 public class UserController extends GenericController<User>{
 
+    private final UserService userService;
+
     @Autowired
-    public UserController(UserService userService){ super(userService); }
+    public UserController(UserService service){
+        super(service);
+        this.userService = service;
+    }
 }

@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleService extends GenericService<Role>{
 
+    private final RoleRepository roleRepository;
+
     @Autowired
-    public RoleService(RoleRepository roleRepository){ super(roleRepository); }
+    public RoleService(RoleRepository repository){
+        super(repository);
+        this.roleRepository = repository;
+    }
 }

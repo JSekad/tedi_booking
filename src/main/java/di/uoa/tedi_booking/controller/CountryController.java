@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/country")
 public class CountryController extends GenericController<Country>{
 
+    private final CountryService countryService;
     @Autowired
-    public CountryController(CountryService countryService){ super(countryService); }
+    public CountryController(CountryService service){
+        super(service);
+        this.countryService = service;
+    }
 }

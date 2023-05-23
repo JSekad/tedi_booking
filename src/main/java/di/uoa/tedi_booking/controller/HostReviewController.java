@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/hostReview")
 public class HostReviewController extends GenericController<HostReview>{
 
+    private final HostReviewService hostReviewService;
     @Autowired
-    public HostReviewController(HostReviewService hostReviewService){ super(hostReviewService); }
+    public HostReviewController(HostReviewService service){
+        super(service);
+        this.hostReviewService = service;
+    }
 }

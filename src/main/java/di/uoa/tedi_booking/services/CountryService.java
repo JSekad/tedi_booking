@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class CountryService extends GenericService<Country>{
 
+    private final CountryRepository countryRepository;
     @Autowired
-    public CountryService(CountryRepository countryRepository){ super(countryRepository); }
+    public CountryService(CountryRepository repository){
+        super(repository);
+        this.countryRepository = repository;
+    }
 }

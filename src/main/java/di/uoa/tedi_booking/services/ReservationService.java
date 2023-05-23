@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReservationService extends GenericService<Reservation>{
 
+    private final ReservationRepository reservationRepository;
     @Autowired
-    public ReservationService(ReservationRepository reservationRepository){ super(reservationRepository); }
+    public ReservationService(ReservationRepository repository){
+        super(repository);
+        this.reservationRepository = repository;
+    }
 }

@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/enrollment")
 public class EnrollmentController extends GenericController<Enrollment> {
 
+    private final EnrollmentService enrollmentService;
     @Autowired
-    public EnrollmentController(EnrollmentService enrollmentService){ super(enrollmentService); }
+    public EnrollmentController(EnrollmentService service){
+        super(service);
+        this.enrollmentService = service;
+    }
 }

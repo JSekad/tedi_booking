@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/city")
 public class CityController extends GenericController<City>{
 
+    private final CityService cityService;
     @Autowired
-    public CityController(CityService cityService){ super(cityService); }
+    public CityController(CityService service){
+        super(service);
+        this.cityService = service;
+    }
 }

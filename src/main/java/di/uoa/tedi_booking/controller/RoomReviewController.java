@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/roomReview")
 public class RoomReviewController extends GenericController<RoomReview>{
 
+    private final RoomReviewService roomReviewService;
     @Autowired
-    public RoomReviewController(RoomReviewService roomReviewService){ super(roomReviewService); }
+    public RoomReviewController(RoomReviewService service){
+        super(service);
+        this.roomReviewService = service;
+    }
 }

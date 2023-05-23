@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/property")
 public class PropertyController extends GenericController<Property>{
 
+    private final PropertyService propertyService;
     @Autowired
-    public PropertyController(PropertyService propertyService){ super(propertyService); }
+    public PropertyController(PropertyService service ){
+        super(service);
+        this.propertyService = service;
+    }
 
 }
