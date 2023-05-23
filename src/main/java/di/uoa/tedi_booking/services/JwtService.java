@@ -1,5 +1,12 @@
 package di.uoa.tedi_booking.services;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import di.uoa.tedi_booking.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -20,7 +27,15 @@ public class JwtService {
 
     private static final String SECRET_KEY = "7538782F413F4428472B4B6250655367566B5970337336763979244226452948";
     public String extractUserName(String token) {
-        return extractClaim(token,Claims::getSubject);
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = null;
+        try {
+            jsonNode = objectMapper.readTree(extractClaim(token, Claims::getSubject));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        String uname = jsonNode.get("username").asText();
+        return uname;
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -28,15 +43,26 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(),userDetails);
+    public String generateToken(User user){
+        return generateToken(new HashMap<>(),user);
     }
 
     public String generateToken(Map<String,Object> extraClaims,
-    UserDetails userDetails){
+    User user){
+        String jsonSubject = "";
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            objectMapper.registerModule(new JavaTimeModule());
+            objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+            jsonSubject = objectMapper.writeValueAsString(user).replaceAll("\\\\", "");
+            System.out.println(jsonSubject);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
         return Jwts.builder()
                 .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(jsonSubject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis()+10000*30))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
@@ -45,6 +71,14 @@ public class JwtService {
 
     public  boolean isTokenValid(String token, UserDetails userDetails){
         final String username = extractUserName(token);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        JsonNode jsonNode = null;
+//        try {
+//            jsonNode = objectMapper.readTree(username);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
+//        String uname = jsonNode.get("username").asText();
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
     private boolean isTokenExpired(String token){

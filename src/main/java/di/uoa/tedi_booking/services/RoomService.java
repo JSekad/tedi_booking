@@ -21,7 +21,7 @@ public class RoomService extends GenericService<Room>{
         this.roomRepository= repository;
     }
 
-    public List<Room> searchAvailableRooms(String area, LocalDate startDate, LocalDate endDate, Long numPersons){
+    public List<Room> searchAvailableRooms(String area, LocalDate startDate, LocalDate endDate, Integer numPersons){
         return roomRepository.searchAvailableRooms(area, startDate, endDate, numPersons);
     }
 
