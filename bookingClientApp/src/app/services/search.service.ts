@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Room } from './../model/room.model';
+import { Room } from '../model/room.model';
 
 const httpOptions = {headers: new HttpHeaders({'Accept': 'application/json', 
                                                'ContentType': 'application/json'})};
