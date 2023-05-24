@@ -23,6 +23,7 @@ public class User implements UserDetails{
     @Column(name = "idPerson")
     private Integer id;
 
+    @JsonIgnore
     @OneToOne
     @MapsId
     @JoinColumn(name = "idPerson")
@@ -31,10 +32,11 @@ public class User implements UserDetails{
     @Column(name = "username")
     private String userName;
 
-    @Column(name = "password")
     @JsonIgnore
+    @Column(name = "password")
     private String password;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idRole")
     private Role role;

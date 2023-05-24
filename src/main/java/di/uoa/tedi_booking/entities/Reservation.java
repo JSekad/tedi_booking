@@ -1,5 +1,6 @@
 package di.uoa.tedi_booking.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,10 +18,12 @@ public class Reservation implements Serializable {
     @Id
     private Integer id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idRoom")
     private Room room;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idGuest")
     private Person guest;
@@ -33,14 +36,19 @@ public class Reservation implements Serializable {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idHostReview")
     private HostReview hostReview;
+
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idRoomReview")
     private RoomReview RoomReview;
 
     private String specialRequest;
+
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPaymentMethod")
     private PaymentMethod paymentMethod;

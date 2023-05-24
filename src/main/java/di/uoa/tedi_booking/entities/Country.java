@@ -1,5 +1,6 @@
 package di.uoa.tedi_booking.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class Country implements Serializable {
     private String name;
     private String alias;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
     private Set<City> cities;
 

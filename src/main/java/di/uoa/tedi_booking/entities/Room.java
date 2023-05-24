@@ -1,5 +1,6 @@
 package di.uoa.tedi_booking.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,18 +13,22 @@ import java.util.Set;
 @Setter
 @Table(schema="booking_app", name="room")
 @NamedQueries({
-        @NamedQuery(name="searchAvailableRooms", query="select r from Room r left outer join Reservation res on res.room.id = r.id " +
-                "where r.property.city = :city and res.id is null and (res.startDate >= :startDate and res.endDate <= :endDate) and r.capacity = :numOfPersons")
+        @NamedQuery(name="searchAvailableRooms", query="select r from Room r left outer join Reservation res on res.room.id = r.id inner join Availability a on a.room.id = r.id " +
+            "where r.property.city.name = :city and (res.startDate >= :startDate and res.startDate >= :endDate or res.startDate is null) or (res.endDate <= :endDate " +
+            "and res.endDate <= :endDate or res.endDate is null) and r.capacity <= :numOfPersons and a.startDate <= :startDate and a.endDate >= :endDate")
 })
+
 public class Room implements Serializable {
 
     @Id
     private Integer id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idProperty")
     private Property property;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idRoomType")
     private RoomType roomType;
@@ -46,9 +51,11 @@ public class Room implements Serializable {
     private Boolean hasParking;
     private Boolean hasElevator;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private Set<Reservation> reservations;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private Set<RoomReview> roomReviews;
 }

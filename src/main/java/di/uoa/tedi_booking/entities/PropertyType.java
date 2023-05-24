@@ -1,5 +1,6 @@
 package di.uoa.tedi_booking.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,7 @@ public class PropertyType implements Serializable {
 
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "propertyType", fetch = FetchType.LAZY)
     private Set<Property> properties;
 }

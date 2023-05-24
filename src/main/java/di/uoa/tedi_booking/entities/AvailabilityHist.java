@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -19,7 +19,10 @@ public class AvailabilityHist implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idRoom")
     private Room room;
-    private OffsetDateTime startDate;
-    private OffsetDateTime endDate;
+
+    private LocalDate startDate;
+
+    private LocalDate endDate;
+
     private Integer discount;
 }

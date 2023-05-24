@@ -1,5 +1,6 @@
 package di.uoa.tedi_booking.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -23,11 +24,14 @@ public class City implements Serializable {
     private Integer id;
 
     private String name;
+
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idCountry")
     private Country country;
     private Integer postCode;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY)
     private Set<Property> properties;
 }

@@ -11,5 +11,5 @@ import java.util.List;
 public interface RoomRepository extends GenericRepository<Room>{
 
     @Query(name = "searchAvailableRooms")
-    List<Room> searchAvailableRooms(String area, LocalDate startDate, LocalDate endDate, Integer numOfPersons);
+    List<Room> searchAvailableRooms(String city, LocalDate startDate, LocalDate endDate, Integer numOfPersons);
 }
