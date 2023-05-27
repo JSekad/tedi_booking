@@ -17,7 +17,6 @@ import java.util.Set;
             "where r.property.city.name = :city and ((res.startDate >= :endDate or res.startDate is null) or (res.endDate <= :startDate " +
             "or res.endDate is null)) and r.capacity >= :numOfPersons and a.startDate <= :startDate and a.endDate >= :endDate")
 })
-
 public class Room implements Serializable {
 
     @Id
@@ -58,4 +57,11 @@ public class Room implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private Set<RoomReview> roomReviews;
+
+    public Room(){}
+
+    public Room(Integer id, Integer basePricePerNight){
+        this.id = id;
+        this.basePricePerNight = basePricePerNight;
+    }
 }

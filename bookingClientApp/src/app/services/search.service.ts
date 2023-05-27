@@ -13,7 +13,7 @@ export class SearchService {
 
   constructor(private http: HttpClient) { }
 
-  public getRooms(area: string | null, startDate: string | null, endDate: string | null, numPersons: number | null): Observable<Room[]>{
-    return this.http.get<Room[]>(`${this.apiServerUrl}/room/all`);
+  public getRooms(city: string | null, startDate: string | null, endDate: string | null, numPersons: number | null): Observable<Room[]>{
+    return this.http.get<Room[]>(`${this.apiServerUrl}/room/searchAvailableRooms/${city}/${startDate}/${endDate}/${numPersons}`);
   }
 }

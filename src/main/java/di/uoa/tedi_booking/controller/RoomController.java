@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -22,8 +23,10 @@ public class RoomController extends GenericController<Room>{
     }
 
     @GetMapping(path = "/searchAvailableRooms/{city}/{startDate}/{endDate}/{numOfPersons}")
-    public @ResponseBody List<Room> searchAvailableRooms(@PathVariable String city, @PathVariable LocalDate startDate, @PathVariable LocalDate endDate, @PathVariable Integer numOfPersons){
-        return roomService.searchAvailableRooms(city, startDate, endDate, numOfPersons);
+    public @ResponseBody List<Room> searchAvailableRooms(@PathVariable String city, @PathVariable String startDate, @PathVariable String endDate, @PathVariable Integer numOfPersons){
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return roomService.searchAvailableRooms(city, LocalDate.parse(startDate, formatter), LocalDate.parse(endDate, formatter), numOfPersons);
     }
 
 }
