@@ -14,8 +14,8 @@ import java.util.Set;
 @Table(schema="booking_app", name="room")
 @NamedQueries({
         @NamedQuery(name="searchAvailableRooms", query="select r from Room r left outer join Reservation res on res.room.id = r.id inner join Availability a on a.room.id = r.id " +
-            "where r.property.city.name = :city and (res.startDate >= :startDate and res.startDate >= :endDate or res.startDate is null) or (res.endDate <= :endDate " +
-            "and res.endDate <= :endDate or res.endDate is null) and r.capacity <= :numOfPersons and a.startDate <= :startDate and a.endDate >= :endDate")
+            "where r.property.city.name = :city and ((res.startDate >= :endDate or res.startDate is null) or (res.endDate <= :startDate " +
+            "or res.endDate is null)) and r.capacity >= :numOfPersons and a.startDate <= :startDate and a.endDate >= :endDate")
 })
 
 public class Room implements Serializable {

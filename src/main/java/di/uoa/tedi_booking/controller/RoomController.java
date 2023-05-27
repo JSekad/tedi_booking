@@ -21,7 +21,7 @@ public class RoomController extends GenericController<Room>{
         this.roomService = service;
     }
 
-    @GetMapping(path = "/searchAvailability/{city}/{startDate}/{endDate}/{numOfPersons}")
+    @GetMapping(path = "/searchAvailableRooms/{city}/{startDate}/{endDate}/{numOfPersons}")
     public @ResponseBody List<Room> searchAvailableRooms(@PathVariable String city, @PathVariable LocalDate startDate, @PathVariable LocalDate endDate, @PathVariable Integer numOfPersons){
         return roomService.searchAvailableRooms(city, startDate, endDate, numOfPersons);
     }

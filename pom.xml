@@ -26,7 +26,7 @@
             <artifactId>spring-boot-starter-security</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>org.springFramework.boot</groupId>
+                    <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-web</artifactId>
                 </exclusion>
             </exclusions>
@@ -71,16 +71,6 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
             <version>0.11.5</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.14.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>2.14.2</version>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.security</groupId>-->

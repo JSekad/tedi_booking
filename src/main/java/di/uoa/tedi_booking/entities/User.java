@@ -1,6 +1,5 @@
 package di.uoa.tedi_booking.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,11 +18,9 @@ import java.util.List;
 public class User implements UserDetails{
 
     @Id
-    @JsonIgnore
     @Column(name = "idPerson")
     private Integer id;
 
-    @JsonIgnore
     @OneToOne
     @MapsId
     @JoinColumn(name = "idPerson")
@@ -32,11 +29,9 @@ public class User implements UserDetails{
     @Column(name = "username")
     private String userName;
 
-    @JsonIgnore
     @Column(name = "password")
     private String password;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idRole")
     private Role role;
