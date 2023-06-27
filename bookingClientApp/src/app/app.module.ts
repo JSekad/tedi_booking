@@ -9,6 +9,12 @@ import {AppRoutingModule} from "./app-routing.module";
 import { SearchComponent } from './components/search/search.component';
 import { TestComponent } from './components/test/test.component';
 import { SearchService } from './services/search.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatIconModule} from "@angular/material/icon";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -21,7 +27,13 @@ import { SearchService } from './services/search.service';
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatButtonModule
   ],
   providers: [SearchService],
   bootstrap: [MainComponent]

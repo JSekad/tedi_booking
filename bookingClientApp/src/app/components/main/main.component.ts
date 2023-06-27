@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -6,10 +7,22 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
+
 export class MainComponent implements OnInit {
-  title = 'bookingClientApp';
+  // title = 'bookingClientApp';
+  // username: string;
+  // password: string;
 
   constructor(){}
+
+  // onSubmit(): void {
+  //   // Handle form submission here
+  //   console.log('Username:', this.username);
+  //   console.log('Password:', this.password);
+  //   // You can perform further actions, such as validating the input or making an API call
+  //   // Once done, you can close the dialog
+  //   this.dialogRef.close();
+  // }
 
   ngOnInit(){
     document.getElementById("openPopup")!.addEventListener("click", function() {
