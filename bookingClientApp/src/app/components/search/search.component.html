@@ -3,7 +3,7 @@
 <div id="searchComponent">
 
 	<label for="area">Τοποθεσία</label>
-	<input id="area" type="text" [(ngModel)]="area" name="area">
+	<input id="area" type="text" [(ngModel)]="area" placeholder="e.x. Athens" name="area">
 
 	<label for="startDate">Από</label>
 	<input id="startDate" type="date" [(ngModel)]="startDate" name="startDate"  min="{{ today | date:'yyyy-MM-dd' }}">
