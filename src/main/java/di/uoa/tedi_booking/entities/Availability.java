@@ -1,11 +1,12 @@
 package di.uoa.tedi_booking.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -16,10 +17,14 @@ public class Availability implements Serializable {
     @Id
     private Integer id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idRoom")
     private Room room;
-    private OffsetDateTime startDate;
-    private OffsetDateTime endDate;
+
+    private LocalDate startDate;
+
+    private LocalDate endDate;
+
     private Integer discount;
 }

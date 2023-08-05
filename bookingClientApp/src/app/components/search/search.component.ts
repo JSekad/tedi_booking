@@ -29,7 +29,7 @@ export class SearchComponent {
 
      this.searchInputValidation();
 
-     this.searchService.getRooms(this.area, this.startDate, this.endDate, this.numPersons) .subscribe({
+     this.searchService.getRooms(this.area, this.startDate, this.endDate, this.numPersons).subscribe({
       next: ( response: Room[]) => { this.rooms = response; },
 
       error:(error: HttpErrorResponse) => { alert(error.message); }

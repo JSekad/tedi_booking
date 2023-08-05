@@ -9,9 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 
 public abstract class GenericService<T> {
-    private final GenericRepository<T> repository;
 
-    public GenericService(GenericRepository<T> repository) { this.repository = repository; }
+    protected final GenericRepository<T> repository;
+
+    public GenericService(GenericRepository<T> genericRepository) { this.repository = genericRepository; }
 
     public List<T> findAll(){
         return repository.findAll();

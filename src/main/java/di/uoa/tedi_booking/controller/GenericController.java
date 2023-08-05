@@ -1,6 +1,5 @@
 package di.uoa.tedi_booking.controller;
 
-import di.uoa.tedi_booking.repositories.GenericRepository;
 import di.uoa.tedi_booking.services.GenericService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +8,9 @@ import java.util.List;
 
 public abstract class GenericController<T> {
 
-    private final GenericService<T> service;
+    protected final GenericService<T> service;
 
-    GenericController(GenericRepository<T> repository) { this.service = new GenericService<T>(repository) {}; }
+    GenericController(GenericService<T> genericService) { this.service = genericService; }
 
     @GetMapping(path = "/all")
     public @ResponseBody List<T> getAll() {

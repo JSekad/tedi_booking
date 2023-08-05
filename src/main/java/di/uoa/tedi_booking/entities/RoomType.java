@@ -11,8 +11,8 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(schema="booking_app", name="propertyType")
-public class PropertyType implements Serializable {
+@Table(schema="booking_app", name="roomType")
+public class RoomType implements Serializable {
 
     @Id
     private Integer id;
@@ -20,6 +20,6 @@ public class PropertyType implements Serializable {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "propertyType", fetch = FetchType.LAZY)
-    private Set<Property> properties;
+    @OneToMany(mappedBy = "roomType", fetch = FetchType.LAZY)
+    private Set<Room> rooms;
 }

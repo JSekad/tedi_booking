@@ -1,7 +1,7 @@
 package di.uoa.tedi_booking.controller;
 
 import di.uoa.tedi_booking.entities.RoomReview;
-import di.uoa.tedi_booking.repositories.RoomReviewRepository;
+import di.uoa.tedi_booking.services.RoomReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/roomReview")
 public class RoomReviewController extends GenericController<RoomReview>{
 
+    private final RoomReviewService roomReviewService;
     @Autowired
-    public RoomReviewController(RoomReviewRepository roomReviewRepository){super(roomReviewRepository);}
+    public RoomReviewController(RoomReviewService service){
+        super(service);
+        this.roomReviewService = service;
+    }
 }
