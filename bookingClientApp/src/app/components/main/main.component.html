@@ -1,17 +1,19 @@
 <link rel="stylesheet" type="text/css" href="main.component.css">
 <div class="navbar">
   <span>BOOKING</span>
-  <button id="openPopup">Login</button>
+  <mat-dialog-actions><button mat-raised-button color="primary" (click)="openLoginDialog()">Σύνδεση</button>
+  </mat-dialog-actions>
+
 </div>
 
-<div id="popup" class="popup">
-  <button class="exit-button" id="closePopup">X</button>
-  <label for="username">UserName:</label>
-  <input type="text" id="username">
-  <label for="password">PassWord:</label>
-  <input type="password" id="password" >
-  <button class="submit-button" id="submitBtn">Submit</button>
-</div>
+<!--<div id="popup" class="popup">-->
+<!--  <button class="exit-button" id="closePopup">X</button>-->
+<!--  <label for="username">UserName:</label>-->
+<!--  <input type="text" id="username">-->
+<!--  <label for="password">PassWord:</label>-->
+<!--  <input type="password" id="password" >-->
+<!--  <button class="submit-button" id="submitBtn">Submit</button>-->
+<!--</div>-->
 
 <!--<mat-dialog-content>-->
 <!--  <h2>Enter Username and Password</h2>-->

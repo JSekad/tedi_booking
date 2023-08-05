@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Στοιχεία Χρήστη</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput placeholder="Username" [(ngModel)]="data.username">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput type="password" placeholder="Password" [(ngModel)]="data.password">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Ακύρωση</button>
+  <button mat-raised-button color="primary" (click)="onLogin()" cdkFocusInitial>Submit</button>
+</div>

@@ -15,12 +15,14 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
+import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 
 @NgModule({
   declarations: [
     MainComponent,
     TestComponent,
     SearchComponent,
+    LoginDialogComponent,
   ],
   imports: [
     BrowserModule,
