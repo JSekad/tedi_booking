@@ -1,5 +1,6 @@
 package di.uoa.tedi_booking.entities;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -22,7 +23,6 @@ public class Room implements Serializable {
     @Id
     private Integer id;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idProperty")
     private Property property;
@@ -37,18 +37,22 @@ public class Room implements Serializable {
     private String description;
     private Integer numOfDoubleBeds;
     private Integer numOfSingleBeds;
-    private Integer numOfBedRooms;
+    private Integer numOfBedrooms;
     private Integer numOfBathrooms;
+    private Integer minRentDays;
     private Boolean hasTV;
     private Boolean hasPrivateBathroom;
     private Boolean hasAirCondition;
     private Boolean hasWifi;
     private Boolean hasKitchen;
     private Boolean hasJacuzzi;
+    private Integer areaSize;
     private Integer capacity;
     private Boolean petsAllowed;
     private Boolean hasParking;
     private Boolean hasElevator;
+    private Boolean smokingAllowed;
+    private Boolean partyAllowed;
 
     @JsonIgnore
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
@@ -57,6 +61,14 @@ public class Room implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private Set<RoomReview> roomReviews;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    private Set<RoomImage> roomImages;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id", referencedColumnName = "idRoom")
+    private RoomImageDefault defaultRoomImage;
 
     public Room(){}
 
