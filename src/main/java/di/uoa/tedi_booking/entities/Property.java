@@ -1,11 +1,13 @@
 package di.uoa.tedi_booking.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
@@ -18,10 +20,9 @@ public class Property implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idPerson")
-    private Person person;
+    private Person owner;
 
     @JsonIgnore
     @OneToMany(mappedBy = "property", fetch = FetchType.LAZY)
@@ -35,10 +36,12 @@ public class Property implements Serializable {
     private Integer rating;
     private String address;
     private String addressNumber;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idCity")
     private City city;
-    private String xLongitude;
-    private String yLatitude;
+
+    private BigDecimal longitude;
+    private BigDecimal latitude;
 }
