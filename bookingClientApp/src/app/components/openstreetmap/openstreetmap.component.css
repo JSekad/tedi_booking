@@ -1,0 +1,123 @@
+
+
+
+
+/* .ol-zoom {
+    top: 35.5em;
+    left: 37.5em;
+}
+
+.ol-zoom .ol-zoom-in {
+    border-radius: 2px 2px 0 0;
+}
+
+.ol-unselectable, .ol-viewport{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.ol-control button {
+    display: block;
+    margin: 1px;
+    padding: 0;
+    color: #fff;
+    font-size: 1.14em;
+    font-weight: 700;
+    text-decoration: none;
+    text-align: center;
+    height: 1.375em;
+    width: 1.375em;
+    line-height: .4em;
+    background-color: rgba(0,60,136,.5);
+    border: none;
+    border-radius: 2px;
+}
+
+.ol-unselectable, .ol-viewport {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.ol-control {
+    position: absolute;
+    background-color: rgba(255,255,255,.4);
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.ol-attribution.ol-uncollapsible {
+    bottom: 0;
+    right: 0;
+    border-radius: 4px 0 0;
+    height: 1.1em;
+    line-height: 1em;
+}
+
+.ol-attribution:not(.ol-collapsed) {
+    background: rgba(255,255,255,.8);
+}
+
+.ol-attribution.ol-uncollapsible {
+    bottom: 0;
+    right: 27em;
+    border-radius: 4px 0 0;
+    height: 18.1em;
+    line-height: 0em;
+}
+
+.ol-attribution:not(.ol-collapsed) {
+    background: rgba(255,255,255,.8);
+}
+
+.ol-attribution {
+    text-align: right;
+    bottom: .5em;
+    right: .5em;
+    max-width: calc(100% - 1.3em);
+}
+
+button {
+    appearance: auto;
+    font-style: ;
+    font-variant-ligatures: ;
+    font-variant-caps: ;
+    font-variant-numeric: ;
+    font-variant-east-asian: ;
+    font-variant-alternates: ;
+    font-weight: ;
+    font-stretch: ;
+    font-size: ;
+    font-family: ;
+    font-optical-sizing: ;
+    font-kerning: ;
+    font-feature-settings: ;
+    font-variation-settings: ;
+    text-rendering: auto;
+    color: buttontext;
+    letter-spacing: normal;
+    word-spacing: normal;
+    line-height: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    box-sizing: border-box;
+    background-color: buttonface;
+    margin: 0em;
+    padding: 1px 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonborder;
+    border-image: initial;
+} */

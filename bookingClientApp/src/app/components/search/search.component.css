@@ -1,5 +1,5 @@
 div{
-	margin: 5rem;
+	margin: 3rem;
 	text-align: center;
 }
 
@@ -13,4 +13,19 @@ button{
 
 .title{
 	text-align: center;
+}
+
+.card{
+	max-width: 400px;
+	margin: 1rem;
+}
+
+.mat-form-field{
+	margin: 1rem;
+}
+
+.searchForm{
+	border-bottom: solid;	
+	border-radius: 3%;
+	border-color: lightgray;
 }

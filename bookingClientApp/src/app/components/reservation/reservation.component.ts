@@ -1,0 +1,73 @@
+import { Component, Input } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+
+import { Reservation } from 'src/app/model/reservation.model';
+import { Room } from './../../model/room.model';
+import { RoomImage } from './../../model/room-image.model';
+
+import { ReservationService } from 'src/app/services/reservation.service';
+import { RoomImageService } from '../../services/room-image.service';
+import { SnackBarService } from 'src/app/services/snackBar.service';
+
+@Component({
+  selector: 'app-reservation',
+  templateUrl: './reservation.component.html',
+  styleUrls: ['./reservation.component.css']
+})
+export class ReservationComponent {
+
+  room: Room;
+  roomDefaultImage: any;
+  numOfPersons: number;
+  startDate: Date;
+  endDate: Date;
+  images: any[] = [];
+  imagesSlider: any[] = [];
+
+  constructor(private router: Router, private message: SnackBarService,
+              private roomImageService: RoomImageService, private reservationService: ReservationService){
+
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as {
+      room: Room
+      defaultRoomImage: any;
+      numOfPersons: number;
+      startDate: Date;
+      endDate: Date;
+    };
+
+    this.room = state.room;
+    this.roomDefaultImage = state.defaultRoomImage;
+    this.numOfPersons = state.numOfPersons;
+    this.startDate = state.startDate;
+    this.endDate = state.endDate;
+
+    this.roomImageService.getAllRoomImages().subscribe({
+      next: (response: RoomImage[]) => { this.images = response; },
+
+      complete: () => {
+        this.imagesSlider[0] = {image: this.roomDefaultImage, thumbImage: this.roomDefaultImage, title: ''};
+
+        for(let i = 0; i < this.images.length; i++)
+          this.imagesSlider[i + 1] = {image: 'data:image/jpeg;base64,' + this.images[i].image, thumbImage: 'data:image/jpeg;base64,' + this.images[i].image, title: ''} ;
+      },
+
+      error:(error: HttpErrorResponse) => { this.message.error("Προέκυψε σφάλμα", 'Έξοδος'); }
+    });
+  }
+
+  saveReservation(){
+    const person = {id: 1, surname: 'Τσιμπος', name: 'Βασιλης'};
+    const newReservation = new Reservation(this.room, person, this.numOfPersons, this.room.basePricePerNight, new Date(), null, this.startDate, this.endDate);
+    this.reservationService.saveReservation(newReservation).subscribe( (response: any) => {
+      // if(response.status === 200){
+      //   this.message.info("Η κράτησή σας έγινε με επιτυχία!");
+      // }
+      // else{
+      //   this.message.error("Σφάλμα. Η κράτηση δεν έγινε.", "Έξοδος");
+      // }
+    });
+  }
+
+}

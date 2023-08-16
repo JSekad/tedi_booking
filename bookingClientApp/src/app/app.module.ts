@@ -5,22 +5,37 @@ import {RouterLink, RouterModule} from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MainComponent } from './components/main/main.component';
-import {AppRoutingModule} from "./app-routing.module";
+import {AppRoutingModule } from "./app-routing.module";
 import { SearchComponent } from './components/search/search.component';
 import { TestComponent } from './components/test/test.component';
 import { SearchService } from './services/search.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatDialogModule} from "@angular/material/dialog";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatIconModule} from "@angular/material/icon";
-import {MatInputModule} from "@angular/material/input";
-import {MatButtonModule} from "@angular/material/button";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatCardModule } from "@angular/material/card";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatButtonModule } from "@angular/material/button";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatFormField } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
+import { MatSnackBarModule} from '@angular/material/snack-bar';
+import { ReservationComponent } from './components/reservation/reservation.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { NgImageSliderModule } from 'ng-image-slider';
+
+import { AngularOpenlayersModule } from 'ngx-openlayers';
+import { OpenstreetmapComponent } from './components/openstreetmap/openstreetmap.component';
 
 @NgModule({
   declarations: [
     MainComponent,
     TestComponent,
     SearchComponent,
+    ReservationComponent,
+    OpenstreetmapComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,12 +45,25 @@ import {MatButtonModule} from "@angular/material/button";
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    MatCardModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    CommonModule,
+    MatSnackBarModule,
+    MatAutocompleteModule ,
+    NgImageSliderModule,
+    MatTooltipModule,
+    AngularOpenlayersModule,
   ],
-  providers: [SearchService],
+  providers: [
+    SearchService,
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
+  ],
   bootstrap: [MainComponent]
 })
 export class AppModule { }

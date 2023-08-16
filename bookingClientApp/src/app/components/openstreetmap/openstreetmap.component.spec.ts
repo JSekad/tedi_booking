@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchComponent } from './search.component';
+import { OpenstreetmapComponent } from './openstreetmap.component';
 
-describe('SearchComponent', () => {
-  let component: SearchComponent;
-  let fixture: ComponentFixture<SearchComponent>;
+describe('OpenstreetmapComponent', () => {
+  let component: OpenstreetmapComponent;
+  let fixture: ComponentFixture<OpenstreetmapComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SearchComponent ]
+      declarations: [ OpenstreetmapComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SearchComponent);
+    fixture = TestBed.createComponent(OpenstreetmapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

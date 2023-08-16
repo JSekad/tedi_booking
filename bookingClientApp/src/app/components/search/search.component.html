@@ -1,26 +1,48 @@
 <h1 class="title">Αναζήτηση δωματίων</h1>
 
-<div id="searchComponent">
+<div class="searchForm">
 
-	<label for="area">Τοποθεσία</label>
-	<input id="area" type="text" [(ngModel)]="area" placeholder="e.x. Athens" name="area">
+	<mat-form-field class="mat-form-field">
+		<mat-label>Τοποθεσία</mat-label>
+		<input matInput [matAutocomplete]="auto" [formControl]="cityForm" aria-label="Πόλη">
+		<mat-autocomplete #auto="matAutocomplete">
+			<mat-option *ngFor="let option of filtredCities | async" [value]="option.name">
+				<span>{{option.name}}</span>
+			</mat-option>
+		</mat-autocomplete>
+	</mat-form-field>
 
-	<label for="startDate">Από</label>
-	<input id="startDate" type="date" [(ngModel)]="startDate" name="startDate"  min="{{ today | date:'yyyy-MM-dd' }}">
+	<mat-form-field class="mat-form-field">
+		<mat-label>Ημερομηνίες</mat-label>
+		<mat-date-range-input [rangePicker]="picker" [min]="today">
+			<input matStartDate placeholder="Start date" [(ngModel)]="startDate">
+			<input matEndDate placeholder="End date" [(ngModel)]="endDate">
+		</mat-date-range-input>
+		<mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+		<mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+		<mat-date-range-picker #picker></mat-date-range-picker>
+	</mat-form-field>
 
-	<label for="endDate">Εως</label>
-	<input id="endDate" type="date" [(ngModel)]="endDate" name="endDate" min="{{ today | date:'yyyy-MM-dd' }}">
-
-	<label for="numPersons">Αριθμός Ατόμων</label>
-	<input id="numPersons" type="number" [(ngModel)]="numPersons" name="numPersons">
+	<mat-form-field class="mat-form-field">
+		<mat-label>Αριθμός Ατόμων</mat-label>
+		<input matInput type="number" [(ngModel)]="numPersons" name="numPersons">
+	</mat-form-field>
 
 	<br/>
-	<button class="button" (click)="searchRooms()">Search</button>
+
+	<button mat-raised-button class="button" (click)="searchRooms()">Search</button>
 
 </div>
 
-<ul>
-	<li *ngFor="let room of rooms">
-		{{ room.id}} {{ room.basePricePerNight }} {{ room.description }}
-	</li>
-</ul>
+<mat-card *ngFor="let room of rooms; let roomIndex = index;" class="card">
+	<mat-card-header>
+		<mat-card-title> {{ room.description}} </mat-card-title>
+	</mat-card-header>
+	<img [src]="defaultRoomImages[roomIndex]">
+	<mat-card-content>
+		<div> Room id: {{ room.id}} Price Per Night: {{ room.basePricePerNight }} </div>
+	</mat-card-content>
+	<mat-card-actions>
+		<button mat-raised-button (click)="reserveRoom(roomIndex)">Λεπτομέριες δωματίου</button>
+	</mat-card-actions>
+</mat-card>

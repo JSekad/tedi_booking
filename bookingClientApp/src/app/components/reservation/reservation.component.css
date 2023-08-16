@@ -1,0 +1,43 @@
+.iconCard{
+	width: 100%;
+	margin: 0.5rem;
+	text-align: center;
+}
+
+.spaceCard{
+	margin: 0 auto;
+}
+
+.detailCard{
+	display: flex;
+	margin: 1rem;
+}
+
+.icon{
+	margin: 0 1rem;
+}
+
+.title{
+	margin: 1rem;
+	text-align: center;
+	font-weight: bold;
+	border-bottom: solid;
+	border-radius: 10%;
+}
+
+.number{
+	display: inline-block;
+	overflow: hidden;
+	font-weight: bold;
+}
+
+.description{
+	margin: 0 auto;
+	text-align: center;
+}
+
+.map{
+	width: 40%;
+	height: 40%;
+	margin: 1rem;
+}

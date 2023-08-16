@@ -1,0 +1,126 @@
+<h1 style="text-align: center;">Λεπτομέριες Δωματίου</h1>
+
+<br>
+
+<ng-image-slider #nav [images]="imagesSlider" [infinite]="false" 
+				[autoSlide]="1" [imageSize]="{width: '25%', height: '25%'}" 
+				slideImage="1">
+</ng-image-slider>
+
+<mat-card class="spaceCard">
+	<div style="display: flex">
+		<div style="width: 60%;">
+			<mat-card class="iconCard">
+				<h1 class="title">Χώρος</h1>
+				<div style="display: flex">
+					<div>
+						<mat-icon fontIcon="bedroom_parent" matTooltip="Αριθμός από κρεβατοκάμαρες" class="icon"/>
+						<span class="number">{{ room.numOfBedrooms }}</span>
+					</div>
+					<div>
+						<mat-icon fontIcon="single_bed" matTooltip="Αριθμός μονών κρεβατιών" class="icon"/>
+						<span class="number">{{ room.numOfSingleBeds }}</span>
+					</div>
+					<div>
+						<mat-icon fontIcon="king_bed" matTooltip="Αριθμός διπλών κρεβατιών" class="icon"/>
+						<span class="number">{{ room.numOfDoubleBeds }}</span>
+					</div>
+					<div>
+						<mat-icon fontIcon="bathroom" matTooltip="Αριθμός μπάνιων" class="icon"/>
+						<span class="number">{{ room.numOfBathrooms}}</span>
+					</div>
+					<div>
+						<mat-icon fontIcon="crop" matTooltip="Τετραγωνικά" class="icon"/>
+						<span class="number">{{ room.areaSize }}</span>
+					</div>
+					<div>
+						<mat-icon fontIcon="tv" matTooltip="TV" class="icon"/>
+						<mat-icon fontIcon="{{ room.hasTV ? 'done' : 'close' }}"/>
+					</div>
+					<div>
+						<mat-icon fontIcon="bathtub" matTooltip="Private Bathroom" class="icon"/>
+						<mat-icon fontIcon="{{ room.hasPrivateBathroom ? 'done' : 'close' }}"/>
+					</div>
+					<div>
+						<span matTooltip="Aircondition" class="material-symbols-outlined icon">climate_mini_split</span>
+						<mat-icon fontIcon="{{ room.hasAirCondition ? 'done' : 'close' }}"/>
+					</div>
+					<div>
+						<mat-icon fontIcon="wifi" matTooltip="Wi-fi" class="icon"/>
+						<mat-icon fontIcon="{{ room.hasWifi ? 'done' : 'close' }}"/>
+					</div>
+					<div>
+						<mat-icon fontIcon="kitchen" matTooltip="Kitchen" class="icon"/>
+						<mat-icon fontIcon="{{ room.hasKitchen ? 'done' : 'close' }}"/>
+					</div>
+					<div>
+						<mat-icon fontIcon="hot_tub" matTooltip="Jacuzzi" class="icon"/>
+						<mat-icon fontIcon="{{ room.hasJacuzzi ? 'done' : 'close' }}"/>
+					</div>
+					<div>
+						<mat-icon fontIcon="local_parking" matTooltip="Parking" class="icon"/>
+						<mat-icon fontIcon="{{ room.hasParking ? 'done' : 'close' }}"/>
+					</div>
+					<div>
+						<mat-icon fontIcon="elevator" matTooltip="Elevator" class="icon"/>
+						<mat-icon fontIcon="{{ room.hasElevator ? 'done' : 'close' }}"/>
+					</div>	
+				</div>	
+			</mat-card>
+			
+			<div class="detailCard">
+				<mat-card class="iconCard">
+					<h1 class="title">Κανόνες Ενοικίασης</h1>
+					<div style="display: flex">
+						<div>
+							<mat-icon fontIcon="group" matTooltip="Χωρητικότητα ατόμων" class="icon"/>
+							<span class="number">{{ room.capacity }}</span>
+						</div>
+						<div>
+							<mat-icon fontIcon="pets" matTooltip="Pets allowed" class="icon"/>
+							<mat-icon fontIcon="{{ room.petsAllowed ? 'done' : 'close' }}"/>
+						</div>
+						<div>
+							<mat-icon fontIcon="smoking_rooms" matTooltip="Smoking allowed" class="icon"/>
+							<mat-icon fontIcon="{{ room.smokingAllowed ? 'done' : 'close' }}"/>
+						</div>
+						<div>
+							<mat-icon fontIcon="celebration" matTooltip="Party allowed" class="icon"/>
+							<mat-icon fontIcon="{{ room.partyAllowed ? 'done' : 'close' }}"/>
+						</div>
+					</div>
+				</mat-card>
+
+				<mat-card class="iconCard">
+					<h1 class="title">Τιμή διανυχτέρευσης</h1>
+					<div style="text-align: center; display: block">
+						<span class="number" style="font-size: 1.5rem;">{{ room.basePricePerNight }}</span>
+						<mat-icon fontIcon="euro" matTooltip="Ευρώ" class="icon"/>
+						<br>
+						<span>Ελάχιστες ημέρες διαμονής: {{ room.minRentDays }} </span>
+					</div>
+				</mat-card>
+				
+				<mat-card class="iconCard">
+					<h1 class="title">Ιδιοκτήτης</h1>
+					<h2> {{ room.property.owner.surname}} </h2>
+					<h2> {{ room.property.owner.name}} </h2>
+				</mat-card>
+
+			</div>
+
+			<mat-card class="description">
+				<h1 class="title">Περιγραφή</h1>
+				<h2> {{ room.description}} </h2>
+			</mat-card>
+		</div>
+
+		<openstreetmap  [longitude]="room.property.longitude"
+					[latitude]="room.property.latitude" class="map"></openstreetmap>
+	</div>
+</mat-card>
+
+<mat-card-actions style="justify-content: center; display: grid">
+	<div>Διάστημα κράτησης {{ startDate.toISOString().split('T')[0] }} έως {{ endDate.toISOString().split('T')[0] }} </div>
+	<button mat-raised-button (click)="saveReservation()" style="background-color: grey">Επιβεωβαίωση κράτησης</button>
+</mat-card-actions>
