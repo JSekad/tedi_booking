@@ -1,5 +1,6 @@
 package di.uoa.tedi_booking.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import java.util.List;
 @Table(schema="booking_app", name="user")
 public class User implements UserDetails{
 
+    @JsonIgnore
     @Id
     @Column(name = "idPerson")
     private Integer id;
