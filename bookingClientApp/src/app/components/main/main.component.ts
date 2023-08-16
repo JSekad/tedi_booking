@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
+
 
 @Component({
   selector: 'app-main',
@@ -8,13 +10,12 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./main.component.css']
 })
 
-export class MainComponent implements OnInit {
+export class MainComponent {
   // title = 'bookingClientApp';
   // username: string;
   // password: string;
 
-  constructor(){}
-
+  constructor(public dialog:MatDialog){}
   // onSubmit(): void {
   //   // Handle form submission here
   //   console.log('Username:', this.username);
@@ -23,22 +24,26 @@ export class MainComponent implements OnInit {
   //   // Once done, you can close the dialog
   //   this.dialogRef.close();
   // }
-
-  ngOnInit(){
-    document.getElementById("openPopup")!.addEventListener("click", function() {
-      document.getElementById("popup")!.style.display = "block";
+  openLoginDialog(): void {
+    const dialogRef = this.dialog.open(LoginDialogComponent, {
+      width: '250px',
+      data: { username: '', password: '' }
     });
-    document.getElementById("closePopup")!.addEventListener("click", function() {
-      document.getElementById("popup")!.style.display = "none";
-    });
-
-    document.getElementById("submitBtn")!.addEventListener("click", function() {
-      const username = (<HTMLInputElement>document.getElementById("username")).value;
-      const password = (<HTMLInputElement>document.getElementById("password")).value;
-      console.log("UserName:", username);
-      console.log("PassWord:", password);
-      document.getElementById("popup")!.style.display = "none";
-    });
+  // ngOnInit(){
+  //   document.getElementById("openPopup")!.addEventListener("click", function() {
+  //     document.getElementById("popup")!.style.display = "block";
+  //   });
+  //   document.getElementById("closePopup")!.addEventListener("click", function() {
+  //     document.getElementById("popup")!.style.display = "none";
+  //   });
+  //
+  //   document.getElementById("submitBtn")!.addEventListener("click", function() {
+  //     const username = (<HTMLInputElement>document.getElementById("username")).value;
+  //     const password = (<HTMLInputElement>document.getElementById("password")).value;
+  //     console.log("UserName:", username);
+  //     console.log("PassWord:", password);
+  //     document.getElementById("popup")!.style.display = "none";
+  //   });
   }
 
 }

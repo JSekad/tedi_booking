@@ -5,7 +5,7 @@ import {RouterLink, RouterModule} from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MainComponent } from './components/main/main.component';
-import {AppRoutingModule } from "./app-routing.module";
+import {AppRoutingModule} from "./app-routing.module";
 import { SearchComponent } from './components/search/search.component';
 import { TestComponent } from './components/test/test.component';
 import { SearchService } from './services/search.service';
@@ -28,12 +28,14 @@ import { NgImageSliderModule } from 'ng-image-slider';
 
 import { AngularOpenlayersModule } from 'ngx-openlayers';
 import { OpenstreetmapComponent } from './components/openstreetmap/openstreetmap.component';
+import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 
 @NgModule({
   declarations: [
     MainComponent,
     TestComponent,
     SearchComponent,
+    LoginDialogComponent,
     ReservationComponent,
     OpenstreetmapComponent,
   ],
