@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RestController
 public abstract class GenericController<T> {
 
     protected final GenericService<T> service;

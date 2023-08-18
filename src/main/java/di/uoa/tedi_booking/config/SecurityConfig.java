@@ -3,6 +3,7 @@ package di.uoa.tedi_booking.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,7 +24,9 @@ public class SecurityConfig {
         http.csrf().disable()
                 .authorizeHttpRequests()
                 //.requestMatchers("/api/v1/auth/**", "/role/**", "/room/**")
-                .requestMatchers("/api/v1/auth/**", "/**")
+                .requestMatchers(HttpMethod.OPTIONS, "/**") // Allow all OPTIONS requests
+                .permitAll()
+                .requestMatchers("/api/v1/auth/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

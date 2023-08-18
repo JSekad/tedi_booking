@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {RouterLink, RouterModule} from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -29,6 +29,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { AngularOpenlayersModule } from 'ngx-openlayers';
 import { OpenstreetmapComponent } from './components/openstreetmap/openstreetmap.component';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,11 @@ import { LoginDialogComponent } from './components/login-dialog/login-dialog.com
   ],
   providers: [
     SearchService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
     {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
   ],
   bootstrap: [MainComponent]
