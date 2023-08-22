@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {RouterLink, RouterModule} from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -30,6 +30,8 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { AngularOpenlayersModule } from 'ngx-openlayers';
 import { OpenstreetmapComponent } from './components/openstreetmap/openstreetmap.component';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -40,32 +42,38 @@ import { LoginDialogComponent } from './components/login-dialog/login-dialog.com
     ReservationComponent,
     OpenstreetmapComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatDialogModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatButtonModule,
-    MatNativeDateModule,
-    MatDatepickerModule,
-    MatFormFieldModule,
-    CommonModule,
-    MatSnackBarModule,
-    MatAutocompleteModule ,
-    NgImageSliderModule,
-    MatTooltipModule,
-    MatGridListModule,
-    AngularOpenlayersModule,
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatDialogModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatButtonModule,
+        MatNativeDateModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        CommonModule,
+        MatSnackBarModule,
+        MatAutocompleteModule,
+        NgImageSliderModule,
+        MatTooltipModule,
+        AngularOpenlayersModule,
+        MatMenuModule,
+        MatGridListModule
+    ],
   providers: [
     SearchService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
     {provide: MAT_DATE_LOCALE, useValue: 'el-GR'}
   ],
   bootstrap: [MainComponent]

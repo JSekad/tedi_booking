@@ -29,9 +29,11 @@ public class User implements UserDetails{
     private Person person;
 
     @Column(name = "username")
+    @JsonIgnore
     private String userName;
 
     @Column(name = "password")
+    @JsonIgnore
     private String password;
 
     @ManyToOne
