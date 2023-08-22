@@ -41,3 +41,15 @@
 	height: 40%;
 	margin: 1rem;
 }
+
+.image{
+	width: 100px;
+	height: auto;
+}
+
+.ownerCard{
+	width: 100%;
+	margin: 0.5rem;
+	text-align: center;
+	display: block;
+}

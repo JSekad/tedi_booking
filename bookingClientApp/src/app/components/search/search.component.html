@@ -16,7 +16,7 @@
 		<mat-label>Ημερομηνίες</mat-label>
 		<mat-date-range-input [rangePicker]="picker" [min]="today">
 			<input matStartDate placeholder="Start date" [(ngModel)]="startDate">
-			<input matEndDate placeholder="End date" [(ngModel)]="endDate">
+			<input matEndDate placeholder="End date" [(ngModel)]="endDate" (dateChange)="addEvent('change', $event)">
 		</mat-date-range-input>
 		<mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
 		<mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -34,15 +34,24 @@
 
 </div>
 
-<mat-card *ngFor="let room of rooms; let roomIndex = index;" class="card">
-	<mat-card-header>
-		<mat-card-title> {{ room.description}} </mat-card-title>
-	</mat-card-header>
-	<img [src]="defaultRoomImages[roomIndex]">
-	<mat-card-content>
-		<div> Room id: {{ room.id}} Price Per Night: {{ room.basePricePerNight }} </div>
-	</mat-card-content>
-	<mat-card-actions>
-		<button mat-raised-button (click)="reserveRoom(roomIndex)">Λεπτομέριες δωματίου</button>
-	</mat-card-actions>
-</mat-card>
+<mat-grid-list cols="4" rowHeight="75%">
+	<mat-grid-tile *ngFor="let room of rooms; let roomIndex = index;" >
+		<mat-card class="card">
+			<mat-card-header>
+				<mat-card-title> {{ room.description }} </mat-card-title>
+			</mat-card-header>
+			<img [src]="defaultRoomImages[roomIndex]" class="image">
+			<mat-card-content class="align-center">
+				<div class="mat-content-item"> <b> Τύπος: 			</b> {{ room.type.name }}			</div>
+				<div class="mat-content-item"> <b> Τιμή/Νύχτα:		</b> {{ room.basePricePerNight }}   </div>
+				<div class="mat-content-item"> <b> Μονά κρεβάτια:	</b> {{ room.numOfSingleBeds }}  	</div>
+				<div class="mat-content-item"> <b> Διπλά κρεβάτια:	</b> {{ room.numOfDoubleBeds }} 	</div>
+				<div class="mat-content-item"> <b> Κριτικές:		</b> {{ room.numOfReviews }} 		</div>
+				<div class="mat-content-item"> <b> Μέση τιμή:		</b> {{ room.averageReviews }} 		</div>
+			</mat-card-content>
+			<mat-card-actions class="align-center zeroPadding">
+				<button mat-raised-button (click)="reserveRoom(roomIndex)">Λεπτομέριες δωματίου</button>
+			</mat-card-actions>
+		</mat-card>
+	</mat-grid-tile>
+</mat-grid-list>

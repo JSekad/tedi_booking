@@ -1,9 +1,11 @@
 import { RoomImage } from './room-image.model';
+import { RoomType} from './room-type.model';
 import { Property } from './property.model';
 
 export interface Room {
 	id: number;
 	property: Property;
+	type: RoomType;
 	basePricePerNight: number;
 	description: string;
 	defaultRoomImage: RoomImage;
@@ -25,4 +27,6 @@ export interface Room {
 	hasElevator: boolean;
 	smokingAllowed: boolean;
 	partyAllowed: boolean;
+	numOfReviews: number;
+	averageReviews: number;
 }

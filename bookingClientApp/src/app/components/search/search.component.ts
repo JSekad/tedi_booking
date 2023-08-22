@@ -11,6 +11,7 @@ import { CityService } from '../../services/city.service';
 
 import { Room } from './../../model/room.model';
 import { City } from './../../model/city.model';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-search',
@@ -28,6 +29,7 @@ export class SearchComponent {
   cities : City[] = [];
   filtredCities: Observable<City[]> = new Observable<City[]>;
   cityForm = new FormControl('');
+  events: string[] = [];
 
   constructor( private searchService: SearchService, private message: SnackBarService,
                private router: Router, private cityService: CityService ){
@@ -57,7 +59,7 @@ export class SearchComponent {
      if(this.searchInputValidation())
        return;
 
-     this.searchService.getRooms(this.cityForm.value, this.startDate.toISOString().split('T')[0], this.endDate.toISOString().split('T')[0], this.numPersons).subscribe({
+     this.searchService.getRooms(this.cityForm.value, this.formatDate(this.startDate), this.formatDate(this.endDate), this.numPersons).subscribe({
 
       next: ( response: Room[]) => { this.rooms = response; },
 
@@ -75,7 +77,7 @@ export class SearchComponent {
      });
   };
 
-  private filterCities(value: string): City[]{
+    private filterCities(value: string): City[]{
     return this.cities.filter(city => city.name.toLowerCase().includes(value.toLowerCase()));
   }
 
@@ -83,11 +85,11 @@ export class SearchComponent {
 
     const navigationExtras: NavigationExtras = {
       state: {
-        room: this.rooms[selectedRoomIndex], 
+        room: this.rooms[selectedRoomIndex],
         defaultRoomImage: this.defaultRoomImages[selectedRoomIndex],
         numOfPersons: this.numPersons,
-        startDate: this.startDate,
-        endDate: this.endDate
+        startDate: this.formatDate(this.startDate),
+        endDate:  this.formatDate(this.endDate)
       }
     };
 
@@ -127,6 +129,28 @@ export class SearchComponent {
     }
 
     return false;
+  }
+
+  public addEvent(type: string, event: MatDatepickerInputEvent<Date>){
+    this.events.push(`${type}: ${event.value}`);
+    let now = new Date();
+
+    if(this.startDate != null){
+      this.startDate.setHours(now.getHours());
+      this.startDate.setMinutes(now.getMinutes());
+      this.startDate.setSeconds(now.getSeconds());
+    }
+
+    if(this.endDate != null){
+      this.endDate.setHours(now.getHours());
+      this.endDate.setMinutes(now.getMinutes());
+      this.endDate.setSeconds(now.getSeconds());
+    }
+  }
+
+  private formatDate(date: Date): string{
+    var splitDate = date.toLocaleDateString().split('/');
+    return splitDate[2] + '-' + (Number(splitDate[0]) < 10 ? '0' + splitDate[0] : splitDate[0]) + '-' + (Number(splitDate[1]) < 10 ? '0' + splitDate[1] : splitDate[1])
   }
 
 }

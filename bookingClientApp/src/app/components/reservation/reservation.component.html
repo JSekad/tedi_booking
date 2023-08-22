@@ -101,10 +101,17 @@
 					</div>
 				</mat-card>
 				
-				<mat-card class="iconCard">
+				<mat-card class="ownerCard">
 					<h1 class="title">Ιδιοκτήτης</h1>
-					<h2> {{ room.property.owner.surname}} </h2>
-					<h2> {{ room.property.owner.name}} </h2>
+					<div style="float: left">
+						<h2> {{ room.property.owner.surname}} </h2>
+						<h2> {{ room.property.owner.name}} </h2>
+						<h2>Κριτικές</h2>
+					</div>
+					<div style="float: right; display: grid;">
+						<img [src]="hostPhoto" class="image">
+						<button mat-raised-button>Συνομιλία</button>
+					</div>
 				</mat-card>
 
 			</div>
@@ -121,6 +128,6 @@
 </mat-card>
 
 <mat-card-actions style="justify-content: center; display: grid">
-	<div>Διάστημα κράτησης {{ startDate.toISOString().split('T')[0] }} έως {{ endDate.toISOString().split('T')[0] }} </div>
+	<div>Διάστημα κράτησης {{ startDate }} έως {{ endDate }} </div>
 	<button mat-raised-button (click)="saveReservation()" style="background-color: grey">Επιβεωβαίωση κράτησης</button>
 </mat-card-actions>

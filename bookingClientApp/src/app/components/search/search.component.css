@@ -15,8 +15,13 @@ button{
 	text-align: center;
 }
 
+.image{
+	width: 300px;
+	height: auto;
+}
+
 .card{
-	max-width: 400px;
+	max-width: 300px;
 	margin: 1rem;
 }
 
@@ -28,4 +33,19 @@ button{
 	border-bottom: solid;	
 	border-radius: 3%;
 	border-color: lightgray;
+	margin: 1rem 1rem 0.5rem 1rem;
+}
+
+.mat-content-item{
+	margin: 0.5rem;
+	padding: 0;
+}
+
+.align-center{
+	display: block;
+	text-align: center;
+}
+
+.zeroPadding{
+	padding: 0;
 }
