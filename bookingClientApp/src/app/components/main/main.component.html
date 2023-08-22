@@ -1,8 +1,22 @@
 <link rel="stylesheet" type="text/css" href="main.component.css">
 <div class="navbar">
   <span>BOOKING</span>
-  <mat-dialog-actions><button mat-raised-button color="primary" (click)="openLoginDialog()">Σύνδεση</button>
+<!--  <mat-dialog-actions>-->
+<!--    <button mat-raised-button color="primary" (click)="openLoginDialog()">Σύνδεση</button>-->
+<!--  </mat-dialog-actions>-->
+
+  <mat-dialog-actions *ngIf="!loggedIn">
+    <button mat-raised-button color="primary" (click)="openLoginDialog()">Σύνδεση</button>
   </mat-dialog-actions>
+
+  <button mat-icon-button color="primary" *ngIf="loggedIn" [matMenuTriggerFor]="userMenu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #userMenu="matMenu">
+    <!-- Add menu items for user capabilities (e.g., logout) -->
+    <button mat-menu-item (click)="logout()">Logout</button>
+  </mat-menu>
+
 
 </div>
 

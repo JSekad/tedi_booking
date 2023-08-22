@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 
+import {AuthService} from "../../services/auth-service.service";
+
 
 @Component({
   selector: 'app-main',
@@ -11,39 +13,36 @@ import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 })
 
 export class MainComponent {
-  // title = 'bookingClientApp';
-  // username: string;
-  // password: string;
 
-  constructor(public dialog:MatDialog){}
-  // onSubmit(): void {
-  //   // Handle form submission here
-  //   console.log('Username:', this.username);
-  //   console.log('Password:', this.password);
-  //   // You can perform further actions, such as validating the input or making an API call
-  //   // Once done, you can close the dialog
-  //   this.dialogRef.close();
-  // }
+  loggedIn: boolean = false;
+  // private subscription: Subscription;
+
+  constructor(public dialog:MatDialog, private authService: AuthService){
+    // this.subscription = this.authService.loggedInUserObservable.subscribe(data => {
+    //   this.loggedIn = !!data;
+    //   console.log('hello',data);
+    // });
+  }
+
+
+
   openLoginDialog(): void {
     const dialogRef = this.dialog.open(LoginDialogComponent, {
       width: '250px',
       data: { username: '', password: '' }
     });
-  // ngOnInit(){
-  //   document.getElementById("openPopup")!.addEventListener("click", function() {
-  //     document.getElementById("popup")!.style.display = "block";
-  //   });
-  //   document.getElementById("closePopup")!.addEventListener("click", function() {
-  //     document.getElementById("popup")!.style.display = "none";
-  //   });
-  //
-  //   document.getElementById("submitBtn")!.addEventListener("click", function() {
-  //     const username = (<HTMLInputElement>document.getElementById("username")).value;
-  //     const password = (<HTMLInputElement>document.getElementById("password")).value;
-  //     console.log("UserName:", username);
-  //     console.log("PassWord:", password);
-  //     document.getElementById("popup")!.style.display = "none";
-  //   });
   }
+
+  ngOnInit() {
+    this.authService.loggedInUserObservable.subscribe(jwt => {
+      console.log('here we are:',jwt)
+      this.loggedIn = !!jwt;
+    });
+  }
+
+  logout(): void {
+    this.authService.logoutUser();
+  }
+
 
 }
