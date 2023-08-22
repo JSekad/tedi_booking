@@ -14,9 +14,11 @@ import java.util.Set;
 @Setter
 @Table(schema="booking_app", name="room")
 @NamedQueries({
-        @NamedQuery(name="searchAvailableRooms", query="select r from Room r left outer join Reservation res on res.room.id = r.id inner join Availability a on a.room.id = r.id " +
-            "where r.property.city.name = :city and ((res.startDate >= :endDate or res.startDate is null) or (res.endDate <= :startDate " +
-            "or res.endDate is null)) and r.capacity >= :numOfPersons and a.startDate <= :startDate and a.endDate >= :endDate")
+        @NamedQuery(name="searchAvailableRooms", query="select distinct(r) " +
+            " from Room r left outer join Reservation res on res.room.id = r.id inner join Availability a on a.room.id = r.id " +
+            " where r.property.city.name = :city and r.capacity >= :numOfPersons and a.startDate <= :startDate and a.endDate >= :endDate " +
+            " and (res is null or not(r.id = any (select rr.room.id from Reservation rr where r.id = rr.room.id and (:startDate >= rr.startDate and :startDate <= rr.endDate) or (:endDate >= rr.startDate and :endDate <= rr.endDate) " +
+                " or (:startDate <= rr.startDate and :endDate >= rr.endDate) ))) ")
 })
 public class Room implements Serializable {
 
@@ -27,10 +29,9 @@ public class Room implements Serializable {
     @JoinColumn(name = "idProperty")
     private Property property;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "idRoomType")
-    private RoomType roomType;
+    private RoomType type;
 
     private Integer basePricePerNight;
     private Integer extraPricePerPerson;
@@ -53,6 +54,8 @@ public class Room implements Serializable {
     private Boolean hasElevator;
     private Boolean smokingAllowed;
     private Boolean partyAllowed;
+    private Integer numOfReviews;
+    private Float averageReviews;
 
     @JsonIgnore
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)

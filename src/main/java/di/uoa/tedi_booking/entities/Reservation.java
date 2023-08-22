@@ -1,6 +1,7 @@
 package di.uoa.tedi_booking.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +21,7 @@ public class Reservation implements Serializable {
     @SequenceGenerator(name = "sequence", sequenceName = "reservation_seq")
     private Integer id;
 
-    @JsonIgnore
+    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idRoom")
     private Room room;

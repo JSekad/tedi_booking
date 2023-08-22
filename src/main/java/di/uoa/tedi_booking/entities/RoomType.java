@@ -20,6 +20,6 @@ public class RoomType implements Serializable {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "roomType", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "type", fetch = FetchType.LAZY)
     private Set<Room> rooms;
 }

@@ -32,6 +32,7 @@ public class Property implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPropertyType")
     private PropertyType propertyType;
+
     private String description;
     private Integer rating;
     private String address;
