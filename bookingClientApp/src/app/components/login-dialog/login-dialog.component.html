@@ -1,16 +1,62 @@
-<h1 mat-dialog-title>Στοιχεία Χρήστη</h1>
+<h1 mat-dialog-title>Καλώς ήρθατε στο tediBooking. Σύνδεση ή Εγγραφή Χρήστη</h1>
 <div mat-dialog-content>
-  <mat-form-field>
-    <input matInput placeholder="Username" [(ngModel)]="data.username">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput type="password" placeholder="Password" [(ngModel)]="data.password">
-    <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
-      <mat-icon>{{ passwordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
-    </button>
-  </mat-form-field>
+  <mat-grid-list gutterSize="15px" cols="2" rowHeight="280">
+    <mat-grid-tile class="mat-grid-tile" rowspan="1">
+      <mat-grid-tile-header>Σύνδεση</mat-grid-tile-header>
+        <form>
+        <mat-form-field class="matFormField">
+          <input matInput name="username" placeholder="Όναμα Χρήστη" [(ngModel)]="data.username">
+        </mat-form-field>
+        <mat-form-field class="matFormField">
+          <input matInput type="password" name="password" placeholder="Κωδικός" [(ngModel)]="data.password">
+          <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+            <mat-icon>{{ passwordVisible ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+        </form>
+      <mat-grid-tile-footer><div mat-dialog-actions><button mat-raised-button color="primary" (click)="onLogin()">Σύνδεση</button></div></mat-grid-tile-footer>
+    </mat-grid-tile>
+    <mat-grid-tile class="tile" rowspan="3" class="mat-grid-tile">
+      <mat-grid-tile-header>Εγγραφή</mat-grid-tile-header>
+      <form>
+        <mat-form-field class="matFormField">
+          <input matInput name="name" placeholder="Όνομα" [(ngModel)]="userAboutToRegister.name" />
+        </mat-form-field>
+        <mat-form-field class="matFormField">
+          <input matInput name="surname" placeholder="Επώνυμο" [(ngModel)]="userAboutToRegister.surame"/>
+        </mat-form-field>
+        <mat-form-field class="matFormField">
+          <mat-label>Ημερομηνία Γέννησης</mat-label>
+          <input matInput [matDatepicker]="picker" placeholder="Select a date" name="birthdate" [(ngModel)]="selectedDate" (dateChange)="updateBirthDate($event)">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="matFormField">
+          <input matInput name="email" placeholder="Email" [(ngModel)]="userAboutToRegister.email"/>
+        </mat-form-field>
+        <mat-form-field class="matFormField">
+          <input matInput name="phoneNumber" placeholder="Τηλέφωνο" [(ngModel)]="userAboutToRegister.phoneNumber"/>
+        </mat-form-field>
+        <mat-form-field class="matFormField">
+          <input matInput name="newUsername" placeholder="Όναμα Χρήστη" [(ngModel)]="userAboutToRegister.userName" />
+        </mat-form-field>
+        <mat-form-field class="matFormField">
+          <input matInput name="newPassword" type="password" placeholder="Νέος Κωδικός" [(ngModel)]="userAboutToRegister.password"/>
+        </mat-form-field>
+        <mat-form-field class="matFormField">
+          <input matInput name="verifiedPassword" type="password" placeholder="Επαλήθευση Κωδικού" />
+        </mat-form-field>
+        <mat-form-field class="matFormField">
+          <mat-label>Ρόλοι</mat-label>
+          <mat-select name="rolesSelected" [(ngModel)]="userAboutToRegister.roles" multiple>
+            <mat-option *ngFor="let role of roles" [value]="role.alias">{{role.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-grid-tile-footer><div mat-dialog-actions ><button mat-raised-button  color="primary" (click)="onRegister()">Εγγραφή</button></div></mat-grid-tile-footer>
+      </form>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Ακύρωση</button>
-  <button mat-raised-button color="primary" (click)="onLogin()" cdkFocusInitial>Σύνδεση</button>
 </div>

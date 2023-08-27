@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @Data
 @Builder
@@ -22,4 +23,5 @@ public class RegisterRequest {
     private String phoneNumber;
     private String userName;
     private String password;
+    private ArrayList<String> roles;
 }

@@ -17,7 +17,6 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
-import { MatSelectModule } from "@angular/material/select";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatGridListModule } from "@angular/material/grid-list";
@@ -37,6 +36,8 @@ import { LoginDialogComponent } from './components/login-dialog/login-dialog.com
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import {MatMenuModule} from "@angular/material/menu";
 import { AdminComponent } from './components/admin/admin.component';
+import {MatDividerModule} from "@angular/material/divider";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -62,7 +63,7 @@ import { AdminComponent } from './components/admin/admin.component';
         MatInputModule,
         MatButtonModule,
         MatCheckboxModule,
-        MatSelectModule, 
+        MatSelectModule,
         MatNativeDateModule,
         MatPaginatorModule,
         MatDatepickerModule,
@@ -75,7 +76,9 @@ import { AdminComponent } from './components/admin/admin.component';
         AngularOpenlayersModule,
         MatMenuModule,
         MatGridListModule,
-        MatSidenavModule 
+        MatSidenavModule,
+        MatDividerModule,
+        MatSelectModule
     ],
   providers: [
     SearchService,

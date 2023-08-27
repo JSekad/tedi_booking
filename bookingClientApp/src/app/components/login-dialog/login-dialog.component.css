@@ -1,1 +1,24 @@
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
+.center-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.matFormField {
+  width: 270px;
+}
+
+@media (max-width: 600px) {
+  .mat-grid-tile {
+    width: 40px;
+    height: 40px;
+    font-size: 8px;
+  }
+}

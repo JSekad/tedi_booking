@@ -66,7 +66,7 @@ export class ReservationComponent {
   }
 
   saveReservation(){
-    const person = {id: 1, surname: 'Τσιμπος', name: 'Βασιλης'};
+    const person = {id: 1, surname: 'Τσιμπος', name: 'Βασιλης', birthDate: "", idNumber: "", email: "", phoneNumber: "",approved: "",dateApproved: ""};
     const newReservation = new Reservation(this.room, person, this.numOfPersons, this.room.basePricePerNight, new Date(), null, this.startDate, this.endDate);
     this.reservationService.saveReservation(newReservation).subscribe( {
 

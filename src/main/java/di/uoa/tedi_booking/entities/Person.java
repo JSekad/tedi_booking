@@ -24,8 +24,6 @@ public class Person implements Serializable {
 
     private String name;
     private String surname;
-    private String fathersName;
-    private String mothersName;
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthDate;
     private String idNumber;

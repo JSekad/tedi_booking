@@ -26,7 +26,7 @@ public class SecurityConfig {
 //                .requestMatchers("/api/v1/auth/**", "/role/**", "/room/**, /**")
                 .requestMatchers(HttpMethod.OPTIONS, "/**") // Allow all OPTIONS requests
                 .permitAll()
-                .requestMatchers("/api/v1/auth/**")
+                .requestMatchers("/api/v1/auth/**", "/role/**", "/room/**","/city/**","/roomType/**","/hostphoto/**","/roomImage/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
