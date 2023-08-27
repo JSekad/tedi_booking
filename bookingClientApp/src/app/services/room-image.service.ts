@@ -13,7 +13,7 @@ export class RoomImageService {
 
   constructor(private http: HttpClient) { }
 
-  public getAllRoomImages(): Observable<RoomImage[]>{
-    return this.http.get<RoomImage[]>(`${this.apiServerUrl}/roomImage/all`);
+  public getAllRoomImages(idRoom: number): Observable<RoomImage[]>{
+    return this.http.get<RoomImage[]>(`${this.apiServerUrl}/roomImage/roomImages/${idRoom}`);
   }
 }

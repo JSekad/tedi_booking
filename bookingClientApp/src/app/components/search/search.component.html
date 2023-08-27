@@ -1,57 +1,139 @@
-<h1 class="title">Αναζήτηση δωματίων</h1>
+<mat-drawer-container [hasBackdrop]="true" style="display: block; height: 94%">
 
-<div class="searchForm">
+	<mat-drawer-content>
 
-	<mat-form-field class="mat-form-field">
-		<mat-label>Τοποθεσία</mat-label>
-		<input matInput [matAutocomplete]="auto" [formControl]="cityForm" aria-label="Πόλη">
-		<mat-autocomplete #auto="matAutocomplete">
-			<mat-option *ngFor="let option of filtredCities | async" [value]="option.name">
-				<span>{{option.name}}</span>
-			</mat-option>
-		</mat-autocomplete>
-	</mat-form-field>
+		<h1 class="title">Αναζήτηση δωματίων</h1>
 
-	<mat-form-field class="mat-form-field">
-		<mat-label>Ημερομηνίες</mat-label>
-		<mat-date-range-input [rangePicker]="picker" [min]="today">
-			<input matStartDate placeholder="Start date" [(ngModel)]="startDate">
-			<input matEndDate placeholder="End date" [(ngModel)]="endDate" (dateChange)="addEvent('change', $event)">
-		</mat-date-range-input>
-		<mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
-		<mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-		<mat-date-range-picker #picker></mat-date-range-picker>
-	</mat-form-field>
+		<div class="searchForm">
 
-	<mat-form-field class="mat-form-field">
-		<mat-label>Αριθμός Ατόμων</mat-label>
-		<input matInput type="number" [(ngModel)]="numPersons" name="numPersons">
-	</mat-form-field>
+			<mat-form-field class="mat-form-field">
+				<mat-label>Τοποθεσία</mat-label>
+				<input matInput [matAutocomplete]="auto" [formControl]="cityForm" aria-label="Πόλη">
+				<mat-autocomplete #auto="matAutocomplete">
+					<mat-option *ngFor="let option of filtredCities | async" [value]="option.name">
+						<span>{{option.name}}</span>
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
 
-	<br/>
+			<mat-form-field class="mat-form-field">
+				<mat-label>Ημερομηνίες</mat-label>
+				<mat-date-range-input [rangePicker]="picker" [min]="today">
+					<input matStartDate placeholder="Start date" [(ngModel)]="startDate">
+					<input matEndDate placeholder="End date" [(ngModel)]="endDate" (dateChange)="addEvent('change', $event)">
+				</mat-date-range-input>
+				<mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+				<mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-date-range-picker #picker></mat-date-range-picker>
+			</mat-form-field>
 
-	<button mat-raised-button class="button" (click)="searchRooms()">Search</button>
+			<mat-form-field class="mat-form-field">
+				<mat-label>Αριθμός Ατόμων</mat-label>
+				<input matInput type="number" [(ngModel)]="numPersons" name="numPersons">
+			</mat-form-field>
 
-</div>
+			<br/>
 
-<mat-grid-list cols="4" rowHeight="75%">
-	<mat-grid-tile *ngFor="let room of rooms; let roomIndex = index;" >
-		<mat-card class="card">
-			<mat-card-header>
-				<mat-card-title> {{ room.description }} </mat-card-title>
-			</mat-card-header>
-			<img [src]="defaultRoomImages[roomIndex]" class="image">
-			<mat-card-content class="align-center">
-				<div class="mat-content-item"> <b> Τύπος: 			</b> {{ room.type.name }}			</div>
-				<div class="mat-content-item"> <b> Τιμή/Νύχτα:		</b> {{ room.basePricePerNight }}   </div>
-				<div class="mat-content-item"> <b> Μονά κρεβάτια:	</b> {{ room.numOfSingleBeds }}  	</div>
-				<div class="mat-content-item"> <b> Διπλά κρεβάτια:	</b> {{ room.numOfDoubleBeds }} 	</div>
-				<div class="mat-content-item"> <b> Κριτικές:		</b> {{ room.numOfReviews }} 		</div>
-				<div class="mat-content-item"> <b> Μέση τιμή:		</b> {{ room.averageReviews }} 		</div>
-			</mat-card-content>
-			<mat-card-actions class="align-center zeroPadding">
-				<button mat-raised-button (click)="reserveRoom(roomIndex)">Λεπτομέριες δωματίου</button>
-			</mat-card-actions>
-		</mat-card>
-	</mat-grid-tile>
-</mat-grid-list>
+			<button mat-raised-button class="button" (click)="searchRooms()">Search</button>
+
+		</div>
+
+		<mat-paginator #paginator
+					(page)="changePageEvent($event)"
+					[length]="filtredRooms.length"
+					[pageSize]="10"
+					[showFirstLastButtons]="true"
+					[hidePageSize]="false"
+					[pageIndex]="pageIndex"
+					aria-label="Select page"
+					*ngIf="filtredRooms.length > 0">
+		</mat-paginator>
+
+		<mat-grid-list cols="5" rowHeight="1:1.5">
+			<mat-grid-tile *ngFor="let room of filtredRooms | slice: pageIndex * 10  : (pageIndex+1) * 10; let roomIndex = index;" >
+				<mat-card class="card">
+					<mat-card-header>
+						<mat-card-title> {{ room.description }} </mat-card-title>
+					</mat-card-header>
+					<img [src]="room.defaultRoomImage != null ? room.defaultRoomImage.image : null" class="image">
+					<mat-card-content class="align-center">
+						<div class="mat-content-item"> <b> Τύπος: 			</b> {{ room.type.name }}			</div>
+						<div class="mat-content-item"> <b> Τιμή/Νύχτα:		</b> {{ room.basePricePerNight }}   </div>
+						<div class="mat-content-item"> <b> Μονά κρεβάτια:	</b> {{ room.numOfSingleBeds }}  	</div>
+						<div class="mat-content-item"> <b> Διπλά κρεβάτια:	</b> {{ room.numOfDoubleBeds }} 	</div>
+						<div class="mat-content-item"> <b> Κριτικές:		</b> {{ room.numOfReviews }} 		</div>
+						<div class="mat-content-item"> <b> Μέση τιμή:		</b> {{ room.averageReviews }} 		</div>
+					</mat-card-content>
+					<mat-card-actions class="align-center zeroPadding">
+						<button mat-raised-button (click)="reserveRoom(roomIndex + pageIndex * 10)">Λεπτομέριες δωματίου</button>
+					</mat-card-actions>
+				</mat-card>
+			</mat-grid-tile>
+		</mat-grid-list>
+
+		<button mat-raised-button (click)="drawer.toggle()" class="filterButton">
+			<mat-icon fontIcon="filter_list"/>
+		</button>
+
+		<mat-paginator #paginator
+					(page)="changePageEvent($event)"
+					[length]="filtredRooms.length"
+					[pageSize]="10"
+					[showFirstLastButtons]="true"
+					[hidePageSize]="false"
+					[pageIndex]="pageIndex"
+					aria-label="Select page"
+					*ngIf="filtredRooms.length > 0">
+		</mat-paginator>
+
+	</mat-drawer-content>
+
+	<mat-drawer #drawer [mode]="'over'" [position]="'end'" class="filter">
+
+		<h1 class="title" style="margin-bottom: 5rem">Φιλτράρισμα αποτελεσμάτων</h1>
+
+		<div style="display: flex">
+			<mat-form-field class="mat-form-field">
+				<mat-label>Μέγιστο Κόστος/Βραδιά</mat-label>
+				<input matInput type="number" [(ngModel)]="filterMaxCost" name="maxCost">
+			</mat-form-field>
+
+			<mat-form-field class="mat-form-field">
+				<mat-label>Τύπος δωματίου</mat-label>
+				<mat-select [(value)]="filterRoomType">
+					<mat-option [value]="null">---</mat-option>
+					<mat-option *ngFor="let roomType of roomTypes" [value]="roomType">
+						{{ roomType.name }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+
+		<div>
+			<mat-checkbox [(ngModel)]="hasTV" class="checkBox"> <mat-icon fontIcon="tv" matTooltip="TV" class="icon"/> </mat-checkbox>
+			<mat-checkbox [(ngModel)]="hasWifi" class="checkBox"> <mat-icon fontIcon="wifi" class="icon"/> </mat-checkbox>
+			<mat-checkbox [(ngModel)]="hasAircondition" class="checkBox"> <span matTooltip="Aircondition" class="material-symbols-outlined icon">climate_mini_split</span> </mat-checkbox>
+		</div>
+
+		<div>
+			<mat-checkbox [(ngModel)]="hasPrivateBathroom" class="checkBox"> <mat-icon fontIcon="bathtub" matTooltip="Private Bathroom" class="icon"/> </mat-checkbox>
+			<mat-checkbox [(ngModel)]="hasJacuzzi" class="checkBox"> <mat-icon fontIcon="hot_tub" matTooltip="Jacuzzi" class="icon"/> </mat-checkbox>
+			<mat-checkbox [(ngModel)]="hasParking" class="checkBox"> <mat-icon fontIcon="local_parking" matTooltip="Parking" class="icon"/> </mat-checkbox>
+		</div>
+
+		<div>
+			<mat-checkbox [(ngModel)]="hasKitchen" class="checkBox"> <mat-icon fontIcon="kitchen" matTooltip="Kitchen" class="icon"/> </mat-checkbox>
+			<mat-checkbox [(ngModel)]="petsAllowed" class="checkBox"> <mat-icon fontIcon="pets" matTooltip="Pets allowed" class="icon"/> </mat-checkbox>
+			<mat-checkbox [(ngModel)]="smokingAllowed" class="checkBox"> <mat-icon fontIcon="smoking_rooms" matTooltip="Smoking allowed" class="icon"/> </mat-checkbox>
+			<mat-checkbox [(ngModel)]="partyAllowed" style="margin-top: 2rem"> <mat-icon fontIcon="celebration" matTooltip="Party allowed" class="icon"/> </mat-checkbox>
+		</div>
+
+		<div style="text-align: center; display: flex;">
+			<button mat-raised-button (click)="applyFilters()" >Εφαρμογή φίλτρων</button>
+			<button mat-raised-button (click)="clearFilters()">Καθαρισμός φίλτρων</button>
+
+			<button mat-raised-button (click)="addMore()">+</button>
+		</div>
+	</mat-drawer>
+
+</mat-drawer-container>

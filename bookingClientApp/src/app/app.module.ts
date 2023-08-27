@@ -16,8 +16,12 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatSelectModule } from "@angular/material/select";
+import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatGridListModule } from "@angular/material/grid-list";
+import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatFormField } from '@angular/material/form-field';
@@ -32,6 +36,7 @@ import { OpenstreetmapComponent } from './components/openstreetmap/openstreetmap
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import {MatMenuModule} from "@angular/material/menu";
+import { AdminComponent } from './components/admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +46,7 @@ import {MatMenuModule} from "@angular/material/menu";
     LoginDialogComponent,
     ReservationComponent,
     OpenstreetmapComponent,
+    AdminComponent,
   ],
     imports: [
         BrowserModule,
@@ -55,7 +61,10 @@ import {MatMenuModule} from "@angular/material/menu";
         MatIconModule,
         MatInputModule,
         MatButtonModule,
+        MatCheckboxModule,
+        MatSelectModule, 
         MatNativeDateModule,
+        MatPaginatorModule,
         MatDatepickerModule,
         MatFormFieldModule,
         CommonModule,
@@ -65,7 +74,8 @@ import {MatMenuModule} from "@angular/material/menu";
         MatTooltipModule,
         AngularOpenlayersModule,
         MatMenuModule,
-        MatGridListModule
+        MatGridListModule,
+        MatSidenavModule 
     ],
   providers: [
     SearchService,

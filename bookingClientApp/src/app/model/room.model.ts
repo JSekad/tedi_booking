@@ -1,4 +1,4 @@
-import { RoomImage } from './room-image.model';
+import { RoomImageDefault } from './roomImageDefault.model';
 import { RoomType} from './room-type.model';
 import { Property } from './property.model';
 
@@ -8,7 +8,7 @@ export interface Room {
 	type: RoomType;
 	basePricePerNight: number;
 	description: string;
-	defaultRoomImage: RoomImage;
+	defaultRoomImage: RoomImageDefault;
 	numOfDoubleBeds: number;
 	numOfSingleBeds:number;
 	numOfBedrooms: number;

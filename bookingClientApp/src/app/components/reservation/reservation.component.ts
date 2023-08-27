@@ -20,7 +20,6 @@ import { SnackBarService } from 'src/app/services/snackBar.service';
 export class ReservationComponent {
 
   room: Room;
-  roomDefaultImage: any;
   hostPhoto: any;
   numOfPersons: number;
   startDate: Date;
@@ -41,7 +40,6 @@ export class ReservationComponent {
     };
 
     this.room = state.room;
-    this.roomDefaultImage = state.defaultRoomImage;
     this.numOfPersons = state.numOfPersons;
     this.startDate = state.startDate;
     this.endDate = state.endDate;
@@ -52,11 +50,11 @@ export class ReservationComponent {
       error:(error: HttpErrorResponse) => { this.message.error("Προέκυψε σφάλμα", 'Έξοδος'); }
     });
 
-    this.roomImageService.getAllRoomImages().subscribe({
+    this.roomImageService.getAllRoomImages(this.room.id).subscribe({
       next: (response: RoomImage[]) => { this.images = response; },
 
       complete: () => {
-        this.imagesSlider[0] = {image: this.roomDefaultImage, thumbImage: this.roomDefaultImage, title: ''};
+        this.imagesSlider[0] = {image: this.room.defaultRoomImage.image , thumbImage: this.room.defaultRoomImage.image, title: ''};
 
         for(let i = 0; i < this.images.length; i++)
           this.imagesSlider[i + 1] = {image: 'data:image/jpeg;base64,' + this.images[i].image, thumbImage: 'data:image/jpeg;base64,' + this.images[i].image, title: ''} ;

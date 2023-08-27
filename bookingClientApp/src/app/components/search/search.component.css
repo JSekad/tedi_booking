@@ -13,11 +13,14 @@ button{
 
 .title{
 	text-align: center;
+    margin: 1rem;
+    font-style: italic;
+    font-weight: bold;
 }
 
 .image{
 	width: 300px;
-	height: auto;
+	height: 200px;
 }
 
 .card{
@@ -48,4 +51,29 @@ button{
 
 .zeroPadding{
 	padding: 0;
+}
+
+.filterButton{
+	position: fixed;
+	margin: 0;
+	top: 40%;
+	right: 0;
+}
+
+.filter{
+	width: 25%;
+}
+
+.icon{
+	margin: 0 1rem;
+}
+
+.checkBox{
+	padding: 0.8rem;
+}
+
+.bottomPaginator{
+	position: fixed;
+	bottom: 0;
+	width: 100%;
 }

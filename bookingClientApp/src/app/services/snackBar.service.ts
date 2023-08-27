@@ -7,15 +7,15 @@ export class SnackBarService{
 	constructor(private snackBar: MatSnackBar){ }
 
 	info(message: string){
-		this.snackBar.open(message, '', {duration: 3000, panelClass: ['mat-snackBar-info']});
+		this.snackBar.open(message, '', {duration: 3000, verticalPosition: 'top', panelClass: ['mat-snackBar-info']});
 	}
 
 	warn(message: string){
-		this.snackBar.open(message, '', {duration: 3000, panelClass: ['mat-snackBar-warn']});
+		this.snackBar.open(message, '', {duration: 3000, verticalPosition: 'top', panelClass: ['mat-snackBar-warn']});
 	}
 
 	error(message: string, action: string){
-		this.snackBar.open(message, action, {duration: undefined, panelClass: ['mat-snackBar-error']});
+		this.snackBar.open(message, action, {duration: undefined, verticalPosition: 'top', panelClass: ['mat-snackBar-error']});
 	}
 	
 }
