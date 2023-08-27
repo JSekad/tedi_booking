@@ -9,12 +9,11 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@Table(schema="booking_app", name="room_image_default")
+@Table(schema="tedi", name="room_image_default")
 public class RoomImageDefault implements Serializable {
     @Id
     @Column(name="idRoom")
     private Integer id;
 
-//    @Lob
     private byte[] image;
 }

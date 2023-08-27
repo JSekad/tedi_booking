@@ -11,7 +11,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(schema="booking_app", name="paymentMethod")
+@Table(schema="tedi", name="paymentMethod")
 public class PaymentMethod implements Serializable {
 
     @Id

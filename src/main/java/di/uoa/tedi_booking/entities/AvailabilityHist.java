@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-@Table(schema="booking_app", name="availabilityHist")
+@Table(schema="tedi", name="availabilityHist")
 public class AvailabilityHist implements Serializable {
 
     @Id

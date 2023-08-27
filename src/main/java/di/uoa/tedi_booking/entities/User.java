@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(schema="booking_app", name="user")
+@Table(schema="tedi", name="user")
 public class User implements UserDetails{
 
     @JsonIgnore

@@ -10,7 +10,10 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@Table(schema="booking_app", name="room_images")
+@Table(schema="tedi", name="room_images")
+@NamedQueries({
+        @NamedQuery(name="findAllRoomImages", query="select ri from RoomImage ri where ri.room.id = :idRoom")
+})
 public class RoomImage implements Serializable {
 
     @Id
@@ -21,6 +24,5 @@ public class RoomImage implements Serializable {
     @JoinColumn(name = "idRoom")
     private Room room;
 
-//    @Lob
     private byte[] image;
 }

@@ -13,7 +13,7 @@ import java.time.OffsetDateTime;
 @Entity
 @Getter
 @Setter
-@Table(schema="booking_app", name="reservation")
+@Table(schema="tedi", name="reservation")
 public class Reservation implements Serializable {
 
     @Id

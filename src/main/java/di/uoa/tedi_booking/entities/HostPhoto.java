@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Entity
 @Getter
 @Setter
-@Table(schema="booking_app", name="hostphoto")
+@Table(schema="tedi", name="hostphoto")
 public class HostPhoto implements Serializable {
 
     @Id

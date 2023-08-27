@@ -5,6 +5,8 @@ import di.uoa.tedi_booking.repositories.RoomImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RoomImageService extends GenericService<RoomImage>{
 
@@ -13,5 +15,9 @@ public class RoomImageService extends GenericService<RoomImage>{
     public RoomImageService(RoomImageRepository repository){
         super(repository);
         this.roomImageRepository = repository;
+    }
+
+    public List<RoomImage> findAllRoomImages(Integer idRoom){
+        return roomImageRepository.findAllRoomImages(idRoom);
     }
 }

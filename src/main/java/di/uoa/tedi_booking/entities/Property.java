@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(schema="booking_app", name="property")
+@Table(schema="tedi", name="property")
 public class Property implements Serializable {
 
     @Id

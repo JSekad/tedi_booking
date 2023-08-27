@@ -12,13 +12,13 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(schema="booking_app", name="room")
+@Table(schema="tedi", name="room")
 @NamedQueries({
         @NamedQuery(name="searchAvailableRooms", query="select distinct(r) " +
             " from Room r left outer join Reservation res on res.room.id = r.id inner join Availability a on a.room.id = r.id " +
             " where r.property.city.name = :city and r.capacity >= :numOfPersons and a.startDate <= :startDate and a.endDate >= :endDate " +
             " and (res is null or not(r.id = any (select rr.room.id from Reservation rr where r.id = rr.room.id and (:startDate >= rr.startDate and :startDate <= rr.endDate) or (:endDate >= rr.startDate and :endDate <= rr.endDate) " +
-                " or (:startDate <= rr.startDate and :endDate >= rr.endDate) ))) ")
+                " or (:startDate <= rr.startDate and :endDate >= rr.endDate) ))) order by r.basePricePerNight")
 })
 public class Room implements Serializable {
 
@@ -69,7 +69,7 @@ public class Room implements Serializable {
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private Set<RoomImage> roomImages;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name="id", referencedColumnName = "idRoom")
     private RoomImageDefault defaultRoomImage;
 

@@ -11,7 +11,7 @@ import java.time.OffsetDateTime;
 @Entity
 @Getter
 @Setter
-@Table(schema="booking_app", name="chat")
+@Table(schema="tedi", name="chat")
 public class Chat implements Serializable {
 
     @Id

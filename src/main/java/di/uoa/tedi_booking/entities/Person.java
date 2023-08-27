@@ -15,7 +15,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@Table(schema="booking_app", name="person")
+@Table(schema="tedi", name="person")
 public class Person implements Serializable {
 
     @Id

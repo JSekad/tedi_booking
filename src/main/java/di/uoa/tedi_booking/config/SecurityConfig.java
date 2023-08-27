@@ -23,7 +23,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                //.requestMatchers("/api/v1/auth/**", "/role/**", "/room/**")
+//                .requestMatchers("/api/v1/auth/**", "/role/**", "/room/**, /**")
                 .requestMatchers(HttpMethod.OPTIONS, "/**") // Allow all OPTIONS requests
                 .permitAll()
                 .requestMatchers("/api/v1/auth/**")
