@@ -9,8 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Getter
@@ -36,13 +35,30 @@ public class User implements UserDetails{
     @JsonIgnore
     private String password;
 
-    @ManyToOne
-    @JoinColumn(name = "idRole")
-    private Role role;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "rolesofusers",
+            joinColumns = {
+                    @JoinColumn(name = "iduser")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "idrole")
+            }
+    )
+    private Set<Role> roles = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.getAlias()));
+        String authString = "";
+        for (Role r: roles) {
+            authString += r.getAlias();
+            authString += ',';
+        }
+        if (authString.endsWith(",")) {
+            authString = authString.substring(0, authString.length() - 1);
+        }
+        return List.of(new SimpleGrantedAuthority(authString));
     }
 
     @Override

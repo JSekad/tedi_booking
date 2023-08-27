@@ -7,6 +7,7 @@ import {ReservationComponent} from "./components/reservation/reservation.compone
 
 
 const routes: Routes = [
+  { path: '', redirectTo: '/search', pathMatch: 'full'},
   { path: 'test', component: TestComponent},
   { path: 'search', component: SearchComponent},
   { path: 'reservation', component: ReservationComponent}

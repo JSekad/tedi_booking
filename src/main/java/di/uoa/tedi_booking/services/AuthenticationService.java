@@ -5,6 +5,7 @@ import di.uoa.tedi_booking.config.security.AuthenticationRequest;
 import di.uoa.tedi_booking.config.security.AuthenticationResponse;
 import di.uoa.tedi_booking.config.security.RegisterRequest;
 import di.uoa.tedi_booking.entities.Person;
+import di.uoa.tedi_booking.entities.Role;
 import di.uoa.tedi_booking.entities.User;
 import di.uoa.tedi_booking.repositories.PersonRepository;
 import di.uoa.tedi_booking.repositories.RoleRepository;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -51,20 +52,30 @@ public class AuthenticationService {
 
         Optional<User> userTemp = userRepository.findAllByUserName(registerRequest.getUserName());
         if (userTemp.isPresent() && userTemp.get().getUsername().equals(registerRequest.getUserName())){
-            return AuthenticationResponse.builder().accessToken("User Exists").build();
+            return AuthenticationResponse.builder().accessToken("UserModel Exists").build();
         }
 
         User user = new User();
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setUserName(registerRequest.getUserName());
-        user.setRole(roleRepository.findById(3L).orElse(null));
+        Set<Role> roles = new HashSet<Role>();
+        for (String str: registerRequest.getRoles()){
+            if (str.equals("owner")){
+               roles.add(roleRepository.findById(3L).orElse(null));
+            }
+            if (str.equals("user")){
+                roles.add(roleRepository.findById(2L).orElse(null));
+            }
+            if (str.equals("admin")){
+                roles.add(roleRepository.findById(1L).orElse(null));
+            }
+        }
+        user.setRoles(roles);
         Person person = new Person();
         person.setBirthDate(dateOfBirth);
         person.setEmail(registerRequest.getEmail());
         person.setSurname(registerRequest.getSurame());
         person.setName(registerRequest.getName());
-        person.setFathersName(registerRequest.getFathersName());
-        person.setMothersName(registerRequest.getMothersName());
         person.setPhoneNumber(registerRequest.getPhoneNumber());
         person.setIdNumber(registerRequest.getIdNumber());
         user.setPerson(person);

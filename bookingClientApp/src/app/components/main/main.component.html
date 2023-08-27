@@ -13,6 +13,13 @@
     <mat-icon>account_circle</mat-icon>
   </button>
   <mat-menu #userMenu="matMenu">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{luser?.person?.surname}} {{luser?.person?.name}}</mat-card-title>
+        <mat-card-subtitle>{{luser?.person?.email}}</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+    <button mat-menu-item (click)="printUser()">Who Am I</button>
     <!-- Add menu items for user capabilities (e.g., logout) -->
     <button mat-menu-item (click)="logout()">Logout</button>
   </mat-menu>

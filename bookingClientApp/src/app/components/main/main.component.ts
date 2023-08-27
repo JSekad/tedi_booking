@@ -4,6 +4,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 
 import {AuthService} from "../../services/auth-service.service";
+import {User} from "../../model/user.model";
 
 
 @Component({
@@ -15,30 +16,33 @@ import {AuthService} from "../../services/auth-service.service";
 export class MainComponent {
 
   loggedIn: boolean = false;
-  // private subscription: Subscription;
+  luser: User = {} as User;
 
   constructor(public dialog:MatDialog, private authService: AuthService){
-    // this.subscription = this.authService.loggedInUserObservable.subscribe(data => {
-    //   this.loggedIn = !!data;
-    //   console.log('hello',data);
-    // });
+      this.authService.loggedInUserChange.subscribe(user => {
+      this.loggedIn = !!user;
+      this.luser = user as User;
+    });
   }
 
-
+  printUser(){
+    console.log(this.luser);
+  }
 
   openLoginDialog(): void {
-    const dialogRef = this.dialog.open(LoginDialogComponent, {
-      width: '250px',
+    this.dialog.open(LoginDialogComponent, {
+      width: '600px',
+      height: '650px',
       data: { username: '', password: '' }
     });
   }
 
-  ngOnInit() {
-    this.authService.loggedInUserObservable.subscribe(jwt => {
-      console.log('here we are:',jwt)
-      this.loggedIn = !!jwt;
-    });
-  }
+  // ngOnInit() {
+  //   this.authService.loggedInUserObservable.subscribe(data => {
+  //     console.log('here we are:',data)
+  //     this.loggedIn = !!data;
+  //   });
+  // }
 
   logout(): void {
     this.authService.logoutUser();

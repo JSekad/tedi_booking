@@ -32,6 +32,8 @@ import { OpenstreetmapComponent } from './components/openstreetmap/openstreetmap
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import {MatMenuModule} from "@angular/material/menu";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -42,31 +44,33 @@ import {MatMenuModule} from "@angular/material/menu";
     ReservationComponent,
     OpenstreetmapComponent,
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        AppRoutingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        MatDialogModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatButtonModule,
-        MatNativeDateModule,
-        MatDatepickerModule,
-        MatFormFieldModule,
-        CommonModule,
-        MatSnackBarModule,
-        MatAutocompleteModule,
-        NgImageSliderModule,
-        MatTooltipModule,
-        AngularOpenlayersModule,
-        MatMenuModule,
-        MatGridListModule
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatButtonModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    CommonModule,
+    MatSnackBarModule,
+    MatAutocompleteModule,
+    NgImageSliderModule,
+    MatTooltipModule,
+    AngularOpenlayersModule,
+    MatMenuModule,
+    MatGridListModule,
+    MatDividerModule,
+    MatSelectModule
+  ],
   providers: [
     SearchService,
     {
