@@ -9,16 +9,20 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.time.OffsetDateTime;
 import java.util.*;
 
 @Entity
 @Getter
 @Setter
 @Table(schema="tedi", name="user")
+@NamedNativeQueries({
+        @NamedNativeQuery(name="usersMeAitimaEggrafis", query="select u.* from user u inner join rolesofusers rou on u.idPerson = rou.iduser where rou.idRole = 3 and u.approved is null")
+})
 public class User implements UserDetails{
 
-    @JsonIgnore
     @Id
+    @JsonIgnore
     @Column(name = "idPerson")
     private Integer id;
 
@@ -35,6 +39,8 @@ public class User implements UserDetails{
     @JsonIgnore
     private String password;
 
+    private Boolean approved;
+    private OffsetDateTime dateApproved;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

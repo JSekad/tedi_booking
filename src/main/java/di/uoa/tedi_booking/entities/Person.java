@@ -29,9 +29,6 @@ public class Person implements Serializable {
     private String idNumber;
     private String email;
     private String phoneNumber;
-    @Column(columnDefinition = "TINYINT(1)")
-    private Boolean approved;
-    private OffsetDateTime dateApproved;
 
     @JsonIgnore
     @OneToOne(mappedBy = "person", fetch = FetchType.LAZY)

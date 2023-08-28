@@ -6,6 +6,4 @@ export interface Person{
   idNumber: string;
   email: string;
   phoneNumber: string;
-  approved: string;
-  dateApproved: string;
 }
