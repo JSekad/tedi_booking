@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
@@ -23,6 +23,11 @@ export class MainComponent {
       this.loggedIn = !!user;
       this.luser = user as User;
     });
+  }
+
+  ngOnInit(){
+    if (this.authService.getStoredJwtToken()) this.authService.refreshPage();
+    console.log("refresh")
   }
 
   printUser(){

@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import jwtDecode from "jwt-decode";
 import {Subject} from "rxjs";
 import {Router} from "@angular/router";
+import {Role} from "../model/role";
+import {SnackBarService} from "./snackBar.service";
 
 
 @Injectable({
@@ -10,18 +12,42 @@ import {Router} from "@angular/router";
 })
 export class AuthService {
 
-  constructor(private http: HttpClient,private router: Router) { }
+  constructor(private http: HttpClient,private router: Router,private message: SnackBarService) { }
 
   private apiUrl = 'http://localhost:8080';
 
   private loggedInUser: any = null;
-
   loggedInUserChange: Subject<any> = new Subject<any>();
 
+  userRoles: [] = [];
   selectedRole: any = null;
 
   getLoggedInUser(): any {
     return this.loggedInUser;
+  }
+
+  //TODO SELECT
+  selectRole(value:any): void{
+    this.selectedRole = value;
+  }
+
+  refreshPage():void {
+    this.refreshtoken().subscribe(
+      (response) => {
+        console.log("OK1")
+        if (response['access_token'] && response['access_token'].length < 100) {
+          // The access_token contains the substring "error"
+          this.message.warn("Η συνεδρία σας έχει τελειώσει παρακαλώ συνδεθείτε ξανά");
+          this.router.navigate(['/']);
+        } else {
+          // Handle the successful login response here
+          console.log("OK3")
+          this.storeJwtToken(response['access_token']);
+          this.setLoggedInUser(this.decodeJwtToken(response['access_token']));
+        }
+
+    this.setLoggedInUser(this.decodeJwtToken(response['access_token']));
+  })
   }
 
   setLoggedInUser(value: any): void {
@@ -29,12 +55,16 @@ export class AuthService {
     this.loggedInUser = JSON.parse(value.sub);
     console.log(this.loggedInUser);
     console.log(this.loggedInUser.roles);
-    this.selectedRole = this.loggedInUser.roles.find((obj: {alias: string, name: string}) => {
-      const userObject = obj.alias === "user" ? obj : null;
-      return userObject ||  obj.alias === "owner" ? obj : null;
+    this.userRoles = this.loggedInUser.roles
+    this.selectedRole = this.userRoles.find((obj: {alias: string, name: string}) => {
+      if (obj.alias === "owner") return obj;
+      if (obj.alias === "user") return obj;
+      if (obj.alias === "admin") return obj;
+      return null;
     })
     console.log(this.selectedRole);
     this.loggedInUserChange.next(JSON.parse(value.sub));
+    if (this.selectedRole.alias === 'admin') this.router.navigate(['/admin']);
   }
 
 
@@ -45,6 +75,10 @@ export class AuthService {
 
   register(credentials: any){
     return this.http.post<any>(`${this.apiUrl}/api/v1/auth/register`, credentials);
+  }
+
+  refreshtoken(){
+    return this.http.post<any>(`${this.apiUrl}/api/v1/auth/refresh-token`,null)
   }
 
   logoutUser(): void {
@@ -69,6 +103,9 @@ export class AuthService {
 
   clearJwtToken(): void {
     localStorage.removeItem('jwt');
+    this.loggedInUser = null;
+    this.selectedRole = null;
+    this.loggedInUserChange.next(null);
   }
 
 }
