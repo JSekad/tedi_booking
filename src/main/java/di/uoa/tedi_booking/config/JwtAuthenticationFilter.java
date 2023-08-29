@@ -2,7 +2,9 @@ package di.uoa.tedi_booking.config;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import di.uoa.tedi_booking.entities.Role;
 import di.uoa.tedi_booking.entities.User;
+import di.uoa.tedi_booking.repositories.RoleRepository;
 import di.uoa.tedi_booking.repositories.UserRepository;
 import di.uoa.tedi_booking.services.JwtService;
 import jakarta.servlet.FilterChain;
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -27,7 +31,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserRepository userRepository;
-    private UserDetailsService userDetailsService;
+    private final RoleRepository roleRepository;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
@@ -48,9 +52,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //            ObjectMapper objectMapper = new ObjectMapper();
 //            JsonNode jsonNode = objectMapper.readTree(userName);
 //            String uname = jsonNode.get("username").asText();
+            User user = null;
+            if (userName.equals("admin")){
+                user = new User();
+                user.setUserName("admin");
+                user.setId(0);
 
-            User user = userRepository.findAllByUserName(userName)
-                    .orElseThrow();
+                Role adminRole = roleRepository.findById(1L).orElse(null);
+                Set<Role> rolesSet = new HashSet<Role>();
+                rolesSet.add(adminRole);
+                user.setRoles(rolesSet);
+                user.setPerson(null);
+            }else {
+                user = userRepository.findAllByUserName(userName)
+                        .orElseThrow();
+            }
             if(jwtService.isTokenValid(jwt,user)){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user.getUsername(), null, user.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
