@@ -17,19 +17,9 @@ import java.util.*;
 @Setter
 @Table(schema="tedi", name="user")
 @NamedNativeQueries({
-        @NamedNativeQuery(name="usersMeAitimaEggrafis", query="select u.* from user u inner join rolesofusers rou on u.idPerson = rou.iduser where rou.idRole = 3 and u.approved is null")
+        @NamedNativeQuery(name="usersMeAitimaEggrafis", query="select p.*,u.*,r.id,r.name as rolename,r.alias from user u inner join person p on u.id = p.id inner join rolesofusers rou on u.id = rou.iduser inner join role r on rou.idrole = r.id where rou.idRole = 3 and u.approved is null",resultClass = User.class)
 })
-public class User implements UserDetails{
-
-    @Id
-    @JsonIgnore
-    @Column(name = "idPerson")
-    private Integer id;
-
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "idPerson")
-    private Person person;
+public class User extends Person implements UserDetails{
 
     @Column(name = "username")
     @JsonIgnore
@@ -46,7 +36,7 @@ public class User implements UserDetails{
     @JoinTable(
             name = "rolesofusers",
             joinColumns = {
-                    @JoinColumn(name = "iduser")
+                    @JoinColumn(name = "iduser",referencedColumnName = "id")
             },
             inverseJoinColumns = {
                     @JoinColumn(name = "idrole")

@@ -2,6 +2,7 @@ package di.uoa.tedi_booking.controller;
 
 import di.uoa.tedi_booking.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import di.uoa.tedi_booking.entities.User;
 
@@ -20,7 +21,9 @@ public class UserController extends GenericController<User>{
     }
 
     @GetMapping(path = "/usersMeAitimaEggrafis")
-    public @ResponseBody List<User> usersMeAitimaEggrafis(){
-        return userService.usersMeAitimaEggrafis();
+    public  ResponseEntity<List<User>> usersMeAitimaEggrafis(){
+        List<User> users = userService.usersMeAitimaEggrafis();
+        System.out.println(users);
+        return ResponseEntity.ok(users);
     }
 }

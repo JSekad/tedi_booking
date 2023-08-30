@@ -3,6 +3,7 @@ package di.uoa.tedi_booking.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +16,9 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Inheritance( strategy = InheritanceType.JOINED )
 @Table(schema="tedi", name="person")
+@JsonIgnoreProperties(value = {"messagesSend","messagesRecieved","reservations","hostReviews"})
 public class Person implements Serializable {
 
     @Id
@@ -30,32 +33,32 @@ public class Person implements Serializable {
     private String email;
     private String phoneNumber;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "person", fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    private User user;
+//    @JsonIgnore
+//    @OneToOne(mappedBy = "person", fetch = FetchType.LAZY)
+//    @PrimaryKeyJoinColumn
+//    private User user;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sender")
     private Set<Chat> messagesSend;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "reciever", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "reciever")
     private Set<Chat> messagesRecieved;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "guest", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "guest")
     private Set<Reservation> reservations;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "host", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "host")
     private Set<HostReview> hostReviews;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "reviewer", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "reviewer")
     private Set<RoomReview> roomReviews;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "person")
     private Set<Enrollment> enrollements;
 }

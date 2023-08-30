@@ -56,13 +56,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (userName.equals("admin")){
                 user = new User();
                 user.setUserName("admin");
-                user.setId(0);
 
                 Role adminRole = roleRepository.findById(1L).orElse(null);
                 Set<Role> rolesSet = new HashSet<Role>();
                 rolesSet.add(adminRole);
                 user.setRoles(rolesSet);
-                user.setPerson(null);
+//                user.setPerson(null);
             }else {
                 user = userRepository.findAllByUserName(userName)
                         .orElseThrow();

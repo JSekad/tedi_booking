@@ -28,12 +28,12 @@ export class AdminComponent {
     {
       columnDef: 'Surnname',
       header: 'Επώνυμο',
-      cell: (user: User) => `${user.person.surname}`
+      cell: (user: User) => `${user.surname}`
     },
     {
       columnDef: 'Name',
       header: 'Όνομα',
-      cell: (user: User) => `${user.person.name}`
+      cell: (user: User) => `${user.name}`
     }
   ]
 

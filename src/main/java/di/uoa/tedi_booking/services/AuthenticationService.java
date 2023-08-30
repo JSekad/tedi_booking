@@ -71,14 +71,14 @@ public class AuthenticationService {
             }
         }
         user.setRoles(roles);
-        Person person = new Person();
-        person.setBirthDate(dateOfBirth);
-        person.setEmail(registerRequest.getEmail());
-        person.setSurname(registerRequest.getSurame());
-        person.setName(registerRequest.getName());
-        person.setPhoneNumber(registerRequest.getPhoneNumber());
-        person.setIdNumber(registerRequest.getIdNumber());
-        user.setPerson(person);
+//        Person person = new Person();
+        user.setBirthDate(dateOfBirth);
+        user.setEmail(registerRequest.getEmail());
+        user.setSurname(registerRequest.getSurame());
+        user.setName(registerRequest.getName());
+        user.setPhoneNumber(registerRequest.getPhoneNumber());
+        user.setIdNumber(registerRequest.getIdNumber());
+        user.setId(0);
         userRepository.save(user);
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().accessToken(jwtToken).build();
@@ -93,13 +93,12 @@ public class AuthenticationService {
             if (authenticationRequest.getUsername().equals("admin") && authenticationRequest.getPassword().equals("admin")){
                 user = new User();
                 user.setUserName("admin");
-                user.setId(0);
 
                 Role adminRole = roleRepository.findById(1L).orElse(null);
                 Set<Role> rolesSet = new HashSet<Role>();
                 rolesSet.add(adminRole);
                 user.setRoles(rolesSet);
-                user.setPerson(null);
+                user.setId(0);
             }else{
                 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
                 user = userRepository.findAllByUserName(authenticationRequest.getUsername()).orElseThrow();
@@ -138,13 +137,12 @@ public class AuthenticationService {
             if (userEmail.equals("admin")){
                 user = new User();
                 user.setUserName("admin");
-                user.setId(0);
 
                 Role adminRole = roleRepository.findById(1L).orElse(null);
                 Set<Role> rolesSet = new HashSet<Role>();
                 rolesSet.add(adminRole);
                 user.setRoles(rolesSet);
-                user.setPerson(null);
+                user.setId(0);
             }else {
                 user = userRepository.findAllByUserName(userEmail)
                         .orElseThrow();

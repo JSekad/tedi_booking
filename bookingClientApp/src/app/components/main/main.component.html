@@ -15,8 +15,8 @@
   <mat-menu #userMenu="matMenu">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>{{luser?.person?.surname}} {{luser?.person?.name}}</mat-card-title>
-        <mat-card-subtitle>{{luser?.person?.email}}</mat-card-subtitle>
+        <mat-card-title>{{luser?.surname}} {{luser?.name}}</mat-card-title>
+        <mat-card-subtitle>{{luser?.email}}</mat-card-subtitle>
       </mat-card-header>
     </mat-card>
     <button mat-menu-item (click)="printUser()">Who Am I</button>
