@@ -236,8 +236,7 @@ export class SearchComponent {
 
   private formatDate(date: Date): string{
     var splitDate = date.toLocaleDateString().split('/');
-    return splitDate[2] + '-' + (splitDate[0].length == 1 ? '0' + splitDate[0] : splitDate[0]) + '-' + (splitDate[1].length == 1 ? '0' + splitDate[1] : splitDate[1]);
-    // return splitDate[2] + '-' + (Number(splitDate[0]) < 10 ? '0' + splitDate[0] : splitDate[0]) + '-' + (Number(splitDate[1]) < 10 ? '0' + splitDate[1] : splitDate[1])
+    return splitDate[2] + '-' + (Number(splitDate[0]) < 10 ? '0' + splitDate[0] : splitDate[0]) + '-' + (Number(splitDate[1]) < 10 ? '0' + splitDate[1] : splitDate[1])
   }
 
 }
