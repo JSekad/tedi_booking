@@ -1,0 +1,170 @@
+<h1 class="pageTitle">Διαχείρηση Χώρων</h1>
+
+<mat-card class="spaceCard">
+	<div style="display: flex">
+		<div style="text-align: center;">
+
+			<h1 class="title">Στοιχεία Τοποθεσίας</h1>
+
+			<mat-form-field class="mat-form-field">
+				<mat-label>Πόλη</mat-label>
+				<input matInput [matAutocomplete]="auto" [formControl]="cityForm" aria-label="Πόλη">
+				<mat-autocomplete #auto="matAutocomplete">
+					<mat-option *ngFor="let option of filtredCities | async" [value]="option.name">
+						<span>{{option.name}}</span>
+					</mat-option>
+				</mat-autocomplete>
+			</mat-form-field>
+
+			<br>
+
+			<mat-form-field class="mat-form-field">
+				<mat-label>Διεύθυνση</mat-label>
+				<input matInput [(ngModel)]="address">
+			</mat-form-field>
+
+			<br>
+
+			<mat-form-field class="mat-form-field">
+				<mat-label>Αριθμός</mat-label>
+				<input matInput [(ngModel)]="addressNumber">
+			</mat-form-field>
+
+			<br>
+
+			<mat-form-field class="mat-form-field">
+				<mat-label>Πληροφορίες Πρόσβασης</mat-label>
+				<input matInput [(ngModel)]="accessInformation">
+			</mat-form-field>
+		</div>
+
+		<div style="text-align: center;">
+			<h1 class="title">Επιλογή συντεταγμένων στον χάρτη</h1>
+			<br>
+			<mat-form-field class="mat-form-field">
+				<mat-label>Γεωγραφικό Μήκος</mat-label>
+				<input matInput type="number" [(ngModel)]="longitude">
+			</mat-form-field>
+			<br>
+			<mat-form-field class="mat-form-field">
+				<mat-label>Γεωγραφικό Πλάτος</mat-label>
+				<input matInput type="number" [(ngModel)]="latitude">
+			</mat-form-field>
+		</div>
+
+		<openstreetmap [longitude]="23.727500" [latitude]="37.9838000" 
+			[pointerSelection]="true" [width]="'100%'" [height]="'90%'"
+			(coordinatesSelected)="oncoordinatesSelected($event)" class="map"></openstreetmap>
+	</div>
+</mat-card>
+
+
+<mat-card class="spaceCard">
+
+	<h1 class="title">Στοιχεία Δωματίου</h1>
+
+	<div style="display: flex">
+		<div>
+
+			<mat-form-field class="mat-form-field">
+				<mat-label>Τύπος δωματίου</mat-label>
+				<mat-select [(value)]="filterRoomType">
+					<mat-option [value]="null">---</mat-option>
+					<mat-option *ngFor="let roomType of roomTypes" [value]="roomType">
+						{{ roomType.name }}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+
+			<mat-form-field class="mat-form-field">
+				<mat-label>Ημερομηνίες Διαθεσιμότητας</mat-label>
+				<mat-date-range-input [rangePicker]="picker" [min]="today">
+					<input matStartDate placeholder="Start date" [(ngModel)]="startDate">
+					<input matEndDate placeholder="End date" [(ngModel)]="endDate" (dateChange)="addEvent('change', $event)">
+				</mat-date-range-input>
+				<mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+				<mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+				<mat-date-range-picker #picker></mat-date-range-picker>
+			</mat-form-field>
+			
+			<mat-form-field class="mat-form-field">
+				<mat-label>Κόστος/Βραδιά</mat-label>
+				<input matInput type="number" [(ngModel)]="basePricePerNight">
+			</mat-form-field>
+
+			<mat-form-field class="mat-form-field">
+				<mat-label>Εμβαδόν δωματίου</mat-label>
+				<input matInput type="number" [(ngModel)]="areaSize">
+			</mat-form-field>
+
+			<mat-form-field class="mat-form-field">
+				<mat-label>Αριθμός Διπλών Κρεβατιών</mat-label>
+				<input matInput type="number" [(ngModel)]="numOfDoubleBeds">
+			</mat-form-field>
+
+			<mat-form-field class="mat-form-field">
+				<mat-label>Αριθμός Μονών Κρεβατιών</mat-label>
+				<input matInput type="number" [(ngModel)]="numOfSingleBeds">
+			</mat-form-field>
+
+			<mat-form-field class="mat-form-field">
+				<mat-label>Αριθμός Υπνοδωματίων</mat-label>
+				<input matInput type="number" [(ngModel)]="numOfBedrooms">
+			</mat-form-field>
+
+			<mat-form-field class="mat-form-field">
+				<mat-label>Μέγιστος αριθμός ατόμων</mat-label>
+				<input matInput type="number" [(ngModel)]="capacity">
+			</mat-form-field>
+
+			<mat-form-field class="mat-form-field">
+				<mat-label>Ελάχιστες ημέρες ενοικίασης</mat-label>
+				<input matInput type="number" [(ngModel)]="minRentDays">
+			</mat-form-field>
+
+			<mat-form-field class="mat-form-field">
+				<mat-label>Αριθμός Μπάνιων</mat-label>
+				<input matInput type="number" [(ngModel)]="numOfBathrooms">
+			</mat-form-field>
+
+			<div>
+				<mat-checkbox [(ngModel)]="hasTV" class="checkBox"> <mat-icon  fontIcon="tv" matTooltip="TV" class="icon"/> </mat-checkbox>
+				<mat-checkbox [(ngModel)]="hasWifi" class="checkBox"> <mat-icon fontIcon="wifi" class="icon"/> </mat-checkbox>
+				<mat-checkbox [(ngModel)]="hasAirCondition" class="checkBox"> <span matTooltip="Aircondition" class="material-symbols-outlined icon">climate_mini_split</span> </mat-checkbox>
+				<mat-checkbox [(ngModel)]="hasPrivateBathroom" class="checkBox"> <mat-icon fontIcon="bathtub" matTooltip="Private Bathroom" class="icon"/> </mat-checkbox>
+				<mat-checkbox [(ngModel)]="hasJacuzzi" class="checkBox"> <mat-icon fontIcon="hot_tub" matTooltip="Jacuzzi" class="icon"/> </mat-checkbox>
+				<mat-checkbox [(ngModel)]="hasParking" class="checkBox"> <mat-icon fontIcon="local_parking" matTooltip="Parking" class="icon"/> </mat-checkbox>
+				<mat-checkbox [(ngModel)]="hasElevator" class="checkBox"> <mat-icon fontIcon="elevator" matTooltip="Elevator" class="icon"/> </mat-checkbox>
+				<mat-checkbox [(ngModel)]="hasKitchen" class="checkBox"> <mat-icon fontIcon="kitchen" matTooltip="Kitchen" class="icon"/> </mat-checkbox>
+				<mat-checkbox [(ngModel)]="petsAllowed" class="checkBox"> <mat-icon fontIcon="pets" matTooltip="Pets allowed" class="icon"/> </mat-checkbox>
+				<mat-checkbox [(ngModel)]="smokingAllowed" class="checkBox"> <mat-icon fontIcon="smoking_rooms" matTooltip="Smoking allowed" class="icon"/> </mat-checkbox>
+				<mat-checkbox [(ngModel)]="partyAllowed" class="checkBox"> <mat-icon fontIcon="celebration" matTooltip="Party allowed" class="icon"/> </mat-checkbox>
+			</div>
+		</div>
+	</div>
+</mat-card>
+
+<mat-card class="spaceCard">
+
+	<h1 class="title">Φωτογραφίες Δωματίου</h1>
+
+	<div style="display: flex">
+
+		<div class="defaultImageCard">
+			<span>Κύρια Φωτογραφία Δωματίου</span>
+			<img [src]="defaultRoomImage != null ? defaultRoomImage : null" class="image">
+			<input type="file" accept="image/*" (change)="onAddDefaultImage($event)"/>
+		</div>
+
+		<div class="imagesCard">
+			<span>Φωτογραφίες Δωματίου</span>
+			<div style="display: flex;">
+				<ng-container *ngFor="let image of images">
+					<img [src]="image" class="multipleImages">
+				</ng-container>
+			</div>
+			<input type="file" accept="image/*" (change)="onAddImage($event)" multiple="multiple"/>
+		</div>
+
+	</div>
+</mat-card>
