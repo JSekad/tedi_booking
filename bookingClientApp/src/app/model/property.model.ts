@@ -7,6 +7,7 @@ export interface Property{
 	description: string;
 	address: string;
 	addressNumber: number;
+	accessInformation: string;
 	rating: number;
 	city: City;
 	longitude: number;

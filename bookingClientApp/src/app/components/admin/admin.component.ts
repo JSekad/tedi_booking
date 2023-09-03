@@ -18,14 +18,17 @@ export class AdminComponent {
 
   users: User[] = [];
   displayedColumns: string[] = ['username', 'eponymo', 'onoma', 'select'];
-  dataSource = new MatTableDataSource<User>(this.users);
+  dataSource: any;
   selection = new SelectionModel<User>(true, []);
 
-  constructor(private userService: UserService, private message: SnackBarService ){
+  constructor(private userService: UserService, private message: SnackBarService){ }
 
+  ngOnInit(){
     this.userService.usersMeAitimaEggrafis().subscribe({
-      next: (response: User[]) => { this.users = response;
-        console.log(this.users);},
+      next: (response: any) => { 
+          this.users = response;
+          this.dataSource = new MatTableDataSource<User>(this.users);
+        },
 
       error:(error: HttpErrorResponse) => { this.message.error("Προέκυψε σφάλμα", 'Έξοδος'); }
     });

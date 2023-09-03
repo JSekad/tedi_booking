@@ -37,6 +37,7 @@ public class Property implements Serializable {
     private Integer rating;
     private String address;
     private String addressNumber;
+    private String accessInformation;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

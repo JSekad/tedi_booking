@@ -1,4 +1,4 @@
-<h1 style="text-align: center;">Λεπτομέριες Δωματίου</h1>
+<h1 class="pageTitle">Λεπτομέριες Δωματίου</h1>
 
 <br>
 
@@ -122,8 +122,9 @@
 			</mat-card>
 		</div>
 
-		<openstreetmap  [longitude]="room.property.longitude"
-					[latitude]="room.property.latitude" class="map"></openstreetmap>
+		<openstreetmap [longitude]="room.property.longitude" [latitude]="room.property.latitude" 
+						[pointerLongitude]="room.property.longitude" [pointerLatitude]="room.property.latitude"
+						[width]="'100%'" [height]="'100%'" class="map"></openstreetmap>
 	</div>
 </mat-card>
 

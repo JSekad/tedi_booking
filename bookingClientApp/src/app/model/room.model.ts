@@ -8,7 +8,7 @@ export interface Room {
 	type: RoomType;
 	basePricePerNight: number;
 	description: string;
-	defaultRoomImage: RoomImageDefault;
+	defaultRoomImage: RoomImageDefault | null;
 	numOfDoubleBeds: number;
 	numOfSingleBeds:number;
 	numOfBedrooms: number;

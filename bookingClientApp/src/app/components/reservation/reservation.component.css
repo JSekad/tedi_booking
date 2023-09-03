@@ -1,3 +1,10 @@
+.pageTitle{
+	text-align: center;
+    margin: 1rem;
+    font-style: italic;
+    font-weight: bold;
+}
+
 .iconCard{
 	width: 100%;
 	margin: 0.5rem;
@@ -10,10 +17,12 @@
 
 .detailCard{
 	display: flex;
+	flex-shrink: 0;
 	margin: 1rem;
 }
 
 .icon{
+	vertical-align: middle;
 	margin: 0 1rem;
 }
 
@@ -37,8 +46,7 @@
 }
 
 .map{
-	width: 40%;
-	height: 40%;
+	flex-grow: 1;
 	margin: 1rem;
 }
 

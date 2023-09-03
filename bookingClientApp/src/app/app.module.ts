@@ -39,6 +39,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import { AdminComponent } from './components/admin/admin.component';
 import {MatDividerModule} from "@angular/material/divider";
 import {MatSelectModule} from "@angular/material/select";
+import { HostComponent } from './components/host/host.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import {MatSelectModule} from "@angular/material/select";
     ReservationComponent,
     OpenstreetmapComponent,
     AdminComponent,
+    HostComponent,
   ],
     imports: [
         BrowserModule,
@@ -89,7 +91,7 @@ import {MatSelectModule} from "@angular/material/select";
       useClass: JwtInterceptor,
       multi: true
     },
-    {provide: MAT_DATE_LOCALE, useValue: 'el-GR'}
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
   ],
   bootstrap: [MainComponent]
 })

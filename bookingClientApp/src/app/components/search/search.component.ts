@@ -3,9 +3,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Router, NavigationExtras } from '@angular/router';
 import { PageEvent } from "@angular/material/paginator";
 import { FormControl } from '@angular/forms';
-import { Observable, startWith } from 'rxjs';
-import { map } from 'rxjs';
+import { Observable, startWith, map } from 'rxjs';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 
+import { AuthService } from 'src/app/services/auth-service.service';
 import { SnackBarService } from 'src/app/services/snackBar.service';
 import { SearchService } from '../../services/search.service';
 import { CityService } from '../../services/city.service';
@@ -14,7 +15,7 @@ import { RoomTypeService } from '../../services/room-type.service';
 import { Room } from './../../model/room.model';
 import { RoomType } from './../../model/room-type.model';
 import { City } from './../../model/city.model';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { User } from './../../model/user.model';
 
 @Component({
   selector: 'app-search',
@@ -23,6 +24,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 })
 export class SearchComponent {
 
+  user: User | null;  
   startDate: Date = new Date();
   endDate: Date = new Date();
   today: Date;
@@ -43,7 +45,6 @@ export class SearchComponent {
   smokingAllowed: boolean = false;
   partyAllowed: boolean = false;
 
-
   rooms: Room[] = [];
   filtredRooms: Room[] = [];
   cities : City[] = [];
@@ -51,8 +52,9 @@ export class SearchComponent {
   roomTypes: RoomType[] = [];
   events: string[] = [];
 
-  constructor( private searchService: SearchService, private message: SnackBarService,
+  constructor( private searchService: SearchService, private message: SnackBarService, private authService: AuthService,
                private router: Router, private cityService: CityService, private roomTypeService : RoomTypeService  ){
+    this.user = authService.getLoggedInUser();
     this.today = new Date();
     this.today.setHours(0, 0, 0, 0);
     this.startDate = new Date();
@@ -137,13 +139,15 @@ export class SearchComponent {
      if(this.searchInputValidation())
        return;
 
+    this.user = this.authService.getLoggedInUser();
+
      this.searchService.getRooms(this.cityForm.value, this.formatDate(this.startDate), this.formatDate(this.endDate), this.numPersons).subscribe({
 
       next: ( response: Room[]) => {
         this.rooms = response;
         for(let i = 0; i < this.rooms.length; i++)
           if(this.rooms[i].defaultRoomImage != null)
-            this.rooms[i].defaultRoomImage.image = 'data:image/jpeg;base64,' + this.rooms[i].defaultRoomImage.image;
+            this.rooms[i].defaultRoomImage!.image = 'data:image/jpeg;base64,' + this.rooms[i].defaultRoomImage?.image;
 
         this.filtredRooms = [];
         this.rooms.forEach(room => this.filtredRooms.push(room));
@@ -160,7 +164,7 @@ export class SearchComponent {
      });
   };
 
-    private filterCities(value: string): City[]{
+  private filterCities(value: string): City[]{
     return this.cities.filter(city => city.name.toLowerCase().includes(value.toLowerCase()));
   }
 
@@ -168,6 +172,7 @@ export class SearchComponent {
 
     const navigationExtras: NavigationExtras = {
       state: {
+        user: this.user,
         room: this.filtredRooms[selectedRoomIndex],
         numOfPersons: this.numPersons,
         startDate: this.formatDate(this.startDate),
@@ -236,7 +241,8 @@ export class SearchComponent {
 
   private formatDate(date: Date): string{
     var splitDate = date.toLocaleDateString().split('/');
-    return splitDate[2] + '-' + (Number(splitDate[0]) < 10 ? '0' + splitDate[0] : splitDate[0]) + '-' + (Number(splitDate[1]) < 10 ? '0' + splitDate[1] : splitDate[1])
+    // return splitDate[2] + '-' + (splitDate[1].length === 1 ? '0' + splitDate[1] : splitDate[1]) + '-' + (splitDate[0].length === 1 ? '0' + splitDate[0] : splitDate[0]);
+    return splitDate[2] + '-' + (splitDate[0].length === 1 ? '0' + splitDate[0] : splitDate[0]) + '-' + (splitDate[1].length === 1 ? '0' + splitDate[1] : splitDate[1]);
   }
 
 }

@@ -8,7 +8,7 @@
 
 			<mat-form-field class="mat-form-field">
 				<mat-label>Τοποθεσία</mat-label>
-				<input matInput [matAutocomplete]="auto" [formControl]="cityForm" aria-label="Πόλη">
+				<input matInput [matAutocomplete]="auto" [formControl]="cityForm">
 				<mat-autocomplete #auto="matAutocomplete">
 					<mat-option *ngFor="let option of filtredCities | async" [value]="option.name">
 						<span>{{option.name}}</span>
@@ -29,7 +29,7 @@
 
 			<mat-form-field class="mat-form-field">
 				<mat-label>Αριθμός Ατόμων</mat-label>
-				<input matInput type="number" [(ngModel)]="numPersons" name="numPersons">
+				<input matInput type="number" [(ngModel)]="numPersons">
 			</mat-form-field>
 
 			<br/>
@@ -65,7 +65,7 @@
 						<div class="mat-content-item"> <b> Μέση τιμή:		</b> {{ room.averageReviews }} 		</div>
 					</mat-card-content>
 					<mat-card-actions class="align-center zeroPadding">
-						<button mat-raised-button (click)="reserveRoom(roomIndex + pageIndex * 10)">Λεπτομέριες δωματίου</button>
+						<button mat-raised-button *ngIf="user != null" (click)="reserveRoom(roomIndex + pageIndex * 10)">Λεπτομέριες δωματίου</button>
 					</mat-card-actions>
 				</mat-card>
 			</mat-grid-tile>

@@ -26,7 +26,7 @@ public class Reservation implements Serializable {
     @JoinColumn(name = "idRoom")
     private Room room;
 
-    @JsonIgnore
+    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idGuest")
     private Person guest;

@@ -1,4 +1,4 @@
-<aol-map [logo]="true">
+<aol-map [logo]="true" (onSingleClick)="setPointerLocation($event)" [width]="width" [height]="height">
 
 	<aol-interaction-default></aol-interaction-default>
 	<aol-view [zoom]="zoom">
@@ -11,9 +11,9 @@
 	<aol-layer-vector>
 		<aol-source-vector>
 
-			<aol-feature>
+			<aol-feature *ngIf="pointerLatitude != null && pointerLongitude != null">
 				<aol-geometry-point>
-					<aol-coordinate [x]="longitude" [y]="latitude" [srid]="'EPSG:4326'"></aol-coordinate>
+					<aol-coordinate [x]="pointerLongitude" [y]="pointerLatitude" [srid]="'EPSG:4326'"></aol-coordinate>
 				</aol-geometry-point>
 				<aol-style>
 					<aol-style-circle [radius]="7">
@@ -22,9 +22,9 @@
 				</aol-style>
 			</aol-feature>
 
-			<aol-feature>
+			<aol-feature *ngIf="pointerLatitude != null && pointerLongitude != null">
 				<aol-geometry-point>
-					<aol-coordinate [x]="longitude" [y]="latitude" [srid]="'EPSG:4326'"></aol-coordinate>
+					<aol-coordinate [x]="pointerLongitude" [y]="pointerLatitude" [srid]="'EPSG:4326'"></aol-coordinate>
 				</aol-geometry-point>
 				<aol-style>
 					<aol-style-icon [src]="image" [anchor]="[0.5, 1]" [anchorXUnits]="'fraction'" [anchorYUnits]="'fraction'" [scale]="0.02"
@@ -35,22 +35,5 @@
 
 		</aol-source-vector>
 	</aol-layer-vector>
-
-	<!-- <aol-control>
-		<aol-content>
-			<div *ngIf="showControlsZoom" class="ol-overlaycontainer-stopevent">
-				<div class="ol-zoom ol-unselectable ol-control">
-					<button [title]="titleZoomIn" class="ol-zoom-in" type="button" title="Zoom in" (click)="increaseZoom()">+</button>
-					<button [title]="titleZoomOut" class="ol-zoom-out" type="button" title="Zoom out" (click)="decreaseZoom()">−</button>
-				</div>
-				<div *ngIf="showControlsCurrentLocation && position" class="ol-rotate ol-unselectable ol-control">
-					<button [title]="titleCurrentLocation" (click)="setCurrentLocation($event)">&#8982;</button>
-				</div>
-				<div class="ol-attribution ol-unselectable ol-control ol-uncollapsible">
-					<ul><li>© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a></li></ul>
-				</div>
-			</div>
-		</aol-content>
-	</aol-control> -->
 
 </aol-map>

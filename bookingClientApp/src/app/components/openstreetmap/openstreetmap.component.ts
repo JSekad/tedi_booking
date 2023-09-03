@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-// import { proj, View } from 'openlayers';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { proj } from 'openlayers';
 
 @Component({
   selector: 'openstreetmap',
@@ -19,23 +19,30 @@ export class OpenstreetmapComponent {
   longitude = 23.727500;
 
   @Input()
-  showControlsZoom = true; 
+  pointerLatitude: number | null = null;
   @Input()
-  titleZoomIn = 'Zoom in';
+  pointerLongitude: number | null = null;
+
   @Input()
-  titleZoomOut = 'Zoom out';
-  // @Input()
-  // showControlsCurrentLocation: boolean
+  pointerSelection = false;
+
   @Input()
-  titleCurrentLocation = 'Current location';
+  width: string = "40%";
+  @Input()
+  height: string = "40%";
+
+  @Output()
+  coordinatesSelected = new EventEmitter<number[]>;
 
   image = "https://static.vecteezy.com/system/resources/previews/010/160/458/original/pin-location-icon-sign-symbol-design-free-png.png";
 
-  increaseZoom() {
-    this.zoom++;
-  }
+  setPointerLocation(event: any){
+    if(!this.pointerSelection)
+      return;
 
-  decreaseZoom() {
-    this.zoom--;
+    const coordinates = proj.transform(event.coordinate, 'EPSG:3857', 'EPSG:4326');
+    this.pointerLatitude = coordinates[1];
+    this.pointerLongitude = coordinates[0];
+    this.coordinatesSelected.emit([this.pointerLatitude, this.pointerLongitude]);
   }
 }
