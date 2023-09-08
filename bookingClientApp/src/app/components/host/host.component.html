@@ -10,8 +10,8 @@
 				<mat-label>Πόλη</mat-label>
 				<input matInput [matAutocomplete]="auto" [formControl]="cityForm" aria-label="Πόλη">
 				<mat-autocomplete #auto="matAutocomplete">
-					<mat-option *ngFor="let option of filtredCities | async" [value]="option.name">
-						<span>{{option.name}}</span>
+					<mat-option *ngFor="let city of filtredCities | async" [value]="city.name">
+						<span>{{city.name}}</span>
 					</mat-option>
 				</mat-autocomplete>
 			</mat-form-field>
@@ -28,6 +28,13 @@
 			<mat-form-field class="mat-form-field">
 				<mat-label>Αριθμός</mat-label>
 				<input matInput [(ngModel)]="addressNumber">
+			</mat-form-field>
+
+			<br>
+
+			<mat-form-field class="mat-form-field">
+				<mat-label>Περιγραφή</mat-label>
+				<input matInput [(ngModel)]="description">
 			</mat-form-field>
 
 			<br>
@@ -68,10 +75,10 @@
 
 			<mat-form-field class="mat-form-field">
 				<mat-label>Τύπος δωματίου</mat-label>
-				<mat-select [(value)]="filterRoomType">
+				<mat-select [(value)]="roomType">
 					<mat-option [value]="null">---</mat-option>
-					<mat-option *ngFor="let roomType of roomTypes" [value]="roomType">
-						{{ roomType.name }}
+					<mat-option *ngFor="let type of roomTypes" [value]="type">
+						{{ type.name }}
 					</mat-option>
 				</mat-select>
 			</mat-form-field>
@@ -152,19 +159,26 @@
 
 		<div class="defaultImageCard">
 			<span>Κύρια Φωτογραφία Δωματίου</span>
-			<img [src]="defaultRoomImage != null ? defaultRoomImage : null" class="image">
-			<input type="file" accept="image/*" (change)="onAddDefaultImage($event)"/>
+			<img [src]="defaultRoomImage" *ngIf="defaultRoomImage != null" class="image">
+			<span class="image" *ngIf="defaultRoomImage == null"></span>
+			<input type="file" accept="image/*" (change)="onAddDefaultImage($event)" class="btn"/>
 		</div>
 
 		<div class="imagesCard">
 			<span>Φωτογραφίες Δωματίου</span>
-			<div style="display: flex;">
+			<div *ngIf="images.length > 0" style="display: flex;">
 				<ng-container *ngFor="let image of images">
 					<img [src]="image" class="multipleImages">
 				</ng-container>
 			</div>
-			<input type="file" accept="image/*" (change)="onAddImage($event)" multiple="multiple"/>
+			<span class="image" *ngIf="images.length === 0"></span>
+			<input type="file" accept="image/*" (change)="onAddImage($event)" multiple="multiple" class="btn"/>
 		</div>
 
 	</div>
+</mat-card>
+
+
+<mat-card class="spaceCard">
+	<button mat-raised-button class="button" (click)="save()">Αποθήκευση δωματίου</button>
 </mat-card>

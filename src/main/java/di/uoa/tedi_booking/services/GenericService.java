@@ -3,6 +3,7 @@ package di.uoa.tedi_booking.services;
 import java.util.List;
 import java.util.Optional;
 
+import di.uoa.tedi_booking.entities.GenericEntity;
 import di.uoa.tedi_booking.repositories.GenericRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,17 @@ public abstract class GenericService<T> {
         try {
             repository.save(t);
             return ResponseEntity.status(HttpStatus.OK).body("New entry saved successfully");
+        }
+        catch(IllegalArgumentException ex){
+            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body("Persist failed. Objects was null");
+        }
+    }
+
+    @Transactional
+    public ResponseEntity<?> addWithIdInResponse(T t){
+        try {
+            T newT =repository.save(t);
+            return ResponseEntity.status(HttpStatus.OK).body(((GenericEntity) newT).getId().toString());
         }
         catch(IllegalArgumentException ex){
             return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body("Persist failed. Objects was null");

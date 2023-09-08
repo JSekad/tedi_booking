@@ -2,6 +2,7 @@ package di.uoa.tedi_booking.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,9 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(schema="tedi", name="property")
+@NamedQueries({
+        @NamedQuery(name="searchProperty", query="select p from Property p where p.owner.id = :idOwner and p.city.name = :city and p.address = :address and p.addressNumber = :addressNumber")
+})
 public class Property implements Serializable {
 
     @Id
@@ -24,11 +28,11 @@ public class Property implements Serializable {
     @JoinColumn(name = "idPerson")
     private Person owner;
 
-    @JsonIgnore
+    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "property", fetch = FetchType.LAZY)
     private Set<Room> rooms;
 
-    @JsonIgnore
+    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idPropertyType")
     private PropertyType propertyType;
@@ -39,7 +43,7 @@ public class Property implements Serializable {
     private String addressNumber;
     private String accessInformation;
 
-    @JsonIgnore
+    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idCity")
     private City city;

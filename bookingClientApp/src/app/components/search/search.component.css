@@ -65,7 +65,7 @@ button{
 }
 
 .icon{
-	vertical-align: middle;
+	/* vertical-align: text-top; */
 	margin: 0 1rem;
 }
 

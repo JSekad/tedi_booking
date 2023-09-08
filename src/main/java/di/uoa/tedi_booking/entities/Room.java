@@ -2,6 +2,7 @@ package di.uoa.tedi_booking.entities;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,9 +21,11 @@ import java.util.Set;
             " and (res is null or not(r.id = any (select rr.room.id from Reservation rr where r.id = rr.room.id and (:startDate >= rr.startDate and :startDate <= rr.endDate) or (:endDate >= rr.startDate and :endDate <= rr.endDate) " +
                 " or (:startDate <= rr.startDate and :endDate >= rr.endDate) ))) order by r.basePricePerNight")
 })
-public class Room implements Serializable {
+public class Room implements Serializable, GenericEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "room_seq")
+    @SequenceGenerator(name = "room_seq", sequenceName = "room_seq")
     private Integer id;
 
     @ManyToOne
@@ -69,7 +72,11 @@ public class Room implements Serializable {
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private Set<RoomImage> roomImages;
 
-    @OneToOne
+    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    private Set<Availability> availabilities;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="id", referencedColumnName = "idRoom")
     private RoomImageDefault defaultRoomImage;
 

@@ -16,4 +16,12 @@ public class RoomImageDefault implements Serializable {
     private Integer id;
 
     private byte[] image;
+
+    public void setImage(String data){
+        this.image = data.getBytes();
+    }
+
+    public void setImageFromMulitpart(byte[] bytes){
+        this.image = bytes;
+    }
 }

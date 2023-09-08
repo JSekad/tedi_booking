@@ -14,4 +14,8 @@ public class PropertyService extends GenericService<Property>{
         super(repository);
         this.propertyRepository = repository;
     }
+
+    public Property searchProperty(Integer idOwner, String city, String address, String addressNumber){
+        return propertyRepository.searchProperty(idOwner, city, address, addressNumber);
+    }
 }

@@ -1,7 +1,8 @@
 import { Room } from '../model/room.model';
 
-export interface RoomImage {
+export interface Availability{
 	id: number | null;
 	room: Room | null;
-	image: Blob;
+	startDate: Date;
+	endDate: Date;
 }

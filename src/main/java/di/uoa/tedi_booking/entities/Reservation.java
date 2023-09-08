@@ -17,8 +17,8 @@ import java.time.OffsetDateTime;
 public class Reservation implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
-    @SequenceGenerator(name = "sequence", sequenceName = "reservation_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reservation_seq")
+    @SequenceGenerator(name = "reservation_seq", sequenceName = "reservation_seq")
     private Integer id;
 
     @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)

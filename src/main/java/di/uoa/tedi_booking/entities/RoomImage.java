@@ -17,6 +17,8 @@ import java.io.Serializable;
 public class RoomImage implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "room_image_seq")
+    @SequenceGenerator(name = "room_image_seq", sequenceName = "room_image_seq")
     private Integer id;
 
     @JsonIgnore
@@ -25,4 +27,12 @@ public class RoomImage implements Serializable {
     private Room room;
 
     private byte[] image;
+
+    public void setImage(String data){
+        this.image = data.getBytes();
+    }
+
+    public void setImageFromMulitpart(byte[] bytes){
+        this.image = bytes;
+    }
 }
