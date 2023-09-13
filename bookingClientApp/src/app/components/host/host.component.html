@@ -194,6 +194,8 @@
 
 	<mat-drawer #drawer [mode]="'over'" [position]="'end'" class="rooms">
 
+		<span *ngIf="rooms.length === 0">Δεν έχετε καταχωρήσει δωμάτια</span>
+
 		<mat-paginator #paginator
 					(page)="changePageEvent($event)"
 					[length]="rooms.length"

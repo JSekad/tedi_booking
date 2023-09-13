@@ -133,3 +133,17 @@
 .rooms{
   width: 35%;
 }
+
+.card{
+	max-width: 300px;
+	margin: 1rem;
+}
+
+.align-center{
+	display: block;
+	text-align: center;
+}
+
+.zeroPadding{
+	padding: 0;
+}

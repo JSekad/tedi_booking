@@ -105,17 +105,20 @@ export class HostComponent {
     
   }
 
-  public findRooms(){
-    this.roomService.findOwnersRooms(this.authService.getLoggedInUser().id).subscribe({
-      next: (response: Room[]) => {
-        this.rooms = response;
-        for(let i = 0; i < this.rooms.length; i++)
-          if(this.rooms[i].defaultRoomImage != null)
-            this.rooms[i].defaultRoomImage!.image = 'data:image/jpeg;base64,' + this.rooms[i].defaultRoomImage?.image;
-       },
-      error:(error: HttpErrorResponse) => { this.message.error("Προέκυψε σφάλμα", 'Έξοδος'); }
-    })
-  }
+	public findRooms(){
+		if(this.rooms == null)
+			return;
+
+		this.roomService.findOwnersRooms(this.authService.getLoggedInUser().id).subscribe({
+			next: (response: Room[]) => {
+				this.rooms = response;
+				for(let i = 0; i < this.rooms.length; i++)
+					if(this.rooms[i].defaultRoomImage != null)
+					this.rooms[i].defaultRoomImage!.image = 'data:image/jpeg;base64,' + this.rooms[i].defaultRoomImage?.image;
+			},
+			error:(error: HttpErrorResponse) => { this.message.error("Προέκυψε σφάλμα", 'Έξοδος'); }
+		})
+	}
 
 	save(){
 
@@ -247,6 +250,8 @@ export class HostComponent {
     });
 
     this.clearInputs();
+	room.defaultRoomImage = 'data:image/jpeg;base64,' + roomImageDefault;
+	this.rooms.unshift(room);
     this.message.info("Η καταχώρηση του δωματίου έγινε με επιτυχία!")
   }
 
