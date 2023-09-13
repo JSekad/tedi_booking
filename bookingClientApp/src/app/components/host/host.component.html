@@ -204,7 +204,8 @@
 					[hidePageSize]="false"
 					[pageIndex]="pageIndex"
 					aria-label="Select page"
-					*ngIf="rooms.length > 0">
+					*ngIf="rooms.length > 0"
+					style="position: absolute">
 		</mat-paginator>
 
 		<mat-grid-list cols="2" rowHeight="1:1.2">
@@ -225,7 +226,6 @@
 			</mat-grid-tile>
 		</mat-grid-list>
 
-		<div class="bottomPaginator">
 		<mat-paginator #paginator
 					(page)="changePageEvent($event)"
 					[length]="rooms.length"
@@ -234,9 +234,9 @@
 					[hidePageSize]="false"
 					[pageIndex]="pageIndex"
 					aria-label="Select page"
-					*ngIf="rooms.length > 0" >
+					*ngIf="rooms.length > 0"
+					class="bottomPaginator">
 		</mat-paginator>
-		</div>
 
 
 	</mat-drawer>
