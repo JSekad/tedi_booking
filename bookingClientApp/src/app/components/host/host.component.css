@@ -131,7 +131,7 @@
 }
 
 .rooms{
-  width: 35%;
+  width: 40%;
 }
 
 .card{
@@ -146,4 +146,9 @@
 
 .zeroPadding{
 	padding: 0;
+}
+
+.bottomPaginator{
+  position: absolute;
+  bottom: 0; 
 }
