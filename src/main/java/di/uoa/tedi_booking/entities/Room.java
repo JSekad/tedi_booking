@@ -19,7 +19,8 @@ import java.util.Set;
             " from Room r left outer join Reservation res on res.room.id = r.id inner join Availability a on a.room.id = r.id " +
             " where r.property.city.name = :city and r.capacity >= :numOfPersons and a.startDate <= :startDate and a.endDate >= :endDate " +
             " and (res is null or not(r.id = any (select rr.room.id from Reservation rr where r.id = rr.room.id and (:startDate >= rr.startDate and :startDate <= rr.endDate) or (:endDate >= rr.startDate and :endDate <= rr.endDate) " +
-                " or (:startDate <= rr.startDate and :endDate >= rr.endDate) ))) order by r.basePricePerNight")
+                " or (:startDate <= rr.startDate and :endDate >= rr.endDate) ))) order by r.basePricePerNight"),
+        @NamedQuery(name="findOwnersRooms", query="select r from Room r where r.property.owner.id = :idOwner")
 })
 public class Room implements Serializable, GenericEntity {
 

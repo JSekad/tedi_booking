@@ -1,5 +1,6 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PageEvent } from "@angular/material/paginator";
 import { Observable, startWith, map } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -28,6 +29,9 @@ import { RoomTypeService } from 'src/app/services/room-type.service';
   styleUrls: ['./host.component.css']
 })
 export class HostComponent {
+
+
+  rooms: Room[] = [];
 
   address: string | null = null;
   addressNumber: string | null = null;
@@ -73,6 +77,7 @@ export class HostComponent {
 	startDate: Date = new Date();
 	endDate: Date = new Date();
 	events: string[] = [];
+  pageIndex: number = 0;
 
   constructor(private message: SnackBarService, private cityService: CityService, private changeDetectorRef: ChangeDetectorRef,
               private roomTypeService: RoomTypeService, private authService: AuthService,  private roomService: RoomService,
@@ -89,15 +94,27 @@ export class HostComponent {
           map(city => (city ? this.filterCities(city) : this.cities.slice()))
         )
       },
-
       error:(error: HttpErrorResponse) => { this.message.error("Προέκυψε σφάλμα", 'Έξοδος'); }
     });
 
     this.roomTypeService.getAllRoomTypes().subscribe({
       next: (response) => { this.roomTypes = response; },
-
       error:(error: HttpErrorResponse) => { this.message.error("Προέκυψε σφάλμα", 'Έξοδος'); }
     });
+
+    
+  }
+
+  public findRooms(){
+    this.roomService.findOwnersRooms(this.authService.getLoggedInUser().id).subscribe({
+      next: (response: Room[]) => {
+        this.rooms = response;
+        for(let i = 0; i < this.rooms.length; i++)
+          if(this.rooms[i].defaultRoomImage != null)
+            this.rooms[i].defaultRoomImage!.image = 'data:image/jpeg;base64,' + this.rooms[i].defaultRoomImage?.image;
+       },
+      error:(error: HttpErrorResponse) => { this.message.error("Προέκυψε σφάλμα", 'Έξοδος'); }
+    })
   }
 
 	save(){
@@ -343,6 +360,14 @@ export class HostComponent {
       this.endDate.setMinutes(now.getMinutes());
       this.endDate.setSeconds(now.getSeconds());
     }
+  }
+
+  public getLoggedInUser(): any{
+    return this.authService.getLoggedInUser();
+  }
+
+  changePageEvent(e: PageEvent){
+    this.pageIndex = e.pageIndex;
   }
 
   private formatDate(date: Date): string{

@@ -130,10 +130,6 @@ export class SearchComponent {
     this.filterMaxCost = 0;
   }
 
-  addMore(){
-    this.filtredRooms.forEach(room => this.filtredRooms.push(room));
-  }
-
   searchRooms(){
 
      if(this.searchInputValidation())

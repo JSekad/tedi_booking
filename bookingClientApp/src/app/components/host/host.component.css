@@ -122,3 +122,14 @@
   
   transition: width .2s ease-out, padding-top .2s ease-out;
 }
+
+.filterButton{
+	position: fixed;
+	margin: 0;
+	top: 65%;
+	right: 0;
+}
+
+.rooms{
+  width: 35%;
+}

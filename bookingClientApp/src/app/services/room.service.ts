@@ -14,4 +14,8 @@ export class RoomService {
   public addNewRoom(newRoom: any): Observable<any>{
     return this.http.post<Room>(`${this.apiServerUrl}/room/newRoom`, newRoom, {observe : 'response'});
   }
+
+  public findOwnersRooms(idOwner: number): Observable<Room[]>{
+    return this.http.get<Room[]>(`${this.apiServerUrl}/room/findOwnersRooms/${idOwner}`);
+  }
 }

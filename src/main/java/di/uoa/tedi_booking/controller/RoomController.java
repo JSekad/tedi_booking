@@ -37,4 +37,9 @@ public class RoomController extends GenericController<Room>{
 //        Availability a = room.getAvailabilities().iterator().next();
         return service.addWithIdInResponse(room);
     }
+
+    @GetMapping(path = "/findOwnersRooms/{idOwner}")
+    public @ResponseBody List<Room> findOwnersRooms(@PathVariable Integer idOwner){
+        return roomService.findOwnersRooms(idOwner);
+    }
 }

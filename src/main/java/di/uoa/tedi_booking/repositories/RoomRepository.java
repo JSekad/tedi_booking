@@ -12,4 +12,7 @@ public interface RoomRepository extends GenericRepository<Room>{
 
     @Query(name = "searchAvailableRooms")
     List<Room> searchAvailableRooms(String city, LocalDate startDate, LocalDate endDate, Integer numOfPersons);
+
+    @Query(name="findOwnersRooms")
+    List<Room> findOwnersRooms(Integer idOwner);
 }
