@@ -5,6 +5,7 @@ import {TestComponent} from "./components/test/test.component";
 import {SearchComponent} from "./components/search/search.component";
 import {ReservationComponent} from "./components/reservation/reservation.component";
 import { AdminComponent } from './components/admin/admin.component';
+import {ChatComponent} from "./components/chat/chat.component";
 
 
 const routes: Routes = [
@@ -12,7 +13,8 @@ const routes: Routes = [
   { path: 'test', component: TestComponent},
   { path: 'search', component: SearchComponent},
   { path: 'reservation', component: ReservationComponent},
-  { path: 'admin', component: AdminComponent}
+  { path: 'admin', component: AdminComponent},
+  { path: 'chat', component: ChatComponent}
   // { path: 'signup', component: SignUpComponent, canActivate: [IsNotAuthGuard]},
   // { path: 'map', component: MapComponent},
   // { path: 'pois', component: PoisComponent, canActivate: [IsAuthGuard, RolesGuard], data:{roles: ['POI_OWNER']}},

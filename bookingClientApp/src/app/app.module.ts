@@ -39,6 +39,8 @@ import {MatMenuModule} from "@angular/material/menu";
 import { AdminComponent } from './components/admin/admin.component';
 import {MatDividerModule} from "@angular/material/divider";
 import {MatSelectModule} from "@angular/material/select";
+import { ChatComponent } from './components/chat/chat.component';
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -49,39 +51,41 @@ import {MatSelectModule} from "@angular/material/select";
     ReservationComponent,
     OpenstreetmapComponent,
     AdminComponent,
+    ChatComponent,
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        AppRoutingModule,
-        FormsModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        MatDialogModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatButtonModule,
-        MatTableModule,
-        MatCheckboxModule,
-        MatSelectModule,
-        MatNativeDateModule,
-        MatPaginatorModule,
-        MatDatepickerModule,
-        MatFormFieldModule,
-        CommonModule,
-        MatSnackBarModule,
-        MatAutocompleteModule,
-        NgImageSliderModule,
-        MatTooltipModule,
-        AngularOpenlayersModule,
-        MatMenuModule,
-        MatGridListModule,
-        MatSidenavModule,
-        MatDividerModule,
-        MatSelectModule
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    CommonModule,
+    MatSnackBarModule,
+    MatAutocompleteModule,
+    NgImageSliderModule,
+    MatTooltipModule,
+    AngularOpenlayersModule,
+    MatMenuModule,
+    MatGridListModule,
+    MatSidenavModule,
+    MatDividerModule,
+    MatSelectModule,
+    MatListModule
+  ],
   providers: [
     SearchService,
     {

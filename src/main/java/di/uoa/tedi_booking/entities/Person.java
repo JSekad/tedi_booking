@@ -38,13 +38,6 @@ public class Person implements Serializable {
 //    @PrimaryKeyJoinColumn
 //    private User user;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "sender")
-    private Set<Chat> messagesSend;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "reciever")
-    private Set<Chat> messagesRecieved;
 
     @JsonIgnore
     @OneToMany(mappedBy = "guest")

@@ -2,10 +2,12 @@ package di.uoa.tedi_booking.controller;
 
 import di.uoa.tedi_booking.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import di.uoa.tedi_booking.entities.User;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -20,10 +22,21 @@ public class UserController extends GenericController<User>{
         this.userService = service;
     }
 
+
+
     @GetMapping(path = "/usersMeAitimaEggrafis")
     public  ResponseEntity<List<User>> usersMeAitimaEggrafis(){
         List<User> users = userService.usersMeAitimaEggrafis();
         System.out.println(users);
         return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/getbyusername/{username}")
+    public ResponseEntity<User> getUserByUserName(@PathVariable String username) throws IOException {
+        try{
+            return new ResponseEntity<User>(userService.getUserByUserName(username), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity("User not Found", HttpStatus.NOT_FOUND);
+        }
     }
 }

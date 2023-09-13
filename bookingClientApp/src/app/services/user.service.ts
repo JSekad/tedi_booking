@@ -19,4 +19,9 @@ export class UserService {
     return this.http.post<any>(`${this.apiServerUrl}/user/update`, user, { observe: 'response' });
   }
 
+  // getAll() {
+  //   return this.http.get<User[]>(this.apiServerUrl + "/user/getall")
+  // }
+
+
 }

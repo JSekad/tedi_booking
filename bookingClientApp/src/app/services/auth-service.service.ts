@@ -34,27 +34,30 @@ export class AuthService {
   refreshPage():void {
     this.refreshtoken().subscribe(
       (response) => {
-        console.log("OK1")
-        if (response['access_token'] && response['access_token'].length < 100) {
-          // The access_token contains the substring "error"
-          this.message.warn("Η συνεδρία σας έχει τελειώσει παρακαλώ συνδεθείτε ξανά");
-          this.router.navigate(['/']);
-        } else {
+        // if (response.status === 403) {
+        //   // The access_token contains the substring "error"
+        //   this.message.warn("Η συνεδρία σας έχει τελειώσει παρακαλώ συνδεθείτε ξανά");
+        //   this.clearJwtToken();
+        //   this.router.navigate(['/']);
+        // } else {
           // Handle the successful login response here
-          console.log("OK3")
           this.storeJwtToken(response['access_token']);
           this.setLoggedInUser(this.decodeJwtToken(response['access_token']));
-        }
+        // }
 
     this.setLoggedInUser(this.decodeJwtToken(response['access_token']));
-  })
+  },(error) => {
+          // The access_token contains the substring "error"
+          this.message.warn("Η συνεδρία σας έχει τελειώσει παρακαλώ συνδεθείτε ξανά");
+          this.clearJwtToken();
+          this.router.navigate(['/']);
+
+      })
   }
 
   setLoggedInUser(value: any): void {
     //TODO SET USER DETAILS
     this.loggedInUser = JSON.parse(value.sub);
-    console.log(this.loggedInUser);
-    console.log(this.loggedInUser.roles);
     this.userRoles = this.loggedInUser.roles
     this.selectedRole = this.userRoles.find((obj: {alias: string, name: string}) => {
       if (obj.alias === "owner") return obj;
@@ -62,7 +65,6 @@ export class AuthService {
       if (obj.alias === "admin") return obj;
       return null;
     })
-    console.log(this.selectedRole);
     this.loggedInUserChange.next(JSON.parse(value.sub));
     if (this.selectedRole.alias === 'admin') this.router.navigate(['/admin']);
   }
@@ -103,6 +105,7 @@ export class AuthService {
 
   clearJwtToken(): void {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('username');
     this.loggedInUser = null;
     this.selectedRole = null;
     this.loggedInUserChange.next(null);
