@@ -19,38 +19,22 @@
         <mat-card-subtitle>{{luser?.email}}</mat-card-subtitle>
       </mat-card-header>
     </mat-card>
-    <button mat-menu-item (click)="printUser()">Who Am I</button>
-    <!-- Add menu items for user capabilities (e.g., logout) -->
+    <button mat-menu-item (click)="toggleUserDiv()">My Chats</button>
     <button mat-menu-item (click)="logout()">Logout</button>
   </mat-menu>
 
-
 </div>
 
-<!--<div id="popup" class="popup">-->
-<!--  <button class="exit-button" id="closePopup">X</button>-->
-<!--  <label for="username">UserName:</label>-->
-<!--  <input type="text" id="username">-->
-<!--  <label for="password">PassWord:</label>-->
-<!--  <input type="password" id="password" >-->
-<!--  <button class="submit-button" id="submitBtn">Submit</button>-->
-<!--</div>-->
+<div>
+  <div *ngFor="let presentation of alluser" class="user" (click)="goToChat(presentation.username)">
+    <div *ngIf="presentation.username != check">
+      {{presentation.username}}
+<!--      <div *ngFor="let currentchat of chatData">-->
+<!--          {{currentchat.roomId}}-->
+<!--      </div>-->
+    </div>
 
-<!--<mat-dialog-content>-->
-<!--  <h2>Enter Username and Password</h2>-->
-<!--  <mat-form-field>-->
-<!--    <input matInput placeholder="Username" [(ngModel)]="username">-->
-<!--  </mat-form-field>-->
-<!--  <mat-form-field>-->
-<!--    <input matInput type="password" placeholder="Password" [(ngModel)]="password">-->
-<!--  </mat-form-field>-->
-<!--</mat-dialog-content>-->
-
-<!--<mat-dialog-actions align="end">-->
-<!--  <button mat-button (click)="onSubmit()">Submit</button>-->
-<!--  <button mat-icon-button mat-dialog-close>-->
-<!--    <mat-icon>close</mat-icon>-->
-<!--  </button>-->
-<!--</mat-dialog-actions>-->
+  </div>
+</div>
 
 <router-outlet> </router-outlet>

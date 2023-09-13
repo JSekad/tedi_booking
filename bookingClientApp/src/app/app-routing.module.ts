@@ -6,6 +6,7 @@ import {SearchComponent} from "./components/search/search.component";
 import {ReservationComponent} from "./components/reservation/reservation.component";
 import { AdminComponent } from './components/admin/admin.component';
 import { HostComponent } from './components/host/host.component';
+import {ChatComponent} from "./components/chat/chat.component";
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'test', component: TestComponent},
   { path: 'search', component: SearchComponent},
   { path: 'reservation', component: ReservationComponent},
+  { path: 'chat', component: ChatComponent},
   { path: 'host', component: HostComponent},
   { path: 'admin', component: AdminComponent}
   // { path: 'signup', component: SignUpComponent, canActivate: [IsNotAuthGuard]},

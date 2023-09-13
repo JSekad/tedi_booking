@@ -16,8 +16,13 @@ import java.util.*;
 @Getter
 @Setter
 @Table(schema="tedi", name="user")
+@NamedQueries({
+        @NamedQuery(name="findByUserName",query = "select u from User u where u.userName = :username")
+})
 @NamedNativeQueries({
-        @NamedNativeQuery(name="usersMeAitimaEggrafis", query="select p.*,u.*,r.id,r.name as rolename,r.alias from user u inner join person p on u.id = p.id inner join rolesofusers rou on u.id = rou.iduser inner join role r on rou.idrole = r.id where rou.idRole = 3 and u.approved is null",resultClass = User.class)
+        @NamedNativeQuery(name="usersMeAitimaEggrafis", query="select p.*,u.*,r.id,r.name as rolename,r.alias from user u inner join person p on u.id = p.id inner join rolesofusers rou on u.id = rou.iduser inner join role r on rou.idrole = r.id where rou.idRole = 3 and u.approved is null",resultClass = User.class),
+
+        @NamedNativeQuery(name="usersForChat", query="select p.*,u.* from user u inner join person p on u.id = p.id where u.id in (select c.idUserSecond from  chat c where c.idUserFirst = :userid UNION select c.idUserFirst from chat c where c.idUserSecond = :userid)",resultClass = User.class)
 })
 public class User extends Person implements UserDetails{
 
@@ -44,17 +49,21 @@ public class User extends Person implements UserDetails{
     )
     private Set<Role> roles = new HashSet<>();
 
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "sender")
+//    private Set<Chat> messagesSend;
+//
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "reciever")
+//    private Set<Chat> messagesRecieved;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        String authString = "";
-        for (Role r: roles) {
-            authString += r.getAlias();
-            authString += ',';
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        for (Role r : roles) {
+            authorities.add(new SimpleGrantedAuthority(r.getAlias()));
         }
-        if (authString.endsWith(",")) {
-            authString = authString.substring(0, authString.length() - 1);
-        }
-        return List.of(new SimpleGrantedAuthority(authString));
+        return authorities;
     }
 
     @Override

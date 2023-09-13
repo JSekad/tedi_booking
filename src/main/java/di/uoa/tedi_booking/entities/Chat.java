@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,25 +16,26 @@ import java.time.OffsetDateTime;
 public class Chat implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String message;
-    private OffsetDateTime sendTimestamp;
-    @Column(columnDefinition = "TINYINT(1)")
-    private Boolean readStatus;
+    @OneToMany(mappedBy = "chat", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Message> messageList;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idSender")
-    private Person sender;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idUserFirst")
+    private User firstUser;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idReciever")
-    private Person reciever;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idUserSecond")
+    private User secondUser;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idReservation")
-    private Reservation reservation;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "idRoom")
+    private Room conversationForRoom;
+
 }

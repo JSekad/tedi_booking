@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService extends GenericService<User>{
@@ -21,11 +22,21 @@ public class UserService extends GenericService<User>{
         this.userRepository = repository;
     }
 
+
     @Transactional
     public List<User> usersMeAitimaEggrafis(){
         List<User> users = userRepository.usersMeAitimaEggrafis();
         users.forEach(user -> Hibernate.initialize(user.getRoles()));
         return users;
+    }
+
+    public User getUserByUserName(String username) throws Exception {
+        User user1 = userRepository.getUserByUserName(username);
+        if (user1 != null){
+            return user1;
+        }else {
+            throw new Exception();
+        }
     }
 
 }
