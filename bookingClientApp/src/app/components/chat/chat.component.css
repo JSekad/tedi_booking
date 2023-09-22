@@ -236,7 +236,7 @@ html {
 .msg_cotainer {
   margin-top: auto;
   margin-bottom: auto;
-  margin-left: 10px;
+  margin-left: 150px;
   border-radius: 25px;
   background-color: #a9ece6;
   padding: 10px;
@@ -246,7 +246,7 @@ html {
 .msg_cotainer_send {
   margin-top: auto;
   margin-bottom: auto;
-  margin-right: 10px;
+  margin-right: 150px;
   border-radius: 25px;
   background-color: #91fea9;
   padding: 10px;
