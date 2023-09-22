@@ -74,14 +74,27 @@ body {
   border: 1px solid blueviolet;
   border-radius: 6px;
   margin: 4px 4px 4px 4px;
-  background: cornsilk;
-  height: 20px;
-  width: 70px;
+  background: dodgerblue;
+  height: 50px;
+  width: 200px;
   /* Remove display: flex; */
    justify-content: center;
    text-align: center;
   display: flex;
 }
+.chat {
+  border: 1px solid blueviolet;
+  border-radius: 6px;
+  margin: 4px 4px 4px 4px;
+  background: lightblue;
+  height: 20px;
+  width: 80px;
+  /* Remove display: flex; */
+  justify-content: center;
+  text-align: center;
+  display: flex;
+}
+
 
 .user:hover {
   border: 1px solid red;

@@ -48,14 +48,30 @@ public class ChatService extends GenericService<Chat>{
     @Transactional
     public ChatDTO addChat(ChatDTO chat)  {
         Chat realChat = new Chat();
-        realChat.setMessageList(chat.messageList);
+
         try {
-            realChat.setFirstUser(userRepository.getUserByUserName(chat.firstUserName));
-            realChat.setSecondUser(userRepository.getUserByUserName(chat.secondUserName));
+            realChat.setFirstUser(userRepository.findById(Long.parseLong(chat.firstUserName)).orElse(null));
+            realChat.setSecondUser(userRepository.findById(Long.parseLong(chat.secondUserName)).orElse(null));
+            realChat.setConversationForRoom(roomRepository.findById((long) chat.roomId).orElse(null));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        realChat.setConversationForRoom(roomRepository.findById((long) chat.roomId).orElse(null));
+
+
+        HashSet<Chat> chat1 = chatRepository.getChatByFirstUserAndSecondUserAndConversationForRoom(realChat.getFirstUser(), realChat.getSecondUser(),realChat.getConversationForRoom());
+        HashSet<Chat> chat2 = chatRepository.getChatBySecondUserAndFirstUserAndConversationForRoom(realChat.getFirstUser(), realChat.getSecondUser(),realChat.getConversationForRoom());
+
+        HashSet<ChatDTO> chat3 = ChatConverter.convertToChatDTOSet(chat1);
+        HashSet<ChatDTO> chat4 = ChatConverter.convertToChatDTOSet(chat2);
+
+        if (!chat3.isEmpty()) {
+            return chat3.iterator().next();
+        } else if (!chat4.isEmpty()) {
+            return chat4.iterator().next();
+        }
+
+        realChat.setMessageList(chat.messageList);
+
         realChat = chatRepository.save(realChat);
 
         ChatDTO returnchatDTO = new ChatDTO();

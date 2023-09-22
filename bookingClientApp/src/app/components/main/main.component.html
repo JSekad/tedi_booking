@@ -19,6 +19,7 @@
         <mat-card-subtitle>{{luser?.email}}</mat-card-subtitle>
       </mat-card-header>
     </mat-card>
+    <button mat-menu-item (click)="goToEdit()">Edit Details</button>
     <button mat-menu-item (click)="toggleUserDiv()">My Chats</button>
     <button mat-menu-item (click)="logout()">Logout</button>
   </mat-menu>
@@ -26,14 +27,13 @@
 </div>
 
 <div>
-  <div *ngFor="let presentation of alluser" class="user" (click)="goToChat(presentation.username)">
+  <div *ngFor="let presentation of alluser" class="user" (click)="goToChats(presentation.username)">
     <div *ngIf="presentation.username != check">
-      {{presentation.username}}
-<!--      <div *ngFor="let currentchat of chatData">-->
-<!--          {{currentchat.roomId}}-->
-<!--      </div>-->
+        {{presentation.username}}
     </div>
-
+  </div>
+  <div *ngFor="let chat of chatData" class="chat" (click)="goToChat(chat.chatId)">
+    {{chat.roomId}}
   </div>
 </div>
 

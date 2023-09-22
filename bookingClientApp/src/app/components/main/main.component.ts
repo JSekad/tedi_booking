@@ -8,6 +8,7 @@ import {User} from "../../model/user.model";
 import {ChatService} from "../../services/chat.service";
 import { Chat } from '../../model/chat.model';
 import {Router} from "@angular/router";
+import {SnackBarService} from "../../services/snackBar.service";
 
 
 
@@ -33,11 +34,12 @@ export class MainComponent {
       this.getAllUsersForChat();
       this.showUserDiv = !this.showUserDiv;
     }else{
+      this.alluser = null;
       this.showUserDiv = false;
     }
   }
 
-  constructor(public dialog:MatDialog, private authService: AuthService,private chatService: ChatService,private router: Router){
+  constructor(public dialog:MatDialog, private authService: AuthService,private chatService: ChatService,private router: Router, private message: SnackBarService){
       this.authService.loggedInUserChange.subscribe(user => {
       this.loggedIn = !!user;
       this.luser = user as User;
@@ -74,71 +76,38 @@ export class MainComponent {
     // }, 1000);
 
   }
-  //TODO CHATS
-  // goToChats(username: any) {
-  //   this.chatService.getChatByFirstUserNameAndSecondUserName(username, sessionStorage.getItem("username")?? '').subscribe(
-  //     (data) => {
-  //       this.chatData = data;
-  //       console.log(this.chatData)
-  //     },
-  //     (error) => {
-  //       if (error.status == 404) {
-  //         this.chatObj.firstUserName = sessionStorage.getItem("username")?? '';
-  //         this.chatObj.secondUserName = username;
-  //         this.chatObj.roomId = 2;
-  //         this.chatService.createChatRoom(this.chatObj).subscribe(
-  //           (data) => {
-  //             this.chatData = data;
-  //           })
-  //       } else {
-  //
-  //       }
-  //     });
-  //
-  // }
-
-  //
-  goToChat(username: any) {
+  // TODO CHATS
+  goToChats(username: any) {
     this.chatService.getChatByFirstUserNameAndSecondUserName(username, sessionStorage.getItem("username")?? '').subscribe(
       (data) => {
-        this.chatId = data[0].chatId;
-        sessionStorage.setItem("chatId", this.chatId);
-
-        sessionStorage.setItem("gotochat", "false");
-        this.router.navigateByUrl('/chat');
+        this.chatData = data;
+        console.log(this.chatData)
       },
       (error) => {
-        if (error.status == 404) {
-          this.chatObj.firstUserName = sessionStorage.getItem("username")?? '';
-          this.chatObj.secondUserName = username;
-          this.chatObj.roomId = 1;
-          this.chatService.createChatRoom(this.chatObj).subscribe(
-            (data) => {
-              this.chatData = data;
-              this.chatId = this.chatData.chatId;
-              sessionStorage.setItem("chatId", this.chatData.chatId);
-
-              sessionStorage.setItem("gotochat", "false");
-              this.router.navigateByUrl('/chat');
-            })
-        } else {
-
-        }
+        this.message.warn("Δεν έχετε συνομιλίες");
       });
 
   }
 
 
-  // ngOnInit() {
-  //   this.authService.loggedInUserObservable.subscribe(data => {
-  //     console.log('here we are:',data)
-  //     this.loggedIn = !!data;
-  //   });
-  // }
+  goToChat(chatId: any) {
+    this.chatId = chatId
+    sessionStorage.setItem("chatId", chatId);
+    // sessionStorage.setItem("gotochat", "false");
+    this.router.navigateByUrl('/chat');
+    this.alluser = null;
+    this.chatData = null;
+    this.showUserDiv = false;
+  }
+
 
   logout(): void {
     this.authService.logoutUser();
     this.alluser = null;
+  }
+
+  goToEdit(): void {
+    console.log("EDIT")
   }
 
 

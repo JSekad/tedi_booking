@@ -13,6 +13,8 @@ import { ReservationService } from 'src/app/services/reservation.service';
 import { RoomImageService } from '../../services/room-image.service';
 import { HostPhotoService } from '../../services/host-photo.service';
 import { SnackBarService } from 'src/app/services/snackBar.service';
+import {Chat} from "../../model/chat.model";
+import {ChatService} from "../../services/chat.service";
 
 @Component({
   selector: 'app-reservation',
@@ -29,10 +31,12 @@ export class ReservationComponent {
   endDate: Date;
   images: any[] = [];
   imagesSlider: any[] = [];
+  chat: Chat = new Chat();
+  public chatData: any = [];
 
   constructor(private router: Router, private message: SnackBarService, private hostPhotoService: HostPhotoService,
               private roomImageService: RoomImageService, private reservationService: ReservationService,
-              private authService: AuthService){
+              private authService: AuthService,private chatServive: ChatService){
     const navigation = this.router.getCurrentNavigation();
     const state = navigation?.extras.state as {
       user: User;
@@ -98,6 +102,21 @@ export class ReservationComponent {
   private formatDate(date: Date): string{
     var splitDate = date.toLocaleDateString().split('/');
     return splitDate[2] + '-' + (splitDate[1].length === 1 ? '0' + splitDate[1] : splitDate[1]) + '-' + (splitDate[0].length === 1 ? '0' + splitDate[0] : splitDate[0]);
+  }
+
+
+  chatWith():void{
+    this.chat.firstUserName = this.authService.getLoggedInUser()? `${this.authService.getLoggedInUser().id}` : '';
+    this.chat.secondUserName = this.room.property.owner.id ? `${this.room.property.owner.id}` : '';
+    this.chat.roomId = this.room.id;
+    this.chatServive.createChatRoom(this.chat).subscribe(
+      (data) => {
+        this.chatData = data;
+        console.log(this.chatData)
+        sessionStorage.setItem("chatId", this.chatData.chatId);
+        // sessionStorage.setItem("gotochat", "false");
+        this.router.navigateByUrl('/chat');
+      })
   }
 
 }
