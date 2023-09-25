@@ -42,6 +42,7 @@ import {MatSelectModule} from "@angular/material/select";
 import { ChatComponent } from './components/chat/chat.component';
 import {MatListModule} from "@angular/material/list";
 import { HostComponent } from './components/host/host.component';
+import { EdituserComponent } from './components/edituser/edituser.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { HostComponent } from './components/host/host.component';
     AdminComponent,
     HostComponent,
     ChatComponent,
+    EdituserComponent,
   ],
   imports: [
     BrowserModule,

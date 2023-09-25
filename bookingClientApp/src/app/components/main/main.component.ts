@@ -94,7 +94,7 @@ export class MainComponent {
     this.chatId = chatId
     sessionStorage.setItem("chatId", chatId);
     // sessionStorage.setItem("gotochat", "false");
-    this.router.navigateByUrl('/chat');
+    this.router.navigate(['/chat']);
     this.alluser = null;
     this.chatData = null;
     this.showUserDiv = false;
@@ -108,6 +108,7 @@ export class MainComponent {
 
   goToEdit(): void {
     console.log("EDIT")
+    this.router.navigate(['/edituser']);
   }
 
 

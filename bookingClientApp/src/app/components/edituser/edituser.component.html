@@ -1,0 +1,49 @@
+<mat-card class="edit-user">
+  <mat-card-header>
+    <mat-card-title>Edit User Details</mat-card-title>
+  </mat-card-header>
+  <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+    <mat-card-content>
+      <mat-form-field class="form-group">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" id="name" name="name" [(ngModel)]="user.name" required>
+      </mat-form-field>
+
+      <mat-form-field class="form-group">
+        <mat-label>Surname</mat-label>
+        <input matInput type="text" id="surname" name="surname" [(ngModel)]="user.surname" required>
+      </mat-form-field>
+
+      <mat-form-field class="form-group">
+        <mat-label>Birth Date</mat-label>
+        <input matInput type="date" id="birthDate" name="birthDate" [(ngModel)]="user.birthDate" required>
+      </mat-form-field>
+
+      <mat-form-field class="form-group">
+        <mat-label>ID Number</mat-label>
+        <input matInput type="text" id="idNumber" name="idNumber" [(ngModel)]="user.idNumber" required>
+      </mat-form-field>
+
+      <mat-form-field class="form-group">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" id="email" name="email" [(ngModel)]="user.email" required>
+      </mat-form-field>
+
+      <mat-form-field class="form-group">
+        <mat-label>Phone Number</mat-label>
+        <input matInput type="tel" id="phoneNumber" name="phoneNumber" [(ngModel)]="user.phoneNumber" required>
+      </mat-form-field>
+
+      <mat-form-field class="form-group">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" id="password" name="password" [(ngModel)]="user.password" required>
+      </mat-form-field>
+
+      <!-- Add file input for uploading a photo here -->
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Save</button>
+    </mat-card-actions>
+  </form>
+</mat-card>
