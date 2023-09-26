@@ -1,49 +1,71 @@
 <mat-card class="edit-user">
-  <mat-card-header>
-    <mat-card-title>Edit User Details</mat-card-title>
-  </mat-card-header>
+
   <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+    <mat-card-header>
+      <mat-card-title>Επεξεργασία Στοιχεία Χρήστη</mat-card-title>
+    </mat-card-header>
     <mat-card-content>
-      <mat-form-field class="form-group">
-        <mat-label>Name</mat-label>
-        <input matInput type="text" id="name" name="name" [(ngModel)]="user.name" required>
-      </mat-form-field>
+      <div style="display: flex;flex-direction: column">
+        <mat-form-field class="form-group">
+          <mat-label>Όνομα</mat-label>
+          <input matInput type="text" id="name" name="name" [(ngModel)]="user.name" required>
+        </mat-form-field>
 
-      <mat-form-field class="form-group">
-        <mat-label>Surname</mat-label>
-        <input matInput type="text" id="surname" name="surname" [(ngModel)]="user.surname" required>
-      </mat-form-field>
+        <mat-form-field class="form-group">
+          <mat-label>Επώνυμο</mat-label>
+          <input matInput type="text" id="surname" name="surname" [(ngModel)]="user.surname" required>
+        </mat-form-field>
 
-      <mat-form-field class="form-group">
-        <mat-label>Birth Date</mat-label>
-        <input matInput type="date" id="birthDate" name="birthDate" [(ngModel)]="user.birthDate" required>
-      </mat-form-field>
+        <mat-form-field class="form-group">
+          <mat-label>Ημερομηνία Γέννησης</mat-label>
+          <input matInput [matDatepicker]="picker" placeholder="Select a date" name="birthdate" [(ngModel)]="selectedDate" (dateChange)="updateBirthDate($event)" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
 
-      <mat-form-field class="form-group">
-        <mat-label>ID Number</mat-label>
-        <input matInput type="text" id="idNumber" name="idNumber" [(ngModel)]="user.idNumber" required>
-      </mat-form-field>
+        <mat-form-field class="form-group">
+          <mat-label>Αριθμός Ταυτότητας - Διαβατηρίου</mat-label>
+          <input matInput type="text" id="idNumber" name="idNumber" [(ngModel)]="user.idNumber" required>
+        </mat-form-field>
 
-      <mat-form-field class="form-group">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" id="email" name="email" [(ngModel)]="user.email" required>
-      </mat-form-field>
+        <mat-form-field class="form-group">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" id="email" name="email" [(ngModel)]="user.email" required>
+        </mat-form-field>
 
-      <mat-form-field class="form-group">
-        <mat-label>Phone Number</mat-label>
-        <input matInput type="tel" id="phoneNumber" name="phoneNumber" [(ngModel)]="user.phoneNumber" required>
-      </mat-form-field>
-
-      <mat-form-field class="form-group">
-        <mat-label>Password</mat-label>
-        <input matInput type="password" id="password" name="password" [(ngModel)]="user.password" required>
-      </mat-form-field>
-
-      <!-- Add file input for uploading a photo here -->
+        <mat-form-field class="form-group">
+          <mat-label>Αριθμός Τηλεφώνου</mat-label>
+          <input matInput type="tel" id="phoneNumber" name="phoneNumber" [(ngModel)]="user.phoneNumber" required>
+        </mat-form-field>
+      </div>
     </mat-card-content>
-
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Save</button>
+      <button mat-raised-button color="primary" type="submit">Αποθήκευση</button>
+    </mat-card-actions>
+  </form>
+      <div style="border-top: 1px solid #ccc;margin: 16px 0;"></div>
+  <form (ngSubmit)="onSubmitPassword()" #passwordForm="ngForm">
+    <mat-card-header>
+      <mat-card-title>Αλλαγή κωδικού Χρήστη</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div style="display: flex;flex-direction: column">
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput type="password" id="password" name="password" [(ngModel)]="user.password" required>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Confirm Password</mat-label>
+          <input matInput type="password" id="confirmPassword" required>
+          <div *ngIf="passwordForm.hasError('passwordMismatch')">
+            Passwords do not match.
+          </div>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Change Password</button>
     </mat-card-actions>
   </form>
 </mat-card>

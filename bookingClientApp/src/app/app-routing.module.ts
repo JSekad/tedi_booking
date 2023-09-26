@@ -8,6 +8,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { HostComponent } from './components/host/host.component';
 import {ChatComponent} from "./components/chat/chat.component";
 import {EdituserComponent} from "./components/edituser/edituser.component";
+import {AuthGuard} from "./authguards/auth-guard.guard";
 
 
 const routes: Routes = [
@@ -15,10 +16,10 @@ const routes: Routes = [
   { path: 'test', component: TestComponent},
   { path: 'search', component: SearchComponent},
   { path: 'reservation', component: ReservationComponent},
-  { path: 'chat', component: ChatComponent},
+  { path: 'chat', component: ChatComponent, canActivate: [AuthGuard]},
   { path: 'host', component: HostComponent},
-  { path: 'admin', component: AdminComponent},
-  { path: 'edituser', component: EdituserComponent}
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
+  { path: 'edituser', component: EdituserComponent, canActivate: [AuthGuard] }
   // { path: 'signup', component: SignUpComponent, canActivate: [IsNotAuthGuard]},
   // { path: 'map', component: MapComponent},
   // { path: 'pois', component: PoisComponent, canActivate: [IsAuthGuard, RolesGuard], data:{roles: ['POI_OWNER']}},
