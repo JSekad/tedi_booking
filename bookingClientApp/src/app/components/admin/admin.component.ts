@@ -25,7 +25,7 @@ export class AdminComponent {
 
   ngOnInit(){
     this.userService.usersMeAitimaEggrafis().subscribe({
-      next: (response: any) => { 
+      next: (response: any) => {
           this.users = response;
           this.dataSource = new MatTableDataSource<User>(this.users);
         },
@@ -40,11 +40,24 @@ export class AdminComponent {
       u.dateApproved = new Date();
     });
 
+    var successfulApprovalCount = 0;
+
     for(let user of this.selection.selected){
       this.userService.updateUser(user).subscribe({
         error: (error: HttpErrorResponse) => {
           if(error.status != 200)
             this.message.error("Προέκυψε σφάλμα!", "Έξοδος");
+          else if(error.status === 200){
+            successfulApprovalCount++;
+            var index = this.users.indexOf(user, 0);
+            if(index > -1)
+              this.users.splice(index, 1);
+
+            if(successfulApprovalCount == this.selection.selected.length){
+              this.dataSource = new MatTableDataSource<User>(this.users);
+              this.message.info("Οι χρήστες εγκρίθηκαν");
+            }
+          }
         }
       });
     }

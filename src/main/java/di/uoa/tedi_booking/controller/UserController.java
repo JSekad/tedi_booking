@@ -24,8 +24,6 @@ public class UserController extends GenericController<User>{
         this.userService = service;
     }
 
-
-
     @GetMapping(path = "/usersMeAitimaEggrafis")
     public  ResponseEntity<List<User>> usersMeAitimaEggrafis(){
         List<User> users = userService.usersMeAitimaEggrafis();
@@ -49,5 +47,14 @@ public class UserController extends GenericController<User>{
 //            return new ResponseEntity("User not Found", HttpStatus.NOT_FOUND);
 //        }
 //    }
+
+    @PostMapping("/approveUser")
+    public ResponseEntity<?> approveUser(@RequestParam(value = "idUser") String idUser){
+        int rowsUpdated = userService.approveUser(Integer.parseInt(idUser));
+        if(rowsUpdated != 1)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User approval failed");
+        else
+            return ResponseEntity.status(HttpStatus.OK).body("User approval succeed");
+    }
 
 }

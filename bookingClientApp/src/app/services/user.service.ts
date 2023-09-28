@@ -16,12 +16,9 @@ export class UserService {
   }
 
   public updateUser(user: User): Observable<any>{
-    return this.http.post<any>(`${this.apiServerUrl}/user/update`, user, { observe: 'response' });
+    const formData: FormData = new FormData();
+    formData.append('idUser', user.id.toString());
+    return this.http.post<any>(`${this.apiServerUrl}/user/approveUser`, formData, { observe: 'response' });
   }
-
-  // getAll() {
-  //   return this.http.get<User[]>(this.apiServerUrl + "/user/getall")
-  // }
-
 
 }

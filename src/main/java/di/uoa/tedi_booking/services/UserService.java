@@ -4,6 +4,7 @@ import di.uoa.tedi_booking.entities.User;
 import di.uoa.tedi_booking.repositories.UserRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,11 @@ public class UserService extends GenericService<User>{
         }else {
             throw new Exception();
         }
+    }
+
+    @Transactional
+    public int approveUser(Integer idUser){
+        return userRepository.approveUser(idUser);
     }
 
 }

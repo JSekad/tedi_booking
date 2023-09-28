@@ -4,7 +4,9 @@ import di.uoa.tedi_booking.entities.PropertyType;
 import di.uoa.tedi_booking.entities.User;
 import jakarta.persistence.NamedQuery;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,5 +25,7 @@ public interface UserRepository extends GenericRepository<User> {
     @Query(name = "usersForChat")
     List<User> findAllUsersForChat(int userid) throws Exception;
 
-
+    @Modifying(clearAutomatically = true)
+    @Query(name="approveUser")
+    int approveUser(Integer idUser);
 }

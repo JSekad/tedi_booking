@@ -22,7 +22,8 @@ import java.util.*;
 @NamedNativeQueries({
         @NamedNativeQuery(name="usersMeAitimaEggrafis", query="select p.*,u.*,r.id,r.name as rolename,r.alias from user u inner join person p on u.id = p.id inner join rolesofusers rou on u.id = rou.iduser inner join role r on rou.idrole = r.id where rou.idRole = 3 and u.approved is null",resultClass = User.class),
 
-        @NamedNativeQuery(name="usersForChat", query="select p.*,u.* from user u inner join person p on u.id = p.id where u.id in (select c.idUserSecond from  chat c where c.idUserFirst = :userid UNION select c.idUserFirst from chat c where c.idUserSecond = :userid)",resultClass = User.class)
+        @NamedNativeQuery(name="usersForChat", query="select p.*,u.* from user u inner join person p on u.id = p.id where u.id in (select c.idUserSecond from  chat c where c.idUserFirst = :userid UNION select c.idUserFirst from chat c where c.idUserSecond = :userid)",resultClass = User.class),
+        @NamedNativeQuery(name="approveUser", query="update user set approved = 1, dateApproved = current_date() where id = :idUser")
 })
 public class User extends Person implements UserDetails{
 
