@@ -43,8 +43,8 @@ public class Property implements Serializable {
     private String addressNumber;
     private String accessInformation;
 
-    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idCity")
     private City city;
 

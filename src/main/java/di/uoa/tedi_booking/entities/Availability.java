@@ -13,6 +13,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Table(schema="tedi", name="availability")
+@NamedQueries({
+        @NamedQuery(name="findByIdRoom", query="select a from Availability a where a.room.id = :idRoom")
+})
 public class Availability implements Serializable {
 
     @Id
@@ -29,5 +32,6 @@ public class Availability implements Serializable {
 
     private LocalDate endDate;
 
+    @JsonIgnore
     private Integer discount;
 }

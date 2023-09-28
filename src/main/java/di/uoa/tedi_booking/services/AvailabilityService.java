@@ -15,4 +15,8 @@ public class AvailabilityService extends GenericService<Availability>{
         super(repository);
         this.availabilityRepository = repository;
     }
+
+    public Availability findByIdRoom(Integer idRoom){
+        return availabilityRepository.findByIdRoom(idRoom);
+    }
 }

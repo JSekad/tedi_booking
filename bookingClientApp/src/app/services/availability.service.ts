@@ -15,4 +15,8 @@ export class AvailabilityService {
     return this.http.post<Availability>(`${this.apiServerUrl}/availability/add`, newAvailability, {observe: 'response'});
   }
 
+  public findAvailabilityByIdRoom(idRoom: number): Observable<Availability>{
+    return this.http.get<Availability>(`${this.apiServerUrl}/availability/findByIdRoom/${idRoom}`);
+  }
+
 }
