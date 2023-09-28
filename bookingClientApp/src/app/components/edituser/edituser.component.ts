@@ -13,6 +13,7 @@ export class EdituserComponent implements OnInit {
   user: any = {};
   selectedDate: Date = new Date();
   passwordForm: FormGroup;
+  confirmPasword: string = '';
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.passwordForm = this.fb.group({
@@ -28,6 +29,8 @@ export class EdituserComponent implements OnInit {
     const password = check ? check.value :'';
     check = control.get('confirmPassword');
     const confirmPassword = check ? check.value :'';
+
+    console.log("WHAT")
 
     if (password === confirmPassword) {
       return null; // Passwords match

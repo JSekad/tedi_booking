@@ -18,6 +18,7 @@ export class AuthService {
 
   private loggedInUser: any = null;
   loggedInUserChange: Subject<any> = new Subject<any>();
+  selectedRoleChange: Subject<any> = new Subject<any>();
 
   userRoles: [] = [];
   selectedRole: any = null;
@@ -59,14 +60,43 @@ export class AuthService {
     //TODO SET USER DETAILS
     this.loggedInUser = JSON.parse(value.sub);
     this.userRoles = this.loggedInUser.roles
+    console.log(this.loggedInUser);
+
     this.selectedRole = this.userRoles.find((obj: {alias: string, name: string}) => {
-      if (obj.alias === "owner") return obj;
-      if (obj.alias === "user") return obj;
       if (obj.alias === "admin") return obj;
       return null;
     })
-    this.loggedInUserChange.next(JSON.parse(value.sub));
-    if (this.selectedRole.alias === 'admin') this.router.navigate(['/admin']);
+    if (this.selectedRole!=null && this.selectedRole.alias === 'admin'){
+      this.router.navigate(['/admin']);
+      this.loggedInUserChange.next(JSON.parse(value.sub));
+      this.selectedRoleChange.next(this.selectedRole);
+      return;
+    }
+    this.selectedRole = this.userRoles.find((obj: {alias: string, name: string}) => {
+      if (obj.alias === "user") return obj;
+      return null;
+    })
+    if (this.selectedRole!=null && this.selectedRole.alias === 'user'){
+      this.router.navigate(['/']);
+      this.loggedInUserChange.next(JSON.parse(value.sub));
+      this.selectedRoleChange.next(this.selectedRole);
+      return;
+    }
+    this.selectedRole = this.userRoles.find((obj: {alias: string, name: string}) => {
+      if (obj.alias === "owner") return obj;
+      return null;
+    })
+    if (this.selectedRole!=null && this.selectedRole.alias === 'owner'){
+      if (this.selectedRole.alias === 'owner' && this.loggedInUser.approved == false){
+        this.message.warn("Δεν έχετε εγγρηθεί από τον admin");
+        this.logoutUser();
+        return;
+      }
+      this.router.navigate(['/host']);
+      this.loggedInUserChange.next(JSON.parse(value.sub));
+      this.selectedRoleChange.next(this.selectedRole);
+      return;
+    }
   }
 
 
@@ -88,6 +118,7 @@ export class AuthService {
     this.loggedInUser = null;
     this.selectedRole = null;
     this.loggedInUserChange.next(null);
+    this.selectedRoleChange.next(null);
     this.router.navigate(['/'])
   }
 
@@ -109,6 +140,7 @@ export class AuthService {
     this.loggedInUser = null;
     this.selectedRole = null;
     this.loggedInUserChange.next(null);
+    this.selectedRoleChange.next(null);
   }
 
 }

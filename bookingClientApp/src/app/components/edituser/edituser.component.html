@@ -50,22 +50,22 @@
     </mat-card-header>
     <mat-card-content>
       <div style="display: flex;flex-direction: column">
-        <mat-form-field>
+        <mat-form-field class="form-group">
           <mat-label>Password</mat-label>
           <input matInput type="password" id="password" name="password" [(ngModel)]="user.password" required>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="form-group">
           <mat-label>Confirm Password</mat-label>
-          <input matInput type="password" id="confirmPassword" required>
-          <div *ngIf="passwordForm.hasError('passwordMismatch')">
+          <input matInput type="password" id="confirmPassword" [(ngModel)]="confirmPasword" required>
+          <div *ngIf="passwordForm.hasError('passwordMatchValidator')">
             Passwords do not match.
           </div>
         </mat-form-field>
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Change Password</button>
+      <button mat-raised-button color="primary" type="submit">Αλλαγή Κωδικού</button>
     </mat-card-actions>
   </form>
 </mat-card>

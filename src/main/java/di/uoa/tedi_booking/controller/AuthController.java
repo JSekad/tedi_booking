@@ -1,15 +1,12 @@
 package di.uoa.tedi_booking.controller;
 
-import di.uoa.tedi_booking.config.security.AuthenticationRequest;
-import di.uoa.tedi_booking.config.security.AuthenticationResponse;
-import di.uoa.tedi_booking.config.security.RegisterRequest;
-import di.uoa.tedi_booking.entities.User;
+import di.uoa.tedi_booking.DTOS.security.AuthenticationRequest;
+import di.uoa.tedi_booking.DTOS.security.AuthenticationResponse;
+import di.uoa.tedi_booking.DTOS.security.RegisterRequest;
 import di.uoa.tedi_booking.services.AuthenticationService;
 import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

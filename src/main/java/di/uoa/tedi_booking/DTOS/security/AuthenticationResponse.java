@@ -1,4 +1,4 @@
-package di.uoa.tedi_booking.config.security;
+package di.uoa.tedi_booking.DTOS.security;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

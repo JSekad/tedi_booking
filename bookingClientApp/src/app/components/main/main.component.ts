@@ -9,6 +9,7 @@ import {ChatService} from "../../services/chat.service";
 import { Chat } from '../../model/chat.model';
 import {Router} from "@angular/router";
 import {SnackBarService} from "../../services/snackBar.service";
+import {Role} from "../../model/role";
 
 
 
@@ -45,6 +46,16 @@ export class MainComponent {
       this.luser = user as User;
       sessionStorage.setItem('username',this.luser.username);
     });
+      this.authService.selectedRoleChange.subscribe(role =>{
+        if(role.alias === 'owner'){
+          this.router.navigate(['/host']);
+        } else if(role.alias === 'admin'){
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/'])
+        }
+
+      })
   }
 
   ngOnInit(){
@@ -55,8 +66,6 @@ export class MainComponent {
   }
 
 
-
-
   openLoginDialog(): void {
     this.dialog.open(LoginDialogComponent, {
       width: '600px',
@@ -65,8 +74,18 @@ export class MainComponent {
     });
   }
 
+  selectRole(role:any){
+    if (role.alias === 'owner' && (!this.luser.approved)){
+      this.message.warn("Δεν έχετε εγγρηθεί από τον admin");
+      return;
+    }
+    this.authService.selectedRoleChange.next(role);
+    this.authService.selectedRole = role;
+  }
+
   getAllUsersForChat(): void{
     // let all = setInterval(() => {
+    sessionStorage.setItem('username',this.luser.username);
       this.luser.id
 
       this.chatService.getAll(this.luser.id).subscribe((data) => {

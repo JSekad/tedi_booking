@@ -19,6 +19,13 @@
         <mat-card-subtitle>{{luser?.email}}</mat-card-subtitle>
       </mat-card-header>
     </mat-card>
+    <mat-card>
+      <div *ngFor="let role of luser?.roles" class="user" (click)="selectRole(role)">
+        <div>
+          {{role.name}}
+        </div>
+      </div>
+    </mat-card>
     <button mat-menu-item (click)="goToEdit()">Edit Details</button>
     <button mat-menu-item (click)="toggleUserDiv()">My Chats</button>
     <button mat-menu-item (click)="logout()">Logout</button>

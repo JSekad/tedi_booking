@@ -1,4 +1,4 @@
-package di.uoa.tedi_booking.config.security;
+package di.uoa.tedi_booking.DTOS.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

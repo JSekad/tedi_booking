@@ -1,5 +1,7 @@
 package di.uoa.tedi_booking.controller;
 
+import di.uoa.tedi_booking.DTOS.PasswordDTO;
+import di.uoa.tedi_booking.DTOS.security.AuthenticationRequest;
 import di.uoa.tedi_booking.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,4 +41,13 @@ public class UserController extends GenericController<User>{
             return new ResponseEntity("User not Found", HttpStatus.NOT_FOUND);
         }
     }
+//    @PostMapping("/changePassWord")
+//    public ResponseEntity<User> changePassWord(@RequestBody PasswordDTO pass) throws IOException {
+//        try{
+//            return new ResponseEntity<User>(userService.getUserByUserName(username), HttpStatus.OK);
+//        }catch (Exception e){
+//            return new ResponseEntity("User not Found", HttpStatus.NOT_FOUND);
+//        }
+//    }
+
 }

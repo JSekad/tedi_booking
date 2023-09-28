@@ -1,19 +1,15 @@
 package di.uoa.tedi_booking.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import di.uoa.tedi_booking.config.security.AuthenticationRequest;
-import di.uoa.tedi_booking.config.security.AuthenticationResponse;
-import di.uoa.tedi_booking.config.security.RegisterRequest;
-import di.uoa.tedi_booking.entities.Person;
+import di.uoa.tedi_booking.DTOS.security.AuthenticationRequest;
+import di.uoa.tedi_booking.DTOS.security.AuthenticationResponse;
+import di.uoa.tedi_booking.DTOS.security.RegisterRequest;
 import di.uoa.tedi_booking.entities.Role;
 import di.uoa.tedi_booking.entities.User;
 import di.uoa.tedi_booking.repositories.PersonRepository;
 import di.uoa.tedi_booking.repositories.RoleRepository;
 import di.uoa.tedi_booking.repositories.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

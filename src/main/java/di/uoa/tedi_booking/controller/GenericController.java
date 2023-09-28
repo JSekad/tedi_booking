@@ -28,7 +28,7 @@ public abstract class GenericController<T> {
         return service.add(t);
     }
 
-    @PutMapping(path = "/update")
+    @PostMapping(path = "/update")
     public ResponseEntity<?> update(@RequestBody T t){
         return service.update(t);
     }

@@ -15,9 +15,9 @@ const routes: Routes = [
   { path: '', redirectTo: '/search', pathMatch: 'full'},
   { path: 'test', component: TestComponent},
   { path: 'search', component: SearchComponent},
-  { path: 'reservation', component: ReservationComponent},
+  { path: 'reservation', component: ReservationComponent, canActivate: [AuthGuard]},
   { path: 'chat', component: ChatComponent, canActivate: [AuthGuard]},
-  { path: 'host', component: HostComponent},
+  { path: 'host', component: HostComponent, canActivate: [AuthGuard]},
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},
   { path: 'edituser', component: EdituserComponent, canActivate: [AuthGuard] }
   // { path: 'signup', component: SignUpComponent, canActivate: [IsNotAuthGuard]},
