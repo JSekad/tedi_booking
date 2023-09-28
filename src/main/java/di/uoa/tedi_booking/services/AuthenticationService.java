@@ -1,5 +1,6 @@
 package di.uoa.tedi_booking.services;
 
+import di.uoa.tedi_booking.DTOS.PasswordDTO;
 import di.uoa.tedi_booking.DTOS.security.AuthenticationRequest;
 import di.uoa.tedi_booking.DTOS.security.AuthenticationResponse;
 import di.uoa.tedi_booking.DTOS.security.RegisterRequest;
@@ -40,6 +41,15 @@ public class AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
+    public String changePassWord(PasswordDTO passPhrase) throws Exception {
+        Optional<User> user = userRepository.findById((Long) Long.parseLong(passPhrase.getUserId()));
+        if (user.isPresent()){
+            User us = user.get();
+            us.setPassword(passwordEncoder.encode(passPhrase.getPassword()));
+            userRepository.save(us);
+        }
+        return "ok";
+    }
     public AuthenticationResponse register(RegisterRequest registerRequest){
 
 

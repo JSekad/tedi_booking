@@ -1,6 +1,6 @@
 <mat-card class="edit-user">
 
-  <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+  <form>
     <mat-card-header>
       <mat-card-title>Επεξεργασία Στοιχεία Χρήστη</mat-card-title>
     </mat-card-header>
@@ -40,11 +40,11 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Αποθήκευση</button>
+      <button mat-raised-button color="primary" (click)="onSubmitUpdatedUser()">Αποθήκευση</button>
     </mat-card-actions>
   </form>
       <div style="border-top: 1px solid #ccc;margin: 16px 0;"></div>
-  <form (ngSubmit)="onSubmitPassword()" #passwordForm="ngForm">
+  <form>
     <mat-card-header>
       <mat-card-title>Αλλαγή κωδικού Χρήστη</mat-card-title>
     </mat-card-header>
@@ -57,15 +57,15 @@
 
         <mat-form-field class="form-group">
           <mat-label>Confirm Password</mat-label>
-          <input matInput type="password" id="confirmPassword" [(ngModel)]="confirmPasword" required>
-          <div *ngIf="passwordForm.hasError('passwordMatchValidator')">
-            Passwords do not match.
-          </div>
+          <input matInput type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" required>
         </mat-form-field>
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Αλλαγή Κωδικού</button>
+      <button mat-raised-button color="primary" (click)="onSubmitPassword()" >Αλλαγή Κωδικού</button>
+      <button mat-icon-button (click)="routeX()">
+        <mat-icon>logout</mat-icon>
+      </button>
     </mat-card-actions>
   </form>
 </mat-card>

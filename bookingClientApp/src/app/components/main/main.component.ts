@@ -44,10 +44,10 @@ export class MainComponent {
       this.authService.loggedInUserChange.subscribe(user => {
       this.loggedIn = !!user;
       this.luser = user as User;
-      sessionStorage.setItem('username',this.luser.username);
+      sessionStorage.setItem('username',this.luser?.username);
     });
       this.authService.selectedRoleChange.subscribe(role =>{
-        if(role.alias === 'owner'){
+        if(role?.alias === 'owner'){
           this.router.navigate(['/host']);
         } else if(role.alias === 'admin'){
           this.router.navigate(['/admin']);
