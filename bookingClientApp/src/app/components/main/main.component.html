@@ -36,7 +36,7 @@
 <div>
   <div *ngFor="let presentation of alluser" class="user" (click)="goToChats(presentation.username)">
     <div *ngIf="presentation.username != check">
-        {{presentation.username}}
+        {{presentation.name}} {{presentation.surname}} {{presentation.username}}
     </div>
   </div>
   <div *ngFor="let chat of chatData" class="chat" (click)="goToChat(chat.chatId)">

@@ -87,7 +87,8 @@ export class AuthService {
       return null;
     })
     if (this.selectedRole!=null && this.selectedRole.alias === 'owner'){
-      if (this.selectedRole.alias === 'owner' && this.loggedInUser.approved == false){
+      console.log("ooooo  "+this.loggedInUser.approved)
+      if (this.selectedRole.alias === 'owner' && !this.loggedInUser.approved){
         this.message.warn("Δεν έχετε εγγρηθεί από τον admin");
         this.logoutUser();
         return;
