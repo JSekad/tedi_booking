@@ -79,7 +79,7 @@
 						<mat-label>Τύπος δωματίου</mat-label>
 						<mat-select [(value)]="roomType">
 							<mat-option [value]="null">---</mat-option>
-							<mat-option *ngFor="let type of roomTypes" [value]="type">
+							<mat-option *ngFor="let type of roomTypes" [value]="type.name">
 								{{ type.name }}
 							</mat-option>
 						</mat-select>
@@ -87,7 +87,7 @@
 
 					<mat-form-field class="mat-form-field">
 						<mat-label>Ημερομηνίες Διαθεσιμότητας</mat-label>
-						<mat-date-range-input [rangePicker]="picker" [min]="today">
+						<mat-date-range-input [rangePicker]="picker">
 							<input matStartDate placeholder="Start date" [(ngModel)]="startDate">
 							<input matEndDate placeholder="End date" [(ngModel)]="endDate" (dateChange)="addEvent('change', $event)">
 						</mat-date-range-input>
@@ -181,8 +181,12 @@
 		</mat-card>
 
 
-		<mat-card class="spaceCard">
+		<mat-card *ngIf="!editMode" class="spaceCard">
 			<button mat-raised-button class="button" (click)="save()">Αποθήκευση νέου δωματίου</button>
+		</mat-card>
+
+		<mat-card *ngIf="editMode" class="spaceCard">
+			<button mat-raised-button class="button" (click)="edit()">Αποθήκευση επεξεργασίας</button>
 		</mat-card>
 
 		<button mat-raised-button (click)="findRooms(); drawer.toggle()" class="filterButton">
@@ -204,7 +208,8 @@
 					[hidePageSize]="false"
 					[pageIndex]="pageIndex"
 					aria-label="Select page"
-					*ngIf="rooms.length > 0">
+					*ngIf="rooms.length > 0"
+					style="position: absolute">
 		</mat-paginator>
 
 		<mat-grid-list cols="2" rowHeight="1:1.2">
@@ -219,13 +224,12 @@
 						<div class="mat-content-item"> <b> Τιμή/Νύχτα:		</b> {{ room.basePricePerNight }}   </div>
 					</mat-card-content>
 					<mat-card-actions class="align-center zeroPadding">
-						<button mat-raised-button *ngIf="getLoggedInUser() != null" (click)="(roomIndex + pageIndex * 10)">Επεξεργασία δωματίου</button>
+						<button mat-raised-button (click)="initializeEditRoom(roomIndex + pageIndex * 10); drawer.toggle()">Επεξεργασία δωματίου</button>
 					</mat-card-actions>
 				</mat-card>
 			</mat-grid-tile>
 		</mat-grid-list>
 
-		<div class="bottomPaginator">
 		<mat-paginator #paginator
 					(page)="changePageEvent($event)"
 					[length]="rooms.length"
@@ -234,9 +238,9 @@
 					[hidePageSize]="false"
 					[pageIndex]="pageIndex"
 					aria-label="Select page"
-					*ngIf="rooms.length > 0" >
+					*ngIf="rooms.length > 0"
+					class="bottomPaginator">
 		</mat-paginator>
-		</div>
 
 
 	</mat-drawer>

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { PageEvent } from "@angular/material/paginator";
 import { Observable, startWith, map } from 'rxjs';
@@ -30,25 +30,25 @@ import { RoomTypeService } from 'src/app/services/room-type.service';
 })
 export class HostComponent {
 
+	rooms: Room[] = [];
+	editRoom: Room | null = null;
 
-  rooms: Room[] = [];
-
-  address: string | null = null;
-  addressNumber: string | null = null;
-  description: string | null = null;
-  accessInformation: string | null = null;
-  cityForm = new FormControl('', [Validators.required]);
-  cities : City[] = [];
-  filtredCities: Observable<City[]> = new Observable<City[]>;
-  roomType: RoomType | null = null;
-  roomTypes: RoomType[] = [];
-  filterRoomType: RoomType | null | undefined;
-  longitude: number | null = null;
-  latitude: number | null = null;
+	address: string | null = null;
+	addressNumber: string | null = null;
+	description: string | null = null;
+	accessInformation: string | null = null;
+	cityForm = new FormControl('', [Validators.required]);
+	cities : City[] = [];
+	filtredCities: Observable<City[]> = new Observable<City[]>;
+	roomType: string | null = null;
+	roomTypes: RoomType[] = [];
+	filterRoomType: RoomType | null | undefined;
+	longitude: number | null = null;
+	latitude: number | null = null;
 
 	basePricePerNight: number | null = null;
 	defaultRoomImage: any = null;
-  defaultImageToSent: any;
+	defaultImageToSent: any;
 	imagesUrls: any[] = [];
 	images: any[] = [];
 	imagesToSent: any[] = [];
@@ -73,37 +73,39 @@ export class HostComponent {
 	smokingAllowed: boolean = false;
 	partyAllowed: boolean = false;
 
+	editMode: boolean = false;
+
 	today: Date = new Date();
 	startDate: Date = new Date();
 	endDate: Date = new Date();
 	events: string[] = [];
-  pageIndex: number = 0;
+	pageIndex: number = 0;
 
-  constructor(private message: SnackBarService, private cityService: CityService, private changeDetectorRef: ChangeDetectorRef,
-              private roomTypeService: RoomTypeService, private authService: AuthService,  private roomService: RoomService,
-              private roomImageService: RoomImageService, private propertyService: PropertyService, private availabilityService: AvailabilityService){
-  }
+	constructor(private message: SnackBarService, private cityService: CityService, private changeDetectorRef: ChangeDetectorRef,
+				private roomTypeService: RoomTypeService, private authService: AuthService,  private roomService: RoomService,
+				private roomImageService: RoomImageService, private propertyService: PropertyService, private availabilityService: AvailabilityService){
+	}
 
-  ngOnInit(){
-    this.cityService.getAllCities().subscribe({
-      next: (response: City[]) => { this.cities = response; },
+	ngOnInit(){
+		this.cityService.getAllCities().subscribe({
+		next: (response: City[]) => { this.cities = response; },
 
-      complete: () => {
-        this.filtredCities = this.cityForm.valueChanges.pipe(
-          startWith(''),
-          map(city => (city ? this.filterCities(city) : this.cities.slice()))
-        )
-      },
-      error:(error: HttpErrorResponse) => { this.message.error("Προέκυψε σφάλμα", 'Έξοδος'); }
-    });
+		complete: () => {
+			this.filtredCities = this.cityForm.valueChanges.pipe(
+			startWith(''),
+			map(city => (city ? this.filterCities(city) : this.cities.slice()))
+			)
+		},
+		error:(error: HttpErrorResponse) => { this.message.error("Προέκυψε σφάλμα", 'Έξοδος'); }
+		});
 
-    this.roomTypeService.getAllRoomTypes().subscribe({
-      next: (response) => { this.roomTypes = response; },
-      error:(error: HttpErrorResponse) => { this.message.error("Προέκυψε σφάλμα", 'Έξοδος'); }
-    });
+		this.roomTypeService.getAllRoomTypes().subscribe({
+		next: (response) => { this.roomTypes = response; },
+		error:(error: HttpErrorResponse) => { this.message.error("Προέκυψε σφάλμα", 'Έξοδος'); }
+		});
 
-    
-  }
+		
+	}
 
 	public findRooms(){
 		if(this.rooms == null)
@@ -128,7 +130,7 @@ export class HostComponent {
 		let city = this.cities.find(c => c.name === this.cityForm.value);
 
 		const property = {
-			id: null,
+			id: null, 
 			owner: this.authService.getLoggedInUser(),
 			description: this.description,
 			address: this.address,
@@ -165,12 +167,13 @@ export class HostComponent {
 
 	addNewRoom(idProperty: number | null){
 		this.defaultRoomImage = this.defaultRoomImage.slice('data:image/jpeg;base64,'.length);
+		let roomtype = this.roomTypes.find(t => t.name === this.roomType);
 		var room = {
 			id: null,
 			property: {id: idProperty},
-			type: this.roomType,
+			type: roomtype,
 			basePricePerNight: this.basePricePerNight,
-      defaultRoomImage: null,
+			defaultRoomImage: null,
 			description: this.description,
 			numOfDoubleBeds: this.numOfDoubleBeds,
 			numOfSingleBeds: this.numOfSingleBeds,
@@ -197,9 +200,9 @@ export class HostComponent {
 
 		this.roomService.addNewRoom(room).subscribe({
 			next: (response) =>  {
-        room.id = response.body
-        this.saveNewAvailability(room);
-        this.saveAllImages(room); 
+		room.id = response.body
+		this.saveNewAvailability(room);
+		this.saveAllImages(room); 
 			},
 
 			error: (error: HttpErrorResponse) => {
@@ -210,50 +213,54 @@ export class HostComponent {
 
 	}
 
-  saveNewAvailability(room: any){
-    let newAvailability: Availability = {id: null, room: room, startDate: this.startDate, endDate: this.endDate};
-    this.availabilityService.addNewAvailability(newAvailability).subscribe({
-      next: (response) => { },
+	saveNewAvailability(room: any){
+		let newAvailability: Availability = {id: null, room: room, startDate: this.startDate, endDate: this.endDate};
+		this.availabilityService.addNewAvailability(newAvailability).subscribe({
+		next: (response) => { },
 
-      error: (error: HttpErrorResponse) => {
-				if(error.status !== 200)
-					this.message.error("Προέκυψε σφάλμα!", "Έξοδος");
+		error: (error: HttpErrorResponse) => {
+					if(error.status !== 200)
+						this.message.error("Προέκυψε σφάλμα!", "Έξοδος");
+				}
+		});
+	}
+
+	saveAllImages(room: any){
+
+		console.log("Image upload started");
+
+		for(let image of this.imagesToSent){
+
+		this.roomImageService.addNewRoomImage(room.id, image).subscribe({
+			next: (reponse) => { },
+
+			error: (error: HttpErrorResponse) => {
+			if(error.status !== 200)
+				this.message.error("Προέκυψε σφάλμα!", "Έξοδος");
 			}
-    });
-  }
+		});
+		}
 
-  saveAllImages(room: any){
+		var roomImageDefault: RoomImageDefault = {id: room.id,  image: this.defaultImageToSent};
 
-    console.log("Image upload started");
+		this.roomImageService.addNewDefaultRoomImage(roomImageDefault).subscribe({
+			next: (response) => {  },
+			
+			error: (error: HttpErrorResponse) => {
+			if(error.status !== 200)
+				this.message.error("Προέκυψε σφάλμα!", "Έξοδος");
+			}
+		});
 
-    for(let image of this.imagesToSent){
+		this.clearInputs();
+		room.defaultRoomImage = 'data:image/jpeg;base64,' + roomImageDefault;
+		this.rooms.unshift(room);
+		this.message.info("Η καταχώρηση του δωματίου έγινε με επιτυχία!")
+	}
 
-      this.roomImageService.addNewRoomImage(room.id, image).subscribe({
-        next: (reponse) => { },
+	public edit(){
 
-        error: (error: HttpErrorResponse) => {
-          if(error.status !== 200)
-            this.message.error("Προέκυψε σφάλμα!", "Έξοδος");
-        }
-      });
-    }
-
-    var roomImageDefault: RoomImageDefault = {id: room.id,  image: this.defaultImageToSent};
-
-    this.roomImageService.addNewDefaultRoomImage(roomImageDefault).subscribe({
-        next: (response) => {  },
-        
-        error: (error: HttpErrorResponse) => {
-          if(error.status !== 200)
-            this.message.error("Προέκυψε σφάλμα!", "Έξοδος");
-        }
-    });
-
-    this.clearInputs();
-	room.defaultRoomImage = 'data:image/jpeg;base64,' + roomImageDefault;
-	this.rooms.unshift(room);
-    this.message.info("Η καταχώρηση του δωματίου έγινε με επιτυχία!")
-  }
+	}
 
 
   validation(): boolean{
@@ -367,13 +374,69 @@ export class HostComponent {
     }
   }
 
-  public getLoggedInUser(): any{
-    return this.authService.getLoggedInUser();
-  }
 
-  changePageEvent(e: PageEvent){
-    this.pageIndex = e.pageIndex;
-  }
+	public initializeEditRoom(selectedRoomIndex: number){
+		this.editMode = true;
+		this.editRoom = this.rooms[selectedRoomIndex];
+
+		for(let city of this.cities)
+			if(city.name === this.editRoom.property.city.name)
+			this.cityForm.setValue(city.name);
+
+		this.address = this.editRoom.property.address; 
+		this.addressNumber = this.editRoom.property.addressNumber.toString();
+		this.description = this.editRoom.property.description;
+		this.accessInformation = this.editRoom.property.accessInformation;
+		this.latitude = this.editRoom.property.latitude;
+		this.longitude = this.editRoom.property.longitude;
+		this.roomType = this.editRoom.type.name;
+		
+		this.availabilityService.findAvailabilityByIdRoom(this.editRoom.id).subscribe({
+			next: (response: Availability) => { 
+				this.startDate = response.startDate; 
+				this.endDate = response.endDate;
+			},
+			error:(error: HttpErrorResponse) => { this.message.error("Προέκυψε σφάλμα", 'Έξοδος'); }
+		})
+
+		this.basePricePerNight = this.editRoom.basePricePerNight;
+		this.areaSize = this.editRoom.areaSize;
+		this.numOfDoubleBeds = this.editRoom.numOfDoubleBeds;
+		this.numOfSingleBeds = this.editRoom.numOfSingleBeds;
+		this.numOfBedrooms = this.editRoom.numOfBedrooms;
+		this.numOfBathrooms = this.editRoom.numOfBathrooms;
+		this.capacity = this.editRoom.capacity;
+		this.minRentDays = this.editRoom.minRentDays;
+		this.hasTV = this.editRoom.hasTV;
+		this.hasWifi = this.editRoom.hasWifi;
+		this.hasAirCondition = this.editRoom.hasAirCondition;
+		this.hasJacuzzi = this.editRoom.hasJacuzzi;
+		this.hasPrivateBathroom = this.editRoom.hasPrivateBathroom;
+		this.hasParking = this.editRoom.hasParking;
+		this.hasElevator = this.editRoom.hasElevator;
+		this.partyAllowed = this.editRoom.partyAllowed;
+		this.petsAllowed = this.editRoom.petsAllowed;
+		this.smokingAllowed = this.editRoom.smokingAllowed;
+		this.defaultRoomImage = this.editRoom.defaultRoomImage?.image;
+
+		//TODO na valw tis fotografies tou dwmatiou se allh lista
+		this.roomImageService.getAllRoomImages(this.editRoom.id).subscribe({
+			next: (response: RoomImage[]) => { 
+				for(let image of response)
+					this.images.push('data:image/jpeg;base64,' + image);
+			},
+			error:(error: HttpErrorResponse) => { this.message.error("Προέκυψε σφάλμα", 'Έξοδος'); }
+		})
+
+	}
+
+	public getLoggedInUser(): any{
+		return this.authService.getLoggedInUser();
+	}
+
+	changePageEvent(e: PageEvent){
+		this.pageIndex = e.pageIndex;
+	}
 
   private formatDate(date: Date): string{
     var splitDate = date.toLocaleDateString().split('/');
@@ -382,37 +445,37 @@ export class HostComponent {
   }
 
 
-  clearInputs(){
-    this.address = null;
-    this.addressNumber = null;
-    this.roomType = null;
-    this.basePricePerNight = 0;
-    this.description = null;
-    this.accessInformation = null;
-    this.defaultRoomImage = null;
-    this.numOfDoubleBeds = 0;
-    this.numOfSingleBeds = 0;
-    this.numOfBedrooms = 0;
-    this.numOfBathrooms = 0;
-    this.minRentDays = 0;
-    this.hasTV = false;
-    this.hasPrivateBathroom = false;
-    this.hasAirCondition = false;
-    this.hasWifi = false;
-    this.hasKitchen = false;
-    this.hasJacuzzi = false;
-    this.areaSize = 0;
-    this.capacity = 0;
-    this.petsAllowed = false;
-    this.hasParking = false;
-    this.hasElevator = false;
-    this.smokingAllowed = false;
-    this.partyAllowed = false;
-    this.images = [];
-    this.longitude = null;
-    this.latitude = null;
-    this.startDate = new Date();
-    this.endDate = new Date();
-  }
+	clearInputs(){
+		this.address = null;
+		this.addressNumber = null;
+		this.roomType = null;
+		this.basePricePerNight = 0;
+		this.description = null;
+		this.accessInformation = null;
+		this.defaultRoomImage = null;
+		this.numOfDoubleBeds = 0;
+		this.numOfSingleBeds = 0;
+		this.numOfBedrooms = 0;
+		this.numOfBathrooms = 0;
+		this.minRentDays = 0;
+		this.hasTV = false;
+		this.hasPrivateBathroom = false;
+		this.hasAirCondition = false;
+		this.hasWifi = false;
+		this.hasKitchen = false;
+		this.hasJacuzzi = false;
+		this.areaSize = 0;
+		this.capacity = 0;
+		this.petsAllowed = false;
+		this.hasParking = false;
+		this.hasElevator = false;
+		this.smokingAllowed = false;
+		this.partyAllowed = false;
+		this.images = [];
+		this.longitude = null;
+		this.latitude = null;
+		this.startDate = new Date();
+		this.endDate = new Date();
+	}
 
 }

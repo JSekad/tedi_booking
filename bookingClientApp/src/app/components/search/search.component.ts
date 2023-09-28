@@ -132,12 +132,12 @@ export class SearchComponent {
 
   searchRooms(){
 
-     if(this.searchInputValidation())
-       return;
+    if(this.searchInputValidation())
+      return;
 
     this.user = this.authService.getLoggedInUser();
 
-     this.searchService.getRooms(this.cityForm.value, this.formatDate(this.startDate), this.formatDate(this.endDate), this.numPersons).subscribe({
+    this.searchService.getRooms(this.cityForm.value, this.formatDate(this.startDate), this.formatDate(this.endDate), this.numPersons).subscribe({
 
       next: ( response: Room[]) => {
         this.rooms = response;
