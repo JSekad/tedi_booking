@@ -6,7 +6,7 @@ export interface Property{
 	owner: Person;
 	description: string;
 	address: string;
-	addressNumber: number;
+	addressNumber: string;
 	accessInformation: string;
 	rating: number;
 	city: City;

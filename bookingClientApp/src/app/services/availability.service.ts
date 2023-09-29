@@ -7,16 +7,20 @@ import { Availability } from '../model/availability.model'
 @Injectable({ providedIn: 'root' })
 export class AvailabilityService {
 
-  private apiServerUrl = 'http://localhost:8080';
+    private apiServerUrl = 'http://localhost:8080';
 
-  constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { }
 
-  public addNewAvailability(newAvailability: Availability): Observable<any>{
-    return this.http.post<Availability>(`${this.apiServerUrl}/availability/add`, newAvailability, {observe: 'response'});
-  }
+    public addNewAvailability(newAvailability: Availability): Observable<any>{
+        return this.http.post<Availability>(`${this.apiServerUrl}/availability/add`, newAvailability, {observe: 'response'});
+    }
 
-  public findAvailabilityByIdRoom(idRoom: number): Observable<Availability>{
-    return this.http.get<Availability>(`${this.apiServerUrl}/availability/findByIdRoom/${idRoom}`);
-  }
+    public findAvailabilityByIdRoom(idRoom: number): Observable<Availability>{
+        return this.http.get<Availability>(`${this.apiServerUrl}/availability/findByIdRoom/${idRoom}`);
+    }
+
+    public updateAvailability(availability: Availability): Observable<any>{
+        return this.http.post<Availability>(`${this.apiServerUrl}/availability/update`, availability, {observe: 'response'});
+    }
 
 }

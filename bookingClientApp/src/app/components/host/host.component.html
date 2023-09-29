@@ -153,9 +153,22 @@
 			</div>
 		</mat-card>
 
+		<mat-card *ngIf="editMode" class="spaceCard">
+			<h1 class="title">Φωτογραφίες Δωματίου</h1>
+
+			<div style="display: flex">
+				<img [src]="defaultRoomImage" class="image" style="margin: 0 1rem">
+
+				<div *ngFor="let image of editImages; let roomIndex = index" class="deleteImages">
+					<img [src]="'data:image/jpeg;base64,' + image.image" class="image deleteImage">
+					<mat-icon (click)="deleteImage(roomIndex)" fontIcon="delete_forever" matTooltip="Διαγραφή" class="deleteIcon"/>
+				</div>
+			</div>
+		</mat-card>
+
 		<mat-card class="spaceCard">
 
-			<h1 class="title">Φωτογραφίες Δωματίου</h1>
+			<h1 class="title">Προσθήκη Φωτογραφιών</h1>
 
 			<div style="display: flex">
 
@@ -163,7 +176,7 @@
 					<span>Κύρια Φωτογραφία Δωματίου</span>
 					<img [src]="defaultRoomImage" *ngIf="defaultRoomImage != null" class="image">
 					<span class="image" *ngIf="defaultRoomImage == null"></span>
-					<input type="file" accept="image/*" (change)="onAddDefaultImage($event)" class="btn"/>
+					<input type="file" accept="image/*" (change)="onAddDefaultImage($event)" class="btn greyBtn"/>
 				</div>
 
 				<div class="imagesCard">
@@ -174,7 +187,7 @@
 						</ng-container>
 					</div>
 					<span class="image" *ngIf="images.length === 0"></span>
-					<input type="file" accept="image/*" (change)="onAddImage($event)" multiple="multiple" class="btn"/>
+					<input type="file" accept="image/*" (change)="onAddImage($event)" multiple="multiple" class="btn greyBtn"/>
 				</div>
 
 			</div>
@@ -182,11 +195,14 @@
 
 
 		<mat-card *ngIf="!editMode" class="spaceCard">
-			<button mat-raised-button class="button" (click)="save()">Αποθήκευση νέου δωματίου</button>
+			<button mat-raised-button class="btn greenBtn" (click)="save()">Αποθήκευση νέου δωματίου</button>
 		</mat-card>
 
 		<mat-card *ngIf="editMode" class="spaceCard">
-			<button mat-raised-button class="button" (click)="edit()">Αποθήκευση επεξεργασίας</button>
+			<div  style="display: flex">
+				<button mat-raised-button class="btn orangeBtn" (click)="saveChanges()">Αποθήκευση επεξεργασίας</button>
+				<button mat-raised-button class="btn greyBtn" (click)="exitEdit()">Ακύρωση</button>
+			</div>
 		</mat-card>
 
 		<button mat-raised-button (click)="findRooms(); drawer.toggle()" class="filterButton">

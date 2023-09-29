@@ -61,6 +61,18 @@
 	margin: 0 5px;
 }
 
+.greenBtn{
+  background-color: rgb(64, 165, 64);
+}
+
+.orangeBtn{
+  background-color: rgb(214, 123, 20);
+}
+
+.greyBtn{
+  background-color: ligthgrey;
+}
+
 .btn {
   position: relative;
 
@@ -75,7 +87,6 @@
   border-radius: 2px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
   
-  background-color: lightgray;
   color: black;
   
   transition: background-color .3s;
@@ -151,4 +162,23 @@
 .bottomPaginator{
   position: absolute;
   bottom: 0; 
+}
+
+.deleteImages{
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.deleteImage{
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.deleteIcon{
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  color: red;
 }

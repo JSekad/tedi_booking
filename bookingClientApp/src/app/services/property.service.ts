@@ -17,6 +17,10 @@ export class PropertyService {
 
   public addNewProperty(newProperty: any): Observable<any>{
     return this.http.post<any>(`${this.apiServerUrl}/property/newProperty`, newProperty, {observe: 'response'});
-
   }
+
+  public updateProperty(editProperty: any): Observable<any>{
+    return this.http.post<any>(`${this.apiServerUrl}/property/update`, editProperty, {observe: 'response'});
+  }
+
 }

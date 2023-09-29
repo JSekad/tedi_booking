@@ -29,4 +29,12 @@ public class RoomImageDefaultController extends GenericController<RoomImageDefau
        newImage.setImageFromMulitpart(img.getBytes());
        return this.service.add(newImage);
     }
+
+    @PostMapping(path = "/updateDefaultImage")
+    public ResponseEntity<?> updateDefaultImage(@RequestParam(value = "idRoom") String id, @RequestParam(value ="image") MultipartFile img) throws IOException {
+        RoomImageDefault newImage = new RoomImageDefault();
+        newImage.setId(Integer.parseInt(id));
+        newImage.setImageFromMulitpart(img.getBytes());
+        return this.service.update(newImage);
+    }
 }
