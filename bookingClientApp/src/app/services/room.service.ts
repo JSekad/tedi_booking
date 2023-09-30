@@ -7,19 +7,23 @@ import { Room } from '../model/room.model';
 @Injectable({ providedIn: 'root' })
 export class RoomService {
 
-  private apiServerUrl = 'http://localhost:8080';
+	private apiServerUrl = 'http://localhost:8080';
 
-  constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient) { }
 
-  public addNewRoom(newRoom: any): Observable<any>{
-    return this.http.post<Room>(`${this.apiServerUrl}/room/newRoom`, newRoom, {observe : 'response'});
-  }
+	public addNewRoom(newRoom: any): Observable<any>{
+		return this.http.post<Room>(`${this.apiServerUrl}/room/newRoom`, newRoom, {observe : 'response'});
+	}
 
-  public findOwnersRooms(idOwner: number): Observable<Room[]>{
-    return this.http.get<Room[]>(`${this.apiServerUrl}/room/findOwnersRooms/${idOwner}`);
-  }
+	public findOwnersRooms(idOwner: number): Observable<Room[]>{
+		return this.http.get<Room[]>(`${this.apiServerUrl}/room/findOwnersRooms/${idOwner}`);
+	}
 
-  public updateRoom(editRoom: any): Observable<any>{
-    return this.http.post<Room>(`${this.apiServerUrl}/room/update`, editRoom, {observe : 'response'});
-  }
+	public updateRoom(editRoom: any): Observable<any>{
+		return this.http.post<Room>(`${this.apiServerUrl}/room/update`, editRoom, {observe : 'response'});
+	}
+
+	public getAllRooms(): Observable<Room[]>{
+		return this.http.get<Room[]>(`${this.apiServerUrl}/room/all`);	
+	}
 }

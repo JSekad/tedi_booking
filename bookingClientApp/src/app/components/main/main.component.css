@@ -4,7 +4,7 @@ body {
 }
 
 .navbar {
-  background-color: blue;
+  background-color: cornflowerblue;
   height: 50px;
   display: flex;
   align-items: center;
@@ -100,4 +100,8 @@ body {
   border: 1px solid red;
   background: gainsboro;
   /* box-shadow: 0 2px 1px 0 (0.5); */
+}
+
+.title{
+  text-shadow: 3px 5px 4px black;
 }

@@ -1,4 +1,16 @@
-<h1 class="title">Σελίδα Διαχείρισης</h1>
+<div style="text-align: center;">
+	<h1 class="title" style="display: inline;">Σελίδα Διαχείρισης</h1>
+	<button mat-icon-button [matMenuTriggerFor]="menu" style="float: right">
+		<mat-icon fontIcon="menu"/>
+	</button>
+	<mat-menu #menu="matMenu">
+		<button mat-menu-item (click)="exportRoomsJson()">Εξαγωγή Δωματίων (Json)</button>
+		<button mat-menu-item (click)="exportRoomsCsv()">Εξαγωγή Δωματίων (Csv)</button>
+
+		<button mat-menu-item (click)="exportReservationsJson()">Εξαγωγή Κρατήσεων (Json)</button>
+		<button mat-menu-item (click)="exportReservationsCsv()">Εξαγωγή Κρατήσεων (Csv)</button>
+	</mat-menu>
+</div>
 
 <table mat-table [dataSource]="dataSource">
 
