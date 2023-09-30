@@ -205,34 +205,6 @@ html {
   background-color: #c23616 !important;
 }
 
-.user_info {
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-left: 15px;
-}
-
-.user_info span {
-  font-size: 20px;
-  color: white;
-}
-
-.user_info p {
-  font-size: 10px;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.video_cam {
-  margin-left: 50px;
-  margin-top: 5px;
-}
-
-.video_cam span {
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  margin-right: 20px;
-}
-
 .msg_cotainer {
   margin-top: auto;
   margin-bottom: auto;
