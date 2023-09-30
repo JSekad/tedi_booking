@@ -71,15 +71,18 @@ body {
 }
 
 .user {
-  border: 1px solid blueviolet;
-  border-radius: 6px;
+  border: 1px solid blue;
+  border-radius: 10px;
   margin: 4px 4px 4px 4px;
-  background: dodgerblue;
-  height: 50px;
-  width: 200px;
+  background: blue;
+  height: 25px;
+  width: 250px;
+  color: white;
+  align-items: center;
+
   /* Remove display: flex; */
-   justify-content: center;
-   text-align: center;
+  justify-content: center;
+  text-align: center;
   display: flex;
 }
 .chat {
@@ -97,8 +100,10 @@ body {
 
 
 .user:hover {
-  border: 1px solid red;
-  background: gainsboro;
+  border: 1px solid lightblue;
+  background: lightblue;
+  color: blue;
+  cursor: pointer;
   /* box-shadow: 0 2px 1px 0 (0.5); */
 }
 

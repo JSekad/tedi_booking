@@ -3,6 +3,9 @@ import { AuthService } from '../../services/auth-service.service';
 import {User} from "../../model/user.model";
 import {formatDate} from "@angular/common";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {UserService} from "../../services/user.service";
+import {SnackBarService} from "../../services/snackBar.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-edit-user',
@@ -12,30 +15,28 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/form
 export class EdituserComponent implements OnInit {
   user: any = {};
   selectedDate: Date = new Date();
-  passwordForm: FormGroup;
-  confirmPasword: string = '';
+  // passwordForm: FormGroup;
+  confirmPassword: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
-    this.passwordForm = this.fb.group({
-      password: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required]],
-    }, {
-      validator: this.passwordMatchValidator,
-    });
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private userService: UserService,
+    private message: SnackBarService,
+    private router: Router) {
+    // this.passwordForm = this.fb.group({
+    //   password: ['', [Validators.required]],
+    //   confirmPassword: ['', [Validators.required]],
+    // }, {
+    //   validator: this.passwordMatchValidator,
+    // });
   }
 
-  passwordMatchValidator(control: AbstractControl) {
-    let check = control.get('password')
-    const password = check ? check.value :'';
-    check = control.get('confirmPassword');
-    const confirmPassword = check ? check.value :'';
-
-    console.log("WHAT")
-
-    if (password === confirmPassword) {
+  passwordMatchValidator(): boolean|null {
+    if (this.user.password === this.confirmPassword) {
       return null; // Passwords match
     } else {
-      return { passwordMismatch: true }; // Passwords do not match
+      return true; // Passwords do not match
     }
   }
 
@@ -46,8 +47,36 @@ export class EdituserComponent implements OnInit {
       this.selectedDate=ok?ok:new Date();
   }
 
+  onSubmitUpdatedUser(){
+    console.log(this.user);
+    this.userService.updateUserDetails(this.user).subscribe((response)=>{
+      this.message.info("Τα στοιχεία του Χρήστη Άλλαξαν")
+      this.authService.refreshPage()
+    },error => {
+      this.message.info("Προέκυψε κάποιο πρόβλημα")
+    },);
+  }
+
+  routeX() {
+    this.router.navigate(['/']);
+  }
+
   onSubmitPassword(){
-    console.log('ok');
+    console.log(this.user.password);
+    console.log(this.confirmPassword);
+    if(this.passwordMatchValidator()) {
+      this.message.warn("Οι κωδικοί δεν είναι ίδιοι");
+      return;
+    }
+    let obj = {
+      userId: this.user.id,
+      password: this.user.password
+    }
+    this.userService.changePassWord(obj).subscribe((response)=>{
+      this.message.info("Ο κωδικός Άλλαξε")
+    },error => {
+      this.message.info("Ο κωδικός έχει Πρόβλημα")
+    },)
   }
 
   private formattedDate(): string {

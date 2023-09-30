@@ -21,4 +21,17 @@ export class UserService {
     return this.http.post<any>(`${this.apiServerUrl}/user/approveUser`, formData, { observe: 'response' });
   }
 
+  public updateUserDetails(user: User){
+    return this.http.post<any>(`${this.apiServerUrl}/user/updateDetails`, user);
+  }
+
+  changePassWord(password:any){
+    return this.http.post<any>(`${this.apiServerUrl}/user/changePassWord`,password)
+  }
+
+  // getAll() {
+  //   return this.http.get<User[]>(this.apiServerUrl + "/user/getall")
+  // }
+
+
 }

@@ -26,9 +26,9 @@
         </div>
       </div>
     </mat-card>
-    <button mat-menu-item (click)="goToEdit()">Edit Details</button>
-    <button mat-menu-item (click)="toggleUserDiv()">My Chats</button>
-    <button mat-menu-item (click)="logout()">Logout</button>
+    <button mat-menu-item (click)="goToEdit()">Επεξεργασία Στοιχείων</button>
+    <button mat-menu-item (click)="toggleUserDiv()">Συνομιλίες</button>
+    <button mat-menu-item (click)="logout()">Έξοδος</button>
   </mat-menu>
 
 </div>
@@ -36,7 +36,7 @@
 <div>
   <div *ngFor="let presentation of alluser" class="user" (click)="goToChats(presentation.username)">
     <div *ngIf="presentation.username != check">
-        {{presentation.username}}
+        {{presentation.name}} {{presentation.surname}} {{presentation.username}}
     </div>
   </div>
   <div *ngFor="let chat of chatData" class="chat" (click)="goToChat(chat.chatId)">

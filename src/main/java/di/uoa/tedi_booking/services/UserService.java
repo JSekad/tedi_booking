@@ -1,5 +1,6 @@
 package di.uoa.tedi_booking.services;
 
+import di.uoa.tedi_booking.DTOS.PasswordDTO;
 import di.uoa.tedi_booking.entities.User;
 import di.uoa.tedi_booking.repositories.UserRepository;
 import org.hibernate.Hibernate;
@@ -40,6 +41,21 @@ public class UserService extends GenericService<User>{
         }
     }
 
+    public String updateDetails(User user) throws Exception{
+        Optional<User> us = userRepository.findById((long) user.getId());
+        if (us.isPresent()){
+            User current = us.get();
+            current.setName(user.getName());
+            current.setSurname(user.getSurname());
+            current.setEmail(user.getEmail());
+            current.setIdNumber(user.getIdNumber());
+            current.setBirthDate(user.getBirthDate());
+            current.setPhoneNumber(user.getPhoneNumber());
+            userRepository.save(current);
+        }
+        return "ok";
+
+    }
     @Transactional
     public int approveUser(Integer idUser){
         return userRepository.approveUser(idUser);

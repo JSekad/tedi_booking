@@ -59,6 +59,8 @@ public class User extends Person implements UserDetails{
 //    private Set<Chat> messagesRecieved;
 
     @Override
+    @Transient
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         for (Role r : roles) {
