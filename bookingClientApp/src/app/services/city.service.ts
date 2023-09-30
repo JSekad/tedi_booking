@@ -9,7 +9,7 @@ const httpOptions = {headers: new HttpHeaders({'Accept': 'application/json',
 
 @Injectable({ providedIn: 'root' })
 export class CityService {
-  private apiServerUrl = 'http://localhost:8080';
+  private apiServerUrl = 'https://localhost:443';
 
   constructor(private http: HttpClient) { }
 

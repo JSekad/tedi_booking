@@ -14,7 +14,7 @@ export class AuthService {
 
   constructor(private http: HttpClient,private router: Router,private message: SnackBarService) { }
 
-  private apiUrl = 'http://localhost:8080';
+  private apiUrl = 'https://localhost:443';
 
   private loggedInUser: any = null;
   loggedInUserChange: Subject<any> = new Subject<any>();

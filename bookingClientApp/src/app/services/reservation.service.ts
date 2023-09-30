@@ -7,7 +7,7 @@ import { Reservation } from '../model/reservation.model';
 @Injectable({ providedIn: 'root' })
 export class ReservationService {
 
-  private apiServerUrl = 'http://localhost:8080';
+  private apiServerUrl = 'https://localhost:443';
 
   constructor(private http: HttpClient) { }
 
