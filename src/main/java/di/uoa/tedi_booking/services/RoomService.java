@@ -1,7 +1,7 @@
 package di.uoa.tedi_booking.services;
 
 import di.uoa.tedi_booking.entities.Room;
-import di.uoa.tedi_booking.DTOS.repositories.RoomRepository;
+import di.uoa.tedi_booking.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

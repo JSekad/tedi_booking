@@ -1,6 +1,6 @@
 package di.uoa.tedi_booking.config;
 
-import di.uoa.tedi_booking.DTOS.repositories.UserRepository;
+import di.uoa.tedi_booking.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

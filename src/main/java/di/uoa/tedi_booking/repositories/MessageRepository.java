@@ -1,4 +1,4 @@
-package di.uoa.tedi_booking.DTOS.repositories;
+package di.uoa.tedi_booking.repositories;
 
 
 import di.uoa.tedi_booking.entities.Message;
