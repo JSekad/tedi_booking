@@ -12,7 +12,6 @@ export class ReservationService {
 	constructor(private http: HttpClient) { }
 
 	public saveReservation(newReservation: Reservation): Observable<any>{
-	// public saveReservation(newReservation: any): Observable<any>{
 		return this.http.post<any>(`${this.apiServerUrl}/reservation/add`, newReservation, {observe: 'response' });
 	}
 

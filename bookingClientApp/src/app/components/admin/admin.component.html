@@ -4,11 +4,18 @@
 		<mat-icon fontIcon="menu"/>
 	</button>
 	<mat-menu #menu="matMenu">
-		<button mat-menu-item (click)="exportRoomsJson()">Εξαγωγή Δωματίων (Json)</button>
-		<button mat-menu-item (click)="exportRoomsCsv()">Εξαγωγή Δωματίων (Csv)</button>
+		<button mat-menu-item (click)="exportRooms('json')">Εξαγωγή Δωματίων (Json)</button>
+		<button mat-menu-item (click)="exportRooms('csv')">Εξαγωγή Δωματίων (Csv)</button>
 
-		<button mat-menu-item (click)="exportReservationsJson()">Εξαγωγή Κρατήσεων (Json)</button>
-		<button mat-menu-item (click)="exportReservationsCsv()">Εξαγωγή Κρατήσεων (Csv)</button>
+		<button mat-menu-item (click)="exportReservations('json')">Εξαγωγή Κρατήσεων (Json)</button>
+		<button mat-menu-item (click)="exportReservations('csv')">Εξαγωγή Κρατήσεων (Csv)</button>
+
+		<button mat-menu-item (click)="exportRoomReviews('json')">Εξαγωγή Αξιολογήσεων Δωματίων (Json)</button>
+		<button mat-menu-item (click)="exportRoomReviews('csv')">Εξαγωγή Αξιολογήσεων Δωματίων (Csv)</button>
+
+		<button mat-menu-item (click)="exportHostReviews('json')">Εξαγωγή Αξιολογήσεων Ιδιoκτητών (Json)</button>
+		<button mat-menu-item (click)="exportHostReviews('csv')">Εξαγωγή Αξιολογήσεων Ιδιoκτητών (Csv)</button>
+
 	</mat-menu>
 </div>
 

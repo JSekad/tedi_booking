@@ -54,10 +54,14 @@ export class ReviewDialogComponent {
 						};
 			this.reviewService.saveNewRoomReview(review).subscribe({
 				error:(error: HttpErrorResponse) => {
-					if(error.status != 200)
+					if(error.status != 200){
 						this.message.error("Προέκυψε σφάλμα", 'Έξοδος');
-					else
+						this.dialog.close(false);
+					}
+					else{
 						this.message.info("Η αξιολόγησή σας καταχωρήθηκε με επιτυχία!");
+						this.dialog.close(true);
+					}
 				}	
 			});
 		}
@@ -74,15 +78,17 @@ export class ReviewDialogComponent {
 
 			this.reviewService.saveNewHostReview(review).subscribe({
 				error:(error: HttpErrorResponse) => {
-					if(error.status != 200)
+					if(error.status != 200){
 						this.message.error("Προέκυψε σφάλμα", 'Έξοδος');
-					else
+						this.dialog.close(false);
+					}
+					else{
 						this.message.info("Η αξιολόγησή σας καταχωρήθηκε με επιτυχία!");
+						this.dialog.close(true);
+					}
 				}	
 			});
 		}
-
-		this.dialog.close();
 	}
 
 	onClick(index: number){

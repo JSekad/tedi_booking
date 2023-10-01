@@ -2,12 +2,15 @@ import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
-import exportFromJson from 'export-from-json';
+import exportFromJson, { ExportType } from 'export-from-json';
 
+import { ReservationService } from 'src/app/services/reservation.service';
+import { ReviewService } from 'src/app/services/review.service';
 import { RoomService } from 'src/app/services/room.service';
 import { UserService } from '../../services/user.service';
 import { SnackBarService } from 'src/app/services/snackBar.service';
 
+import { Reservation } from '../../model/reservation.model';
 import { Room } from '../../model/room.model';
 import { User } from '../../model/user.model';
 
@@ -24,7 +27,8 @@ export class AdminComponent {
 	dataSource: any;
 	selection = new SelectionModel<User>(true, []);
 
-	constructor(private userService: UserService, private message: SnackBarService, private roomService: RoomService){ }
+	constructor(private userService: UserService, private message: SnackBarService, private reviewService: ReviewService,
+		private reservationService: ReservationService, private roomService: RoomService){ }
 
 	ngOnInit(){
 		this.userService.usersMeAitimaEggrafis().subscribe({
@@ -88,37 +92,49 @@ export class AdminComponent {
 			return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${rowIndex + 1}`;
 	}
 
-	exportRoomsJson(){
+	exportRooms(type: ExportType){
 		this.roomService.getAllRooms().subscribe({
 			next: (response: Room[]) => {
 				for(let room of response)
 					room.defaultRoomImage = null;
 				const data = response;
 				const fileName = 'rooms';
-				const exportType = 'json';
+				const exportType = type;
 				exportFromJson({ data, fileName, exportType});
 			}
 		})
 	}
 
-	exportRoomsCsv(){
-		this.roomService.getAllRooms().subscribe({
-			next: (response: Room[]) => {
-				for(let room of response)
-					room.defaultRoomImage = null;
+	exportReservations(type: ExportType){
+		this.reservationService.getAllReservations().subscribe({
+			next: (response: Reservation[]) => {
 				const data = response;
-				const fileName = 'rooms';
-				const exportType = 'csv';
+				const fileName = 'reservations';
+				const exportType = type;
 				exportFromJson({ data, fileName, exportType});
 			}
 		})
 	}
 
-	exportReservationsJson(){
-
+	exportRoomReviews(type: ExportType){
+		this.reviewService.getAllRoomReviews().subscribe({
+			next: (response: Reservation[]) => {
+				const data = response;
+				const fileName = 'roomReviews';
+				const exportType = type;
+				exportFromJson({ data, fileName, exportType});
+			}
+		})
 	}
 
-	exportReservationsCsv(){
-
+	exportHostReviews(type: ExportType){
+		this.reviewService.getAllHostReviews().subscribe({
+			next: (response: Reservation[]) => {
+				const data = response;
+				const fileName = 'hostReviews';
+				const exportType = type;
+				exportFromJson({ data, fileName, exportType});
+			}
+		})
 	}
 }

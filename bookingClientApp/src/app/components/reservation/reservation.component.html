@@ -134,6 +134,6 @@
 </mat-card>
 
 <mat-card-actions style="justify-content: center; display: grid">
-	<div>Διάστημα κράτησης {{ startDate }} έως {{ endDate }} </div>
+	<div>Διάστημα κράτησης {{ startDate | date : 'dd/MM/yyyy' }} έως {{ endDate | date : 'dd/MM/yyyy'}} </div>
 	<button mat-raised-button (click)="saveReservation()" style="background-color: rgb(64, 165, 64)">Επιβεωβαίωση κράτησης</button>
 </mat-card-actions>

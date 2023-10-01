@@ -51,6 +51,7 @@ export class SearchComponent {
   filtredCities: Observable<City[]> = new Observable<City[]>;
   roomTypes: RoomType[] = [];
   events: string[] = [];
+  math = Math;
 
   constructor( private searchService: SearchService, private message: SnackBarService, private authService: AuthService,
                private router: Router, private cityService: CityService, private roomTypeService : RoomTypeService  ){

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from "@angular/router";
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ReviewDialogComponent } from '../review-dialog/review-dialog.component';
 
 import { AuthService } from "../../services/auth-service.service";
@@ -20,10 +20,12 @@ import { Room } from 'src/app/model/room.model';
 })
 export class ReservationsHistoryComponent {
 
+	reviewDialogRef: MatDialogRef<ReviewDialogComponent> | null = null;
+
 	reservations: Reservation[] = [];
-	canReviewRoom: boolean[] = [];
-	canReviewHost: boolean[] = [];
 	tableColumns: string[] = ['city', 'roomDescription', 'date', 'price', 'numOfPersons', 'owner', 'reservationDate', 'canselationDate', 'reviewRoom', 'reviewOnwer', 'cancelReservation'];
+	roomHasReviewed = new Map<number, boolean>;
+	hostHasReviewed = new Map<number, boolean>;
 
 	today: string;
 
@@ -50,9 +52,9 @@ export class ReservationsHistoryComponent {
 							this.reviewService.findReviewForThisRoom(idReviewer, reservation.room.id).subscribe({
 								error: (error: HttpErrorResponse) => {
 									if(error.status != 200)
-					                    this.canReviewRoom[index] = reservation.cancelationTimestamp != null || reservation.endDate.toString() >= this.today.split('T')[0];
+										this.roomHasReviewed.set(reservation.room.id, reservation.cancelationTimestamp != null || reservation.endDate.toString() >= this.today.split('T')[0]);
 									else
-					                    this.canReviewRoom[index] = true;
+										this.roomHasReviewed.set(reservation.room.id, true);
 
 								}
 							});
@@ -60,42 +62,55 @@ export class ReservationsHistoryComponent {
 							this.reviewService.findReviewForThisHost(idReviewer, reservation.room.property.owner.id).subscribe({
 								error: (error: HttpErrorResponse) => {
 									if(error.status != 200)
-										this.canReviewHost[index] = reservation.cancelationTimestamp != null || reservation.endDate.toString() >= this.today.split('T')[0];
+										this.hostHasReviewed.set(reservation.room.property.owner.id, reservation.cancelationTimestamp != null || reservation.endDate.toString() >= this.today.split('T')[0]);
 									else
-					                    this.canReviewRoom[index] = true;
+										this.hostHasReviewed.set(reservation.room.property.owner.id, true);
 								}
 							});
 						}
-
 					});
 				});
 			},
 			error:(error: HttpErrorResponse) => { this.message.error("Προέκυψε σφάλμα", 'Έξοδος'); }
 		});
-
 	}
 
 	openRoomReviewDialog(room: Room){
-		this.reviewDialog.open(ReviewDialogComponent, {
+		this.reviewDialogRef = this.reviewDialog.open(ReviewDialogComponent, {
 			width: '500px',
 			height: '400px',
 			data: {
 				room: room,
-				type: 'room'
+				type: 'room',
 			},
 		});
+
+		this.reviewDialogRef.afterClosed().subscribe(
+			result => { 
+				if(result)
+					this.roomHasReviewed.set(room.id, true);
+			}
+		);
 	}
 
 	openOwnerReviewDialog(owner: any){
-		this.reviewDialog.open(ReviewDialogComponent, {
+		this.reviewDialogRef = this.reviewDialog.open(ReviewDialogComponent, {
 			width: '500px',
 			height: '400px',
 			data: {
 				owner: owner,
-				type: 'owner'
+				type: 'owner',
 			},
 		});
+		
+		this.reviewDialogRef.afterClosed().subscribe(
+			result => { 
+				if(result)
+					this.hostHasReviewed.set(owner.id, true);	
+			}
+		);
 	}
+
 
 	cancelReservation(reservation: Reservation){
 		reservation.cancelationTimestamp = new Date();

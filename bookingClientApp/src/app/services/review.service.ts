@@ -9,6 +9,14 @@ export class ReviewService {
 
 	constructor(private http: HttpClient) { }
 
+	public getAllRoomReviews(): Observable<any[]>{
+		return this.http.get<any[]>(`${this.apiServerUrl}/roomReview/all`);
+	} 
+
+	public getAllHostReviews(): Observable<any[]>{
+		return this.http.get<any[]>(`${this.apiServerUrl}/hostReview/all`);
+	} 
+
 	public findReviewForThisRoom(idReviewer: number, idRoom: number): Observable<any>{
 		return this.http.get<any>(`${this.apiServerUrl}/roomReview/findForThisRoom/${idReviewer}/${idRoom}`);
 	} 
@@ -18,7 +26,7 @@ export class ReviewService {
 	} 
 
 	public saveNewRoomReview(review: any): Observable<any>{
-		return this.http.post<any>(`${this.apiServerUrl}/roomReview/add`, review, {observe: 'response'});
+		return this.http.post<any>(`${this.apiServerUrl}/roomReview/addRoomReview`, review, {observe: 'response'});
 	}
 
 	public saveNewHostReview(review: any): Observable<any>{

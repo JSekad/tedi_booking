@@ -62,7 +62,11 @@
 						<div class="mat-content-item"> <b> Μονά κρεβάτια:	</b> {{ room.numOfSingleBeds }}  	</div>
 						<div class="mat-content-item"> <b> Διπλά κρεβάτια:	</b> {{ room.numOfDoubleBeds }} 	</div>
 						<div class="mat-content-item"> <b> Κριτικές:		</b> {{ room.numOfReviews }} 		</div>
-						<div class="mat-content-item"> <b> Μέση τιμή:		</b> {{ room.averageReviews }} 		</div>
+						<div class="mat-content-item">
+							<mat-icon fontIcon="star" *ngFor="let star of [].constructor(math.round(room.averageReviews))" style="color: gold"/>
+							<mat-icon fontIcon="star_border" *ngFor="let star of [].constructor(5 - math.round(room.averageReviews))" style="color: gold"/>
+						</div>
+
 					</mat-card-content>
 					<mat-card-actions class="align-center zeroPadding">
 						<button mat-raised-button *ngIf="user != null" (click)="reserveRoom(roomIndex + pageIndex * 10)">Λεπτομέριες δωματίου</button>
