@@ -43,6 +43,8 @@ import { ChatComponent } from './components/chat/chat.component';
 import {MatListModule} from "@angular/material/list";
 import { HostComponent } from './components/host/host.component';
 import { EdituserComponent } from './components/edituser/edituser.component';
+import { ReservationsHistoryComponent } from './components/reservations-history/reservations-history.component';
+import { ReviewDialogComponent } from './components/review-dialog/review-dialog.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { EdituserComponent } from './components/edituser/edituser.component';
     HostComponent,
     ChatComponent,
     EdituserComponent,
+    ReservationsHistoryComponent,
+    ReviewDialogComponent,
   ],
   imports: [
     BrowserModule,

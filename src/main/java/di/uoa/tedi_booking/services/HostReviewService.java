@@ -14,4 +14,8 @@ public class HostReviewService extends GenericService<HostReview>{
         super(repository);
         this.hostReviewRepository = repository;
     }
+
+    public HostReview findByIdHost(int idReviewer, int idHost){
+        return this.hostReviewRepository.findByIdHost(idReviewer, idHost);
+    }
 }

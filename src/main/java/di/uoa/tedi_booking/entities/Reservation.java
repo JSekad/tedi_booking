@@ -1,7 +1,6 @@
 package di.uoa.tedi_booking.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +13,9 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 @Table(schema="tedi", name="reservation")
+@NamedQueries({
+        @NamedQuery(name="findByIdUser", query="select r from Reservation r where r.guest.id = :idGuest")
+})
 public class Reservation implements Serializable {
 
     @Id
@@ -21,13 +23,15 @@ public class Reservation implements Serializable {
     @SequenceGenerator(name = "reservation_seq", sequenceName = "reservation_seq")
     private Integer id;
 
-    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "idRoom")
     private Room room;
 
-    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
-    @ManyToOne(fetch = FetchType.LAZY)
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//    @JsonIdentityReference(alwaysAsId = true)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idGuest")
     private Person guest;
 
@@ -48,11 +52,4 @@ public class Reservation implements Serializable {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idRoomReview")
     private RoomReview RoomReview;
-
-    private String specialRequest;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idPaymentMethod")
-    private PaymentMethod paymentMethod;
 }

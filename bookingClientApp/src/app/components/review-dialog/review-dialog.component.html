@@ -1,0 +1,28 @@
+<h1 class="title"> Αξιολόγηση {{ reviewType === 'room' ? 'Δωματίου' : 'Οικοδεσπότη' }}</h1>
+
+<div class="form">
+
+	<button mat-button *ngFor="let star of stars; index as i" (click)="onClick(i+1)" class="starButton">
+		<mat-icon [fontIcon]="starsIcon[i]" style="color: gold"/>
+	</button>
+
+	<div class="reviewInputs">
+		<mat-form-field class="mat-form-field">
+			<mat-label>Τίτλος</mat-label>
+			<input matInput [(ngModel)]="reviewTitle">
+		</mat-form-field>
+
+		<mat-form-field>
+			<mat-label>Αξιολόγηση</mat-label>
+			<textarea matInput
+						[(ngModel)]="reviewText"
+						[ariaSetSize]="50">
+			</textarea>
+		</mat-form-field>
+
+		<mat-card>
+			<button mat-raised-button class="btn greenBtn" (click)="saveReview()">Αποθήκευση αξιολόγησης</button>
+		</mat-card>
+	</div>
+
+</div>

@@ -83,6 +83,10 @@ export class MainComponent {
     this.authService.selectedRole = role;
   }
 
+  public goToReservations(){
+    this.router.navigate(['/reservationsHistory']);
+  }
+
   getAllUsersForChat(): void{
     // let all = setInterval(() => {
     sessionStorage.setItem('username',this.luser.username);
@@ -130,5 +134,7 @@ export class MainComponent {
     this.router.navigate(['/edituser']);
   }
 
-
+  hasUserRole(): boolean{
+    return this.luser?.roles?.find(r => r.alias === 'user') != null;
+  }
 }

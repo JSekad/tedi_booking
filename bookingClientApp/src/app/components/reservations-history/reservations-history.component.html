@@ -1,0 +1,75 @@
+<div style="text-align: center;">
+	<h1 class="title" style="display: inline;">Οι κρατήσεις μου</h1>
+	<button mat-icon-button (click)="goToSearchPage()" style="float: left">
+		<mat-icon fontIcon="arrow_circle_left" class="backIcon"/>
+	</button>
+</div>
+
+<table mat-table [dataSource]="reservations">
+
+	<ng-container matColumnDef="city">
+		<th mat-header-cell *matHeaderCellDef class="tableHeader">Πόλη</th>
+		<td mat-cell *matCellDef="let reservation" class="tableRow"> {{ reservation.room.property.city.name }}</td>
+	</ng-container>
+
+	<ng-container matColumnDef="roomDescription">
+		<th mat-header-cell *matHeaderCellDef class="tableHeader">Περιγραφή δωματίου</th>
+		<td mat-cell *matCellDef="let reservation" class="tableRow"> {{ reservation.room.property.description }} </td>
+	</ng-container>
+	
+	<ng-container matColumnDef="date">
+		<th mat-header-cell *matHeaderCellDef class="tableHeader">Ημέρες διαμονής</th>
+		<td mat-cell *matCellDef="let reservation" class="tableRow"> {{ reservation.startDate | date : 'dd/MM/yyyy' }} - {{ reservation.endDate | date : 'dd/MM/yyyy'}} </td>
+	</ng-container>
+
+	<ng-container matColumnDef="price">
+		<th mat-header-cell *matHeaderCellDef class="tableHeader">Τιμή/βραδιά</th>
+		<td mat-cell *matCellDef="let reservation" class="tableRow"> {{ reservation.price }} </td>
+	</ng-container>
+
+	<ng-container matColumnDef="numOfPersons">
+		<th mat-header-cell *matHeaderCellDef class="tableHeader">Αριθμός ατόμων</th>
+		<td mat-cell *matCellDef="let reservation" class="tableRow"> {{ reservation.numOfPersons }} </td>
+	</ng-container>
+
+	<ng-container matColumnDef="owner">
+		<th mat-header-cell *matHeaderCellDef class="tableHeader">Ιδιοκτήτης</th>
+		<td mat-cell *matCellDef="let reservation" class="tableRow"> {{ reservation.room.property.owner.surname }} {{ reservation.room.property.owner.name }} </td>
+	</ng-container>
+
+	<ng-container matColumnDef="reservationDate">
+		<th mat-header-cell *matHeaderCellDef class="tableHeader">Ημερομηνία κράτησης</th>
+		<td mat-cell *matCellDef="let reservation" class="tableRow"> {{ reservation.reservationTimestamp | date: 'dd/MM/yyyy h:mm:ss a' }} </td>
+	</ng-container>
+
+	<ng-container matColumnDef="canselationDate">
+		<th mat-header-cell *matHeaderCellDef class="tableHeader">Ημερομηνία ακύρωσης</th>
+		<td mat-cell *matCellDef="let reservation" class="tableRow"> {{ reservation.cancelationTimestamp | date: 'dd/MM/yyyy h:mm:ss a' }} </td>
+	</ng-container>
+
+	<ng-container matColumnDef="reviewRoom">
+		<th mat-header-cell *matHeaderCellDef class="tableHeader">Αξιολόγηση δωματίου</th>
+		<td mat-cell *matCellDef="let reservation; let i = index" class="tableRow"> 
+			<button mat-button (click)="openRoomReviewDialog(reservation.room)"
+				[disabled]="canReviewRoom[i]"> <mat-icon fontIcon="house"/> </button>
+		</td>
+	</ng-container>
+
+	<ng-container matColumnDef="reviewOnwer">
+		<th mat-header-cell *matHeaderCellDef class="tableHeader">Αξιολόγηση οικοδεσπότη</th>
+		<td mat-cell *matCellDef="let reservation; let i = index" class="tableRow"> 
+			<button mat-button (click)="openOwnerReviewDialog(reservation.room.property.owner)"
+			[disabled]="canReviewHost[i]"><mat-icon fontIcon="person"/></button>
+		</td>
+	</ng-container>
+
+	<ng-container matColumnDef="cancelReservation">
+		<th mat-header-cell *matHeaderCellDef class="tableHeader">Ακύρωση κράτησης</th>
+		<td mat-cell *matCellDef="let reservation" class="tableRow" >
+			<button mat-button (click)="cancelReservation(reservation)"
+			 [disabled]="canCancelReservation(reservation)"><mat-icon fontIcon="cancel" [style]="cancelButtonColor(reservation)"></mat-icon></button> </td>
+	</ng-container>
+
+	<tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+	<tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
+</table>

@@ -4,6 +4,9 @@ import di.uoa.tedi_booking.entities.Reservation;
 import di.uoa.tedi_booking.repositories.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ReservationService extends GenericService<Reservation>{
@@ -14,4 +17,8 @@ public class ReservationService extends GenericService<Reservation>{
         super(repository);
         this.reservationRepository = repository;
     }
+
+    public List<Reservation> findReservationsByIdGuest(int idGuest){
+        return reservationRepository.findReservationsByIdGuest(idGuest);
+    };
 }

@@ -24,18 +24,13 @@ public class Property implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "idPerson")
     private Person owner;
 
     @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "property", fetch = FetchType.LAZY)
     private Set<Room> rooms;
-
-    @JsonProperty(access= JsonProperty.Access.WRITE_ONLY)
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idPropertyType")
-    private PropertyType propertyType;
 
     private String description;
     private Integer rating;

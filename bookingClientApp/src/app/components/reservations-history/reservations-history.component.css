@@ -1,0 +1,17 @@
+.backIcon{
+	color: #4255c4;
+	font-size: 3rem;
+	width: 70px;
+	height: 70px;
+	position: absolute;
+	top: 0px;
+	left: -11px;
+}
+
+.tableHeader{
+	text-align: center;
+}
+
+.tableRow{
+	text-align: center;
+}

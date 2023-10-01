@@ -82,7 +82,7 @@ export class ReservationComponent {
       return;
     const person = {id: this.user?.id, surname: this.user?.surname, name: this.user?.name, birthDate: this.user?.birthDate, idNumber: this.user?.idNumber, email: this.user?.email, phoneNumber: this.user?.phoneNumber, approved: this.user?.approved, dateApproved: this.user?.dateApproved};
     this.room.defaultRoomImage = null;
-    const newReservation = new Reservation(this.room, person, this.numOfPersons, this.room.basePricePerNight, new Date(), null, this.startDate, this.endDate);
+    const newReservation: Reservation = {id: null, room: this.room,  guest: person, numOfPersons: this.numOfPersons, price: this.room.basePricePerNight, reservationTimestamp: new Date(), cancelationTimestamp: null, startDate: this.startDate, endDate: this.endDate};
     this.reservationService.saveReservation(newReservation).subscribe( {
 
       error: (error: HttpErrorResponse) => {
@@ -119,4 +119,7 @@ export class ReservationComponent {
       })
   }
 
+  goToSearchPage(){
+    this.router.navigate(['/search']);
+  }
 }

@@ -4,6 +4,7 @@ import {MainComponent} from "./components/main/main.component";
 import {TestComponent} from "./components/test/test.component";
 import {SearchComponent} from "./components/search/search.component";
 import {ReservationComponent} from "./components/reservation/reservation.component";
+import {ReservationsHistoryComponent} from "./components/reservations-history/reservations-history.component";
 import { AdminComponent } from './components/admin/admin.component';
 import { HostComponent } from './components/host/host.component';
 import {ChatComponent} from "./components/chat/chat.component";
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'test', component: TestComponent},
   { path: 'search', component: SearchComponent},
   { path: 'reservation', component: ReservationComponent, canActivate: [AuthGuard]},
+  { path: 'reservationsHistory', component: ReservationsHistoryComponent, canActivate: [AuthGuard]},
   { path: 'chat', component: ChatComponent, canActivate: [AuthGuard]},
   { path: 'host', component: HostComponent, canActivate: [AuthGuard]},
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard]},

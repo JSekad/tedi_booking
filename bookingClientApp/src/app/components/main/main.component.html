@@ -27,6 +27,7 @@
       </div>
     </mat-card>
     <button mat-menu-item (click)="goToEdit()">Επεξεργασία Στοιχείων</button>
+    <button mat-menu-item *ngIf="hasUserRole()" (click)="goToReservations()">Ιστορικό κρατήσεων</button>
     <button mat-menu-item (click)="toggleUserDiv()">Συνομιλίες</button>
     <button mat-menu-item (click)="logout()">Έξοδος</button>
   </mat-menu>

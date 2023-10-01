@@ -5,6 +5,16 @@
     font-weight: bold;
 }
 
+.backIcon{
+	color: #4255c4;
+	font-size: 3rem;
+	width: 70px;
+	height: 70px;
+	position: absolute;
+	top: 0px;
+	left: -11px;
+}
+
 .iconCard{
 	width: 100%;
 	margin: 0.5rem;
