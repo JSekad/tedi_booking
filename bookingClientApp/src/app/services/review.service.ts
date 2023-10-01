@@ -30,6 +30,6 @@ export class ReviewService {
 	}
 
 	public saveNewHostReview(review: any): Observable<any>{
-		return this.http.post<any>(`${this.apiServerUrl}/hostReview/add`, review, {observe: 'response'});
+		return this.http.post<any>(`${this.apiServerUrl}/hostReview/addHostReview`, review, {observe: 'response'});
 	}
 }

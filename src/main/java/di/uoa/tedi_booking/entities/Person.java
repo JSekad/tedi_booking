@@ -32,6 +32,8 @@ public class Person implements Serializable {
     private String idNumber;
     private String email;
     private String phoneNumber;
+    private Integer numOfReviews;
+    private Float averageReviews;
 
 //    @JsonIgnore
 //    @OneToOne(mappedBy = "person", fetch = FetchType.LAZY)

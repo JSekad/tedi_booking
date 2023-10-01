@@ -6,4 +6,6 @@ export interface Person{
   idNumber: string;
   email: string;
   phoneNumber: string;
+  numOfReviews: number;
+  averageReviews: number;
 }

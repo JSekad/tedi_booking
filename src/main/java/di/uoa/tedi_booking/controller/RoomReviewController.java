@@ -15,6 +15,7 @@ public class RoomReviewController extends GenericController<RoomReview>{
 
     private final RoomReviewService roomReviewService;
     private final RoomService roomService;
+
     @Autowired
     public RoomReviewController(RoomReviewService service, RoomService roomServ){
         super(service);
@@ -33,7 +34,6 @@ public class RoomReviewController extends GenericController<RoomReview>{
     @PostMapping(path = "/addRoomReview")
     public ResponseEntity<?> addRoomReview(@RequestBody RoomReview review){
         //update rooms average rating
-//        Room room = this.roomService.find(review.getRoom().getId().longValue());
         Room room = review.getRoom();
         int numOfReviews = room.getNumOfReviews() + 1;
         room.setNumOfReviews(numOfReviews);

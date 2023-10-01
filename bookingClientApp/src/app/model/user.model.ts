@@ -17,6 +17,8 @@ export interface User {
   credentialsNonExpired: boolean;
   approved: boolean;
   dateApproved: Date;
+  numOfReviews: number;
+  averageReviews: number;
   authorities: [
     {
       authority: string
