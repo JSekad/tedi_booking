@@ -111,9 +111,12 @@
 					<div style="float: left">
 						<h2> {{ room.property.owner.surname}} </h2>
 						<h2> {{ room.property.owner.name}} </h2>
-						<mat-icon fontIcon="star" *ngFor="let star of [].constructor(math.round(room.property.owner.averageReviews))" style="color: gold"/>
-						<mat-icon fontIcon="star_border" *ngFor="let star of [].constructor(5 - math.round(room.property.owner.averageReviews))" style="color: gold"/>
-					</div>
+            <div class="alignCenter">
+              <mat-icon fontIcon="star" *ngFor="let star of [].constructor(math.round(room.property.owner.averageReviews))" style="color: gold"/>
+              <mat-icon fontIcon="star_border" *ngFor="let star of [].constructor(5 - math.round(room.property.owner.averageReviews))" style="color: gold"/>
+              <span>({{ room.property.owner.numOfReviews }})</span>
+            </div>
+          </div>
 					<div style="float: right; display: grid;">
 						<img [src]="hostPhoto" class="image">
 						<button mat-raised-button (click)="chatWith()">Συνομιλία</button>

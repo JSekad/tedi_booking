@@ -4,6 +4,10 @@
     font-style: italic;
     font-weight: bold;
 }
+.alignCenter{
+  display: flex;
+  align-items: center;
+}
 
 .backIcon{
 	color: #4255c4;
