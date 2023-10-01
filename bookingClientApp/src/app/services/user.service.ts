@@ -7,7 +7,7 @@ import { User } from '../model/user.model';
 @Injectable({ providedIn: 'root' })
 export class UserService {
 
-  private apiServerUrl = 'http://localhost:8080';
+  private apiServerUrl = 'https://localhost:443';
 
   constructor(private http: HttpClient) { }
 
@@ -27,6 +27,13 @@ export class UserService {
 
   changePassWord(password:any){
     return this.http.post<any>(`${this.apiServerUrl}/user/changePassWord`,password)
+  }
+
+  public updateImage(image:any): Observable<any>{
+    const formData: FormData = new FormData();
+    formData.append('image', image.image);
+    formData.append('idPerson', image.id.toString());
+    return this.http.post<any>(`${this.apiServerUrl}/user/updateHostImage`, formData, {observe : 'response'});
   }
 
   // getAll() {

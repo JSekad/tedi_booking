@@ -20,4 +20,8 @@ public class HostPhoto implements Serializable {
     private Long id;
 
     private byte[] photo;
+
+    public void setImageFromMulitpart(byte[] bytes){
+        this.photo = bytes;
+    }
 }

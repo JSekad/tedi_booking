@@ -2,13 +2,17 @@ package di.uoa.tedi_booking.controller;
 
 import di.uoa.tedi_booking.DTOS.PasswordDTO;
 import di.uoa.tedi_booking.DTOS.security.AuthenticationRequest;
+import di.uoa.tedi_booking.entities.HostPhoto;
+import di.uoa.tedi_booking.entities.RoomImageDefault;
 import di.uoa.tedi_booking.services.AuthenticationService;
+import di.uoa.tedi_booking.services.HostPhotoService;
 import di.uoa.tedi_booking.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import di.uoa.tedi_booking.entities.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,11 +24,14 @@ public class UserController extends GenericController<User>{
     private final UserService userService;
     private final AuthenticationService authService;
 
+    private final HostPhotoService hostPhotoService;
+
     @Autowired
-    public UserController(UserService service,AuthenticationService authService){
+    public UserController(UserService service,AuthenticationService authService,HostPhotoService hostPhotoService){
         super(service);
         this.userService = service;
         this.authService = authService;
+        this.hostPhotoService = hostPhotoService;
     }
 
     @GetMapping(path = "/usersMeAitimaEggrafis")
@@ -73,6 +80,14 @@ public class UserController extends GenericController<User>{
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User approval failed");
         else
             return ResponseEntity.status(HttpStatus.OK).body("User approval succeed");
+    }
+
+    @PostMapping(path = "/updateHostImage")
+    public ResponseEntity<?> updateDefaultImage(@RequestParam(value = "idPerson") String id, @RequestParam(value ="image") MultipartFile img) throws IOException {
+        HostPhoto newHostPhoto = new HostPhoto();
+        newHostPhoto.setId(Long.parseLong(id));
+        newHostPhoto.setImageFromMulitpart(img.getBytes());
+        return this.hostPhotoService.update(newHostPhoto);
     }
 
 }

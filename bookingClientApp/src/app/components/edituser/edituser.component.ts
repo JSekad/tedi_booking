@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import { AuthService } from '../../services/auth-service.service';
 import {User} from "../../model/user.model";
 import {formatDate} from "@angular/common";
@@ -6,6 +6,10 @@ import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/form
 import {UserService} from "../../services/user.service";
 import {SnackBarService} from "../../services/snackBar.service";
 import {Router} from "@angular/router";
+import {RoomImageDefault} from "../../model/roomImageDefault.model";
+import {HttpErrorResponse} from "@angular/common/http";
+import {HostPhoto} from "../../model/host-photo.model";
+import {HostPhotoService} from "../../services/host-photo.service";
 
 @Component({
   selector: 'app-edit-user',
@@ -17,20 +21,24 @@ export class EdituserComponent implements OnInit {
   selectedDate: Date = new Date();
   // passwordForm: FormGroup;
   confirmPassword: string = '';
+  hostImage: any;
+  imagesUrls: any[] = [];
+  hostImageToSent: any;
+  selectedRole: any;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
     private message: SnackBarService,
-    private router: Router) {
-    // this.passwordForm = this.fb.group({
-    //   password: ['', [Validators.required]],
-    //   confirmPassword: ['', [Validators.required]],
-    // }, {
-    //   validator: this.passwordMatchValidator,
-    // });
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef,
+    private hostPhotoService: HostPhotoService
+  ) {
+    this.selectedRole = this.authService.selectedRole;
   }
+
+
 
   passwordMatchValidator(): boolean|null {
     if (this.user.password === this.confirmPassword) {
@@ -40,11 +48,29 @@ export class EdituserComponent implements OnInit {
     }
   }
 
+  onAddHostImage(event: any){
+      let file = event.target.files[0];
+      this.hostImageToSent = event.target.files[0];
+      var fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      this.imagesUrls.push(file);
+      this.changeDetectorRef.detectChanges();
+      fileReader.onload = (event) => {
+        const url = (<FileReader>event.target).result as string;
+        this.hostImage = url;
+        this.changeDetectorRef.detectChanges();
+      }
+  }
+
   ngOnInit(): void {
       this.user = this.authService.getLoggedInUser();
       console.log(this.user);
       let ok = this.parseDate(this.user.birthDate);
       this.selectedDate=ok?ok:new Date();
+      this.hostPhotoService.getHostPhoto(this.user.id).subscribe({
+        next: (response: HostPhoto) => { this.hostImage = 'data:image/jpeg;base64,' + response.photo; },
+        error:(error: HttpErrorResponse) => { this.message.error("Προέκυψε σφάλμα", 'Έξοδος'); }
+      });
   }
 
   onSubmitUpdatedUser(){
@@ -52,6 +78,20 @@ export class EdituserComponent implements OnInit {
     this.userService.updateUserDetails(this.user).subscribe((response)=>{
       this.message.info("Τα στοιχεία του Χρήστη Άλλαξαν")
       this.authService.refreshPage()
+      if(this.selectedRole.alias == 'owner'){
+
+        var hostImageDefault: any = {id: this.user.id,  image: this.hostImageToSent};
+
+        this.userService.updateImage(hostImageDefault).subscribe({
+          next: (response) => {  },
+
+          error: (error: HttpErrorResponse) => {
+            if(error.status !== 200)
+              this.message.error("Προέκυψε σφάλμα!", "Έξοδος");
+          }
+        });
+
+      }
     },error => {
       this.message.info("Προέκυψε κάποιο πρόβλημα")
     },);

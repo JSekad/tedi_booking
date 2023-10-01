@@ -7,7 +7,7 @@ import { HostPhoto } from '../model/host-photo.model';
 @Injectable({ providedIn: 'root' })
 export class HostPhotoService {
 
-  private apiServerUrl = 'http://localhost:8080';
+  private apiServerUrl = 'https://localhost:443';
 
   constructor(private http: HttpClient) { }
 

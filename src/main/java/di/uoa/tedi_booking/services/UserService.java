@@ -1,15 +1,12 @@
 package di.uoa.tedi_booking.services;
 
-import di.uoa.tedi_booking.DTOS.PasswordDTO;
 import di.uoa.tedi_booking.entities.User;
-import di.uoa.tedi_booking.repositories.UserRepository;
+import di.uoa.tedi_booking.DTOS.repositories.UserRepository;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

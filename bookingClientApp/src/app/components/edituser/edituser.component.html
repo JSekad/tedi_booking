@@ -1,5 +1,17 @@
 <mat-card class="edit-user">
+  <div class="defaultImageCard" *ngIf="selectedRole.alias == 'owner' ">
+    <form class="form-group">
+      <mat-card-header>
+        <mat-card-title>Φωτογραφία Οικοδεσπότη</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
 
+          <img [src]="hostImage" *ngIf="hostImage != null" class="image">
+          <span class="image" *ngIf="hostImage == null"></span>
+          <input type="file" accept="image/*" (change)="onAddHostImage($event)" class="btn greyBtn"/>
+      </mat-card-content>
+    </form>
+  </div>
   <form>
     <mat-card-header>
       <mat-card-title>Επεξεργασία Στοιχεία Χρήστη</mat-card-title>

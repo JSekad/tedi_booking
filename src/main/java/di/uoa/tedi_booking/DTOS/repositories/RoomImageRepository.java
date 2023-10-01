@@ -1,4 +1,4 @@
-package di.uoa.tedi_booking.repositories;
+package di.uoa.tedi_booking.DTOS.repositories;
 
 import di.uoa.tedi_booking.entities.RoomImage;
 import org.springframework.data.jpa.repository.Query;

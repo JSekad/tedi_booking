@@ -4,12 +4,12 @@ import { Observable } from 'rxjs';
 
 import { Room } from '../model/room.model';
 
-const httpOptions = {headers: new HttpHeaders({'Accept': 'application/json', 
+const httpOptions = {headers: new HttpHeaders({'Accept': 'application/json',
                                                'ContentType': 'application/json'})};
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {
-  private apiServerUrl = 'http://localhost:8080';
+  private apiServerUrl = 'https://localhost:443';
 
   constructor(private http: HttpClient) { }
 

@@ -1,10 +1,8 @@
-package di.uoa.tedi_booking.repositories;
+package di.uoa.tedi_booking.DTOS.repositories;
 
-import di.uoa.tedi_booking.DTOS.ChatDTO;
 import di.uoa.tedi_booking.entities.Chat;
 import di.uoa.tedi_booking.entities.Room;
 import di.uoa.tedi_booking.entities.User;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;

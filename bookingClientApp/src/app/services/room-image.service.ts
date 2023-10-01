@@ -10,7 +10,7 @@ const httpOptions = {headers: new HttpHeaders({'Accept': 'application/json',
 
 @Injectable({ providedIn: 'root' })
 export class RoomImageService {
-    private apiServerUrl = 'http://localhost:8080';
+    private apiServerUrl = 'https://localhost:443';
 
     constructor(private http: HttpClient) { }
 
@@ -22,21 +22,21 @@ export class RoomImageService {
 		const formData: FormData = new FormData();
 		formData.append('image', newImage.image);
 		formData.append('idRoom', newImage.id.toString());
-		return this.http.post<any>(`${this.apiServerUrl}/roomImageDefault/newDefaultImage`, formData, {observe : 'response'}); 
+		return this.http.post<any>(`${this.apiServerUrl}/roomImageDefault/newDefaultImage`, formData, {observe : 'response'});
     }
 
     public addNewRoomImage(idRoom: number, image: any): Observable<any>{
 		const formData: FormData = new FormData();
 		formData.append('image', image);
 		formData.append('idRoom', idRoom.toString());
-		return this.http.post<any>(`${this.apiServerUrl}/roomImage/newImage`, formData, {observe : 'response'}); 
+		return this.http.post<any>(`${this.apiServerUrl}/roomImage/newImage`, formData, {observe : 'response'});
     }
 
 	public updateDefaultRoomImage(idRoom: number, updatedImage: any){
 		const formData: FormData = new FormData();
 		formData.append('image', updatedImage);
 		formData.append('idRoom', idRoom.toString());
-		return this.http.post<any>(`${this.apiServerUrl}/roomImageDefault/updateDefaultImage`, formData, {observe : 'response'}); 
+		return this.http.post<any>(`${this.apiServerUrl}/roomImageDefault/updateDefaultImage`, formData, {observe : 'response'});
 	}
 
     public deleteRoomImage(id: number): Observable<any>{

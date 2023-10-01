@@ -1,8 +1,7 @@
 package di.uoa.tedi_booking.config;
 
-import di.uoa.tedi_booking.repositories.UserRepository;
+import di.uoa.tedi_booking.DTOS.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldNameConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

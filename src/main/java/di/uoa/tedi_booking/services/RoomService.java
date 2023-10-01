@@ -1,11 +1,8 @@
 package di.uoa.tedi_booking.services;
 
 import di.uoa.tedi_booking.entities.Room;
-import di.uoa.tedi_booking.repositories.GenericRepository;
-import di.uoa.tedi_booking.repositories.RoomRepository;
-import lombok.RequiredArgsConstructor;
+import di.uoa.tedi_booking.DTOS.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

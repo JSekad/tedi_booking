@@ -7,7 +7,7 @@ import { Reservation } from '../model/reservation.model';
 @Injectable({ providedIn: 'root' })
 export class ReservationService {
 
-	private apiServerUrl = 'http://localhost:8080';
+  private apiServerUrl = 'https://localhost:443';
 
 	constructor(private http: HttpClient) { }
 
@@ -17,7 +17,7 @@ export class ReservationService {
 
 	public getAllReservations(): Observable<Reservation[]>{
 		return this.http.get<Reservation[]>(`${this.apiServerUrl}/reservation/all`);
-	} 
+	}
 
 	public findUserReservations(idGuest: number): Observable<Reservation[]>{
 		return this.http.get<Reservation[]>(`${this.apiServerUrl}/reservation/findReservationsByIdGuest/${idGuest}`);
@@ -25,5 +25,5 @@ export class ReservationService {
 
 	public updateReservations(reservation: Reservation): Observable<any>{
 		return this.http.post<any>(`${this.apiServerUrl}/reservation/update`, reservation, {observe: 'response'});
-	} 
+	}
 }

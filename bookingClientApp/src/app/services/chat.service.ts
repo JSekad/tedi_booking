@@ -10,7 +10,7 @@ import {User} from "../model/user.model";
 })
 export class ChatService {
 
-  baseUrl = "http://localhost:8080";
+  baseUrl = "https://localhost:443";
 
   constructor(private httpClient: HttpClient) { }
 

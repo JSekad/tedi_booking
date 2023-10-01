@@ -1,11 +1,9 @@
 package di.uoa.tedi_booking.config;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import di.uoa.tedi_booking.entities.Role;
 import di.uoa.tedi_booking.entities.User;
-import di.uoa.tedi_booking.repositories.RoleRepository;
-import di.uoa.tedi_booking.repositories.UserRepository;
+import di.uoa.tedi_booking.DTOS.repositories.RoleRepository;
+import di.uoa.tedi_booking.DTOS.repositories.UserRepository;
 import di.uoa.tedi_booking.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -15,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;

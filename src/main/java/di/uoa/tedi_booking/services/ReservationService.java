@@ -1,10 +1,9 @@
 package di.uoa.tedi_booking.services;
 
 import di.uoa.tedi_booking.entities.Reservation;
-import di.uoa.tedi_booking.repositories.ReservationRepository;
+import di.uoa.tedi_booking.DTOS.repositories.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

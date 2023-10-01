@@ -7,7 +7,7 @@ import { Room } from '../model/room.model';
 @Injectable({ providedIn: 'root' })
 export class RoomService {
 
-	private apiServerUrl = 'http://localhost:8080';
+	private apiServerUrl = 'https://localhost:443';
 
 	constructor(private http: HttpClient) { }
 
@@ -24,7 +24,7 @@ export class RoomService {
 	}
 
 	public getAllRooms(): Observable<Room[]>{
-		return this.http.get<Room[]>(`${this.apiServerUrl}/room/all`);	
+		return this.http.get<Room[]>(`${this.apiServerUrl}/room/all`);
 	}
 
 	public getRoomById(id: number): Observable<Room>{

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import di.uoa.tedi_booking.entities.GenericEntity;
-import di.uoa.tedi_booking.repositories.GenericRepository;
+import di.uoa.tedi_booking.DTOS.repositories.GenericRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;

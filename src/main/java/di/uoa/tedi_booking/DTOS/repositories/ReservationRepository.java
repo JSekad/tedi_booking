@@ -1,7 +1,6 @@
-package di.uoa.tedi_booking.repositories;
+package di.uoa.tedi_booking.DTOS.repositories;
 
 import di.uoa.tedi_booking.entities.Reservation;
-import di.uoa.tedi_booking.entities.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
